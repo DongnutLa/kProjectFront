@@ -1,0 +1,73 @@
+@use '../vars';
+
+.new {
+    display: flex;
+    flex-direction: column;
+   /*  align-items: center; */
+    margin-top: 40px;
+}
+
+.new .new__img {
+    width: 100%;
+}
+
+.new .new__img img {
+    width: 92%;
+    margin-left: 20px;
+}
+
+.new .new__title h1 {
+    margin: 20px 0 12px 20px;
+}
+
+.new .new__label {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 30px;
+}
+
+.new .new__label p {
+    margin: 8px 12px;
+    padding: 4px;
+    border-radius: 4px;
+    color: var(--lightPink);
+    font-size: var(--text-mini);
+    background-color: var(--purple);
+    cursor: pointer;
+    transition: 0.3s;
+    transform: scale(1);
+}
+.new .new__label p:hover {
+    background-color: var(--violete);
+    transform: scale(1.1);
+}
+
+.new .new__label span {
+    margin: 12px;
+    color: var(--violete);
+    font-size: var(--text-mini);
+}
+
+.new .new__content {
+    margin: 12px;
+}
+
+.new .new__content p {
+    text-align: justify;
+    margin-bottom: 20px;
+}
+
+.new .new__content div {
+    height: 550px;
+}
+
+.new .new__content iframe {
+    width: 100%;   
+}
+
+.new .new__source {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-left: 12px;
+}

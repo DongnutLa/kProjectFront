@@ -1,0 +1,26 @@
+@use '../vars';
+
+.sidebar {
+    display: flex;
+    position: sticky;
+    top: var(--nav-height);
+    flex-direction: column;
+    justify-content: space-between;
+    width: 350px;
+    height: calc(100vh - var(--nav-height));
+    background-color: var(--lightBlue);
+    opacity: 0.9;
+    border-bottom-right-radius: 40%;
+    z-index: 1;
+}
+
+.sidebar ul {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.sidebar ul li a {
+    color: var(--lightPink);
+}

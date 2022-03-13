@@ -1,0 +1,58 @@
+@use '../vars';
+
+.about {
+    margin: 60px 0;
+}
+
+.about .about-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-content: center;
+    place-items: center;
+    margin: 40px;
+    background-color: var(--blue05);
+    border-radius: 50%;
+    box-shadow: 8px 8px 16px var(--blue05),
+                -8px -8px 16px var(--blue05);
+}
+
+.about-container .about-img {
+    display: grid;
+    place-items: center;
+}
+.about-container .about-img img {
+    width: 70%;
+}
+
+.about-container .about-text {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    gap: 20px;
+}
+.about-container .about-text p {
+    text-align: center;
+}
+
+.about-container .about-text a {
+    background-color: var(--violete);
+    padding: 8px 12px;
+    border-radius: 4px;
+    color: var(--lightPink);
+    transition: 0.3s;
+    transform: scale(1);
+}
+.about-container .about-text a:hover {
+    background-color: var(--purple);
+    transform: scale(1.1);
+}
+
+@media (max-width:468px) {
+    .about .about-container {
+        grid-template-columns: 1fr;
+        row-gap: 20px;
+    }
+    .about-container .about-img img {
+        width: 50%;
+    }
+}

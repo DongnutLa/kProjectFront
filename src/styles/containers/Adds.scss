@@ -1,0 +1,25 @@
+@use '../vars';
+
+.adds {
+    margin-top: 40px;
+}
+.adds .adds-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 20px;
+    place-content: center;
+}
+.adds .adds-container div {
+    width: 180px;
+    height: 300px;
+    background-color: var(--blue05);
+}
+
+@media (max-width:600px) {
+    .adds .adds-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+}

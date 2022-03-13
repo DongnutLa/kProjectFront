@@ -1,0 +1,14 @@
+.exchange__filters a {
+    display: block;
+    margin: 16px 0;
+}
+
+.exchange__filters form input {
+    margin: 12px;
+}
+
+.exchange__filters form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

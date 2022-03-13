@@ -1,0 +1,128 @@
+@use '../vars';
+
+.exchange-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 290px;
+    height: 470px;
+    background-color: var(--blue05);
+    border-radius: 8px;
+    box-shadow: 5px 5px 15px var(--blue05);
+}
+
+.exchange-card .card-title {
+    display: flex;
+    justify-content: space-between;
+    margin: 12px 28px 4px 28px;
+    color: var(--violete);
+}
+
+.exchange-card .card-title h4 {
+    font-size: var(--text);
+}
+
+.exchange-card .card-main {
+    display: flex;
+    flex-direction: row;
+    place-content: center;
+    place-items: center;
+}
+
+.exchange-card .card-main div {
+    width: 105px;
+    height: 165px;
+    overflow: hidden;
+    position: relative;
+    padding: 4px;
+    display: flex;
+    place-content: center;
+    place-items: center;
+}
+.exchange-card .card-main > img {
+    max-width: 70px;
+}
+
+.exchange-card .card-main .card-main__have {
+    background: url("@img/ETE-O2-Handong.png") no-repeat center center/cover;
+    border-radius: 8px;
+}
+
+.exchange-card .card-main .card-main__want {
+    background: url("@img/ETE-O3-Siyeon.png") no-repeat center center/cover;
+    border-radius: 8px;
+}
+
+
+.exchange-card .card-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.exchange-card .card-data__buttons{
+    display: flex;
+    justify-content: flex-end;
+}
+.exchange-card .card-data__buttons button {
+    padding: 4px 8px;
+}
+.exchange-card .card-data__buttons a {
+    align-self: center;
+    font-size: var(--text-mini);
+    flex-grow: 2;
+    margin-left: 12px;
+}
+.exchange-card .card-data__buttons a:hover {
+    color: var(--blue);
+}
+
+.exchange-card .card-data .card-data__labels {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin: 4px 8px;
+    padding: 8px 0;
+}
+.exchange-card .card-data .card-data__labels span {
+    padding: 4px;
+    border-radius: 4px;
+    color: var(--lightPink);
+    font-size: var(--text-mini);
+    background-color: var(--purple);
+    cursor: pointer;
+    transition: 0.3s;
+    transform: scale(1);
+}
+
+.exchange-card .card-data .card-data__labels span:hover {
+    background-color: var(--violete);
+    transform: scale(1.1);
+}
+
+.exchange-card .card-data .card-data__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 4px 8px 8px 8px;
+}
+.exchange-card .card-data .card-data__info > div {
+    flex-grow: 2;
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+}
+
+.exchange-card .card-data .card-data__info span {
+    font-size: var(--text-mini);
+}
+.exchange-card .card-data .card-data__info p {
+    font-size: var(--text-med);
+    color: var(--blue);
+}
+
+.exchange-card .card-data .card-data__description p {
+    margin: 12px 8px;
+    font-size: var(--text-med);
+    text-align: justify;
+}

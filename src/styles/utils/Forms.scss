@@ -1,0 +1,105 @@
+@use '../vars';
+
+.new-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: 16px;
+    padding: 20px 0;
+    place-items: center;
+    background-color: var(--mediumPink);
+    border-radius: 12px;
+    width: 60%;
+    height: max-content;
+}
+.new-form h4 {
+    margin: 16px;
+}
+.new-form p {
+    margin: 16px auto;
+}
+
+.new-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.new-form form label {
+    font-size: var(--text);
+    padding: 8px;
+}
+
+.new-form form input{
+    width: 350px;
+    border-radius: 8px;
+    border: none;
+    height: 32px;
+    padding-left: 8px;
+}
+.new-form form textarea {
+    border-radius: 8px;
+    border: none;
+    padding-left: 8px;
+    padding-top: 8px;
+}
+
+.new-form form .form__divided {
+    display: flex;
+    flex-direction: row;
+    gap:16px;
+}
+
+.new-form form .form__divided div {
+    display: flex;
+    flex-direction: column;
+}
+
+.new-form form .form__divided div input {
+    width: 170px;
+}
+
+.new-form form textarea:focus,
+.new-form form input:focus {
+    outline: var(--blue) solid 2px;
+}
+
+.new-form form input[type=file] {
+    display: none;
+}
+
+.new-form form label.img-upload {
+    display: flex;
+    align-items: center;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.new-form form label.img-upload span {
+    padding-left: 16px;
+}
+
+.new-form form label.img-upload img {
+    width: 20px;
+}
+
+.new-form form button {
+    margin-top: 16px;
+}
+
+@media (max-width:850px) {
+    .new-form {
+        width: 80%;
+    }
+}
+
+@media (max-width:640px) {
+    .new-form {
+        width: 90%;
+    }
+}
+
+@media (max-width:420px) {
+    .new-form form input{
+        width: 250px;
+    }
+}

@@ -1,0 +1,61 @@
+@use '../vars';
+
+.news-card {
+    width: 260px;
+    max-height: 450px;
+}
+.news-card .news-card__img {
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.news-card .news-card__img img {
+    width: 100%;
+    max-height: 170px;
+    cursor: pointer;
+    transition: 0.3s;
+    transform: scale(1);
+}
+.news-card .news-card__img img:hover {
+    transform: scale(1.1);
+}
+
+.news-card .news-card__head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.news-card .news-card__head p {
+    margin: 8px 12px;
+    padding: 4px;
+    border-radius: 4px;
+    color: var(--lightPink);
+    font-size: var(--text-mini);
+    background-color: var(--purple);
+    cursor: pointer;
+    transition: 0.3s;
+    transform: scale(1);
+}
+.news-card .news-card__head p:hover {
+    background-color: var(--violete);
+    transform: scale(1.1);
+}
+
+.news-card .news-card__head span {
+    margin: 12px 12px;
+    color: var(--violete);
+    font-size: var(--text-mini);
+}
+
+.news-card .news-card__title {
+    margin: 4px 0;
+    cursor: pointer;
+}
+.news-card .news-card__title:hover {
+    color: var(--purple);
+}
+.news-card .news-card__text {
+    margin: 8px 0;
+    font-size: var(--text-med);
+}

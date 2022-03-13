@@ -1,0 +1,33 @@
+.new-form form .form-pcs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.new-form form .form-pcs label {
+    width: 80px;
+}
+.new-form form .form-pcs label img {
+    width: 100%;
+}
+
+.new-form form .radio_item {
+    display: none !important;
+}
+
+.new-form form .label_item img {
+    border-radius: 8px;
+    opacity: 0.5;
+    transition: 0.3s;
+    transform: scale(1);
+    cursor: pointer;
+}
+.new-form form .label_item img:hover {
+    opacity: 0.7;
+    transform: scale(1.1);
+}
+
+.new-form form .radio_item:checked + .label_item img {
+    border: 1px solid var(--purple);
+    opacity: 1;
+}
