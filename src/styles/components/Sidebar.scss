@@ -2,7 +2,7 @@
 
 .sidebar {
     display: flex;
-    position: sticky;
+    position: fixed;
     top: var(--nav-height);
     flex-direction: column;
     justify-content: space-between;

@@ -1,9 +1,12 @@
 import React from 'react';
+import { formatDistance, subDays } from 'date-fns';
 import '@styles-components/Exchange.scss';
 
-import exchange from '@img/exchange.png';
+import exch from '@img/exchange.png';
 
-const Exchange = () => {
+const Exchange = ({ exchange }) => {
+  const creationDate = formatDistance(subDays(new Date(exchange.creationDate), 0), new Date(), { addSuffix: true });
+
   return (
     <div className="exchange-card">
       <div className="card-title">
@@ -13,27 +16,26 @@ const Exchange = () => {
       <div className="card-main">
         <div className="card-main__have">
         </div>
-        <img src={exchange} alt="exchange logo"/>
+        <img src={exch} alt="exchange logo"/>
         <div className="card-main__want">
         </div>
       </div>
       <div className="card-data">
         <div className="card-data__labels">
-          <span>Dreamcatcher</span>
-          <span>Escape The Era</span>
-          <span>Handong</span>
-          <span>Handong</span>
+          {exchange.tags && exchange.tags.map(tag => (
+            <span key={tag} >{tag}</span>
+          ))}
         </div>
         <div className="card-data__info">
           <div>
-              <p>DongnutLa</p>
+              <p>{exchange.user.username}</p>
               <p>&#8226;</p>
               <p>Bogotá</p>
           </div>
-          <span>13 enero del 2022</span>
+          <span>{creationDate}</span>
         </div>
         <div className="card-data__description">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo consequuntur id nihil velit amet reprehenderit dolorum earum! Assumenda commodi aliquam ea odio natus modi, nostrum possimus dolorem tenetur iusto sequi.</p>
+          <p>{exchange.information}</p>
         </div>
       </div>
       <div className="card-data__buttons">

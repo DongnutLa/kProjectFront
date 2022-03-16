@@ -12,10 +12,10 @@ const Footer = () => {
         <div className="footer-links__main">
           <h4>Sitio</h4>
           <ul>
-            <li><a href="">Inicio</a></li>
-            <li><a href="">Noticias</a></li>
-            <li><a href="">Intercambios</a></li>
-            <li><a href="">Ventas</a></li>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/news">Noticias</a></li>
+            <li><a href="/exchanges">Intercambios</a></li>
+            <li><a href="/store">Ventas</a></li>
           </ul>
         </div>
         <div className="footer-links__about">

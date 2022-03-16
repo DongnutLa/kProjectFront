@@ -17,6 +17,8 @@ module.exports = {
       '@containers': path.resolve(__dirname, 'src/containers/'),
       '@pages': path.resolve(__dirname, 'src/pages/'),
       '@routes': path.resolve(__dirname, 'src/routes/'),
+      '@hooks': path.resolve(__dirname, 'src/hooks/'),
+      '@context': path.resolve(__dirname, 'src/context/'),
       '@assets': path.resolve(__dirname, 'src/assets/'),//No se esta usando
       '@styles': path.resolve(__dirname, 'src/styles/'),
       '@styles-components': path.resolve(__dirname, 'src/styles/components/'),
@@ -73,6 +75,6 @@ module.exports = {
       directory: path.join(__dirname, 'public'),
       },
     compress: true,
-    port: 3005,
+    port: 5000,
   }
 }

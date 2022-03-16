@@ -12,3 +12,20 @@
     flex-direction: column;
     justify-content: center;
 }
+
+@media (max-width:880px) {
+    .container .exchange-container .exchange__filters a {
+        text-align: center;
+    }
+    .container .exchange-container .exchange__filters p {
+        text-align: center;
+        margin-bottom: 8px;
+    }
+    .exchange-container .exchange__filters form {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .container .exchange-container .exchange__filters form input {
+        margin: 4px;
+    }
+}

@@ -3,3 +3,9 @@
     grid-template-columns: 1fr 4fr;
     margin: 40px 0;
 }
+
+@media (max-width:880px) {
+    .container .exchange-container {
+        grid-template-columns: 1fr;
+    }
+}

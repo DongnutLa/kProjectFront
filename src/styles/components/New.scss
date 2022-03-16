@@ -23,11 +23,11 @@
 .news-card .news-card__head {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .news-card .news-card__head p {
-    margin: 8px 12px;
+    margin: 8px 4px;
     padding: 4px;
     border-radius: 4px;
     color: var(--lightPink);
@@ -42,7 +42,11 @@
     transform: scale(1.1);
 }
 
-.news-card .news-card__head span {
+.news-card .news-card__date{
+    text-align: end;
+}
+
+.news-card .news-card__date span {
     margin: 12px 12px;
     color: var(--violete);
     font-size: var(--text-mini);
