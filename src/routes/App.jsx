@@ -15,13 +15,15 @@ import AlbumAdd from '@pages/AlbumAdd';
 import SongAdd from '@pages/SongAdd';
 import PhotocardAdd from '@pages/PhotocardAdd';
 import useInitialState from '@hooks/useInitialState';
+import useExchangeForm from '../hooks/useExchangeForm';
 
 import '@styles/global.scss';
 
 const App = () => {
+  const exchangeForm = useExchangeForm();
   const initialState = useInitialState();
   return (
-    <AppContext.Provider value={initialState}>
+    <AppContext.Provider value={exchangeForm}>
       <BrowserRouter>
         <Layout>
           <Routes>

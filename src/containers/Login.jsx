@@ -9,7 +9,7 @@ import axios from 'axios';
 
 const API = 'http://localhost:3000/api/v1/auth/login';
 
-const Login = () => {
+const Login = ({ setLoginState }) => {
   const form = useRef(null);
 
   const handleSubmit = (event) => {
@@ -27,23 +27,24 @@ const Login = () => {
 
   return (
     <section className="modal">
-        <div className="modal-form">
-            <div className="form-container">
-                <span>X</span>
-                <img src={kpopColor} alt="Logo K-project"/>
-                <form action="" ref={form}>
-                    <label htmlFor="username">Nombre de usuario</label>
-                    <input type="text" name="username" id="username"/>
-                    <label htmlFor="password">Contraseña</label>
-                    <input type="password" name="password" id="password"/>
-                    <button className="button btn-primary" 
-                      type="button" 
-                      onClick={handleSubmit}>
-                        Iniciar sesión</button>
-                    <span>¿No tienes cuenta?, <a href="">¡Crea una!</a></span>
-                </form>
-            </div>
+      <div className="modal-form">
+        <div className="form-container">
+          <span onClick={() => setLoginState(prevState => !prevState)}>X</span>
+          <img src={kpopColor} alt="Logo K-project"/>
+          <form action="" ref={form}>
+            <label htmlFor="username">Nombre de usuario</label>
+            <input type="text" name="username" id="username"/>
+            <label htmlFor="password">Contraseña</label>
+            <input type="password" name="password" id="password"/>
+            <button className="button btn-primary" 
+              type="button" 
+              onClick={handleSubmit}>
+                Iniciar sesión
+            </button>
+            <span>¿No tienes cuenta?, <a href="">¡Crea una!</a></span>
+          </form>
         </div>
+      </div>
     </section>
   );
 }

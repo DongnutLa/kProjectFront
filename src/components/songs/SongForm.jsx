@@ -6,17 +6,17 @@ import '@styles-utils/buttons.scss';
 const SongForm = () => {
   return (
     <form action="">
-      <label for="title">Título</label>
+      <label htmlFor="title">Título</label>
       <input type="text" name="title" id="title"/>
-      <label for="lyrics">Letra por</label>
+      <label htmlFor="lyrics">Letra por</label>
       <input type="text" name="lyrics" id="lyrics"/>
-      <label for="music">Musica por</label>
+      <label htmlFor="music">Musica por</label>
       <input type="text" name="music" id="music"/>
-      <label for="arrangements">Arreglos por</label>
+      <label htmlFor="arrangements">Arreglos por</label>
       <input type="text" name="arrangements" id="arrangements"/>
-      <label for="duration">Duración</label>
+      <label htmlFor="duration">Duración</label>
       <input type="time" name="duration" id="duration"/>
-      <label for="album">Álbum</label>
+      <label htmlFor="album">Álbum</label>
       <input list="album" name="album" />
         <datalist id="album">
           <option value="Escape the era"/>

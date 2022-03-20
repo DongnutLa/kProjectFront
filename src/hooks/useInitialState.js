@@ -1,15 +1,15 @@
 import { useState } from 'react';
 
 const initialState = {
-    //cart: [],
+    modalDisplay: false,
 }
 
+
 const useInitialState = () => {
-    const [state, setState] = useState(initialState);
+    
 
     return {
-        state,
-
+        initialState,
     }
 }
 

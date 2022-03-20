@@ -8,37 +8,37 @@ const IdolForm = () => {
     <form action="">
       <div className="form__divided">
         <div>
-          <label for="name">Nombre</label>
+          <label htmlFor="name">Nombre</label>
           <input type="text" name="name" id="name"/>
         </div>
         <div>
-          <label for="koreanName">Nombre coreano</label>
+          <label htmlFor="koreanName">Nombre coreano</label>
           <input type="text" name="koreanName" id="koreanName"/>
         </div>
       </div>
       <div className="form__divided">
         <div>
-          <label for="stageName">Nombre artístico</label>
+          <label htmlFor="stageName">Nombre artístico</label>
           <input type="text" name="stageName" id="stageName"/>
         </div>
         <div>
-          <label for="stageNameKr">Nombre artístico (Kr)</label>
+          <label htmlFor="stageNameKr">Nombre artístico (Kr)</label>
           <input type="text" name="stageNameKr" id="stageNameKr"/>
         </div>
       </div>
-      <label for="birthday">Fecha de nacimiento</label>
+      <label htmlFor="birthday">Fecha de nacimiento</label>
       <input type="date" name="birthday" id="birthday"/>
-      <label for="nationality">Nacionalidad</label>
+      <label htmlFor="nationality">Nacionalidad</label>
       <input type="text" name="nationality" id="nationality"/>
-      <label for="birthPlace">Lugar de nacimiento</label>
+      <label htmlFor="birthPlace">Lugar de nacimiento</label>
       <input type="text" name="birthPlace" id="birthPlace"/>
-      <label for="position">Posición</label>
+      <label htmlFor="position">Posición</label>
       <input type="text" name="position" id="position"/>
-      <label for="instagram">Instagram</label>
+      <label htmlFor="instagram">Instagram</label>
       <input type="text" name="instagram" id="instagram"/>
-      <label for="twitter">Twitter</label>
+      <label htmlFor="twitter">Twitter</label>
       <input type="text" name="twitter" id="twitter"/>
-      <label for="group">Grupo</label>
+      <label htmlFor="group">Grupo</label>
       <input list="group" name="group" />
         <datalist id="group">
           <option value="Dreamcatcher"/>

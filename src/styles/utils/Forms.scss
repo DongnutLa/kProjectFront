@@ -24,9 +24,39 @@
     flex-direction: column;
 }
 
+.new-form form .sub-form-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    place-items: center;
+    width: 370px;
+    background-color: white;
+    height: 40px;
+    border-radius: 8px;
+    padding: 0 12px;
+    cursor: pointer;
+    margin: 12px 0;
+}
+
+.new-form form .sub-form-container p {
+    font-size: var(--text);
+    color: var(--black);
+    margin: 0 12px;
+}
+.new-form form .sub-form-container svg {
+    margin: 0 12px;
+    transition: transform 0.5s ease-in-out;
+}
+
+.new-form form .sub-form-container:hover svg {
+    transform: rotate(90deg);
+}
+
 .new-form form label {
+    width: 350px;
     font-size: var(--text);
     padding: 8px;
+    align-self: center;
 }
 
 .new-form form input{
@@ -35,6 +65,7 @@
     border: none;
     height: 32px;
     padding-left: 8px;
+    align-self: center;
 }
 .new-form form textarea {
     border-radius: 8px;

@@ -8,7 +8,7 @@ import kpopColor from '@icons/kpopColor.png';
 
 const API = 'http://localhost:3000/api/v1/users';
 
-const Signup = () => {
+const Signup = ({ setSignupState }) => {
   const form = useRef(null);
 
   const handleSubmit = (event) => {
@@ -33,7 +33,7 @@ const Signup = () => {
     <section className="modal">
       <div className="modal-form">
         <div className="form-container">
-          <span>X</span>
+          <span onClick={() => setSignupState(prevState => !prevState)}>X</span>
           <img src={kpopColor} alt="Logo K-project"/>
           <form action="" ref={form}>
             <div className="form__fullname">
