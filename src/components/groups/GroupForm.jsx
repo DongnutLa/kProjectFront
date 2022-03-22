@@ -1,11 +1,49 @@
-import React from 'react';
+import React, { useContext, useRef } from 'react';
+import axios from 'axios';
+
+import AuthContext from '@context/AuthContext';
 
 import '@styles-utils/Forms.scss';
 import '@styles-utils/buttons.scss';
 
+const URL = process.env.API;
+const endpoint = 'groups'
+const API = `${URL}${endpoint}`;
+
 const GroupForm = () => {
+  const { userToken } = useContext(AuthContext);
+
+  const postConfig = {
+    headers: {
+      Authorization: `Bearer ${userToken}`
+    }
+  };
+  
+  const form = useRef(null);
+
+  const handleSubmit = (event) => {
+    const formData = new FormData(form.current);
+    const data = {
+      name: formData.get('name'),
+      koreanName: formData.get('koreanName'),
+      debutDate: formData.get('debutDate'),
+      membersNumber: parseInt(formData.get('membersNumber')),
+      type: formData.get('type'),
+      company: formData.get('company'),
+      fanclubName: formData.get('fanclubName'),
+      fanclubBirth: formData.get('fanclubBirth'),
+      active: formData.get('active') === 'Activo' ? true : false,
+      instagram: formData.get('instagram'),
+      twitter: formData.get('twitter'),
+    }
+    console.log(data);
+    axios.post(API, data, postConfig).then(res => {
+      console.log('Response: ', res.data);
+    });
+  }
+
   return (
-    <form action="">
+    <form action="" ref={form}>
       <label htmlFor="name">Nombre del grupo</label>
       <input type="text" name="name" id="name"/>
       <label htmlFor="koreanName">Nombre coreano del grupo</label>
@@ -43,7 +81,7 @@ const GroupForm = () => {
       <input type="text" name="instagram" id="instagram"/>
       <label htmlFor="twitter">Twitter del grupo</label>
       <input type="text" name="twitter" id="twitter"/>
-      <button type="button" className="button btn-primary">Agregar grupo</button>
+      <button type="button" className="button btn-primary" onClick={handleSubmit}>Agregar grupo</button>
     </form>
   );
 }

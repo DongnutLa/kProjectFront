@@ -1,14 +1,20 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
 import axios from 'axios';
+
+import ModalContext from '@context/ModalContext';
 
 import '@styles-containers/Auth.scss';
 import '@styles-utils/buttons.scss';
 
 import kpopColor from '@icons/kpopColor.png';
 
-const API = 'http://localhost:3000/api/v1/users';
+const URL = process.env.API;
+const endpoint = 'users'
+const API = `${URL}${endpoint}`;
 
-const Signup = ({ setSignupState }) => {
+const Signup = () => {
+  const { toggleSignup } = useContext(ModalContext);
+
   const form = useRef(null);
 
   const handleSubmit = (event) => {
@@ -33,7 +39,7 @@ const Signup = ({ setSignupState }) => {
     <section className="modal">
       <div className="modal-form">
         <div className="form-container">
-          <span onClick={() => setSignupState(prevState => !prevState)}>X</span>
+          <span onClick={() => toggleSignup()}>X</span>
           <img src={kpopColor} alt="Logo K-project"/>
           <form action="" ref={form}>
             <div className="form__fullname">

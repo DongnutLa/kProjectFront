@@ -1,6 +1,13 @@
+@use '../vars';
+
 .exchange__filters a {
     display: block;
     margin: 16px 0;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+.exchange__filters a:hover {
+    color: var(--violete);
 }
 
 .exchange__filters form input {

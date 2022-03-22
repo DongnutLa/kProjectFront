@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import Sidebar from '@components/global/Sidebar';
 import Login from '@containers/Login';
 import Signup from '@containers/Signup';
+import AuthContext from '@context/AuthContext';
+import ModalContext from '@context/ModalContext';
 
 import '@styles-components/Header.scss';
 
@@ -9,9 +13,17 @@ import logo from '@icons/kpopColor.png';
 import menu from '@icons/menu.svg';
 
 const Header = () => {
-    const [menuState, setMenuState] = useState(false);
-    const [loginState, setLoginState] = useState(false);
-    const [signupState, setSignupState] = useState(false);
+  const navigate = useNavigate();
+
+  const { deleteAuthData, userData, isAuthenticated } = useContext(AuthContext);
+  const { modalState, toggleLogin, toggleSignup } = useContext(ModalContext);
+
+  const [menuState, setMenuState] = useState(false);
+
+  const onLogout = () => {
+    deleteAuthData();
+    navigate('/');
+  }
 
   return (
     <>
@@ -20,16 +32,25 @@ const Header = () => {
           <div className="navbar-item__left">
             <img src={logo} alt="logo"/>
             <ul>
-              <li><a href="/">Inicio</a></li>
-              <li><a href="/news">Noticias</a></li>
-              <li><a href="/exchange">Intercambios</a></li>
-              <li><a href="/store">Ventas</a></li>
+              <li onClick={() => navigate('/')}><a>Inicio</a></li>
+              <li onClick={() => navigate('/news')}><a>Noticias</a></li>
+              <li onClick={() => navigate('/exchange')}><a>Intercambios</a></li>
+              <li onClick={() => navigate('/store')}><a>Ventas</a></li>
             </ul>
           </div>
           <ul className="navbar-item__right">
-              <li onClick={() => setLoginState(!loginState)}><a href="#">Login</a></li>
-              <li onClick={() => setSignupState(!signupState)}><a href="#">Signup</a></li>
-              <li><a href="#">Logout</a></li>
+              {!isAuthenticated && (
+                <>
+                  <li onClick={() => toggleLogin()}><a>Login</a></li>
+                  <li onClick={() => toggleSignup()}><a>Signup</a></li>
+                </>
+              )}
+              {isAuthenticated && (
+                <>
+                  <li><a>{userData.username}</a></li>
+                  <li><a href="" onClick={onLogout}>Logout</a></li>
+                </>
+              )}
           </ul>
           <div className="navbar-item__menu">
               <a href="#" onClick={() => setMenuState(!menuState)}>
@@ -39,8 +60,8 @@ const Header = () => {
         </nav>
       </header>
       {menuState && <Sidebar />}
-      {loginState && <Login setLoginState={setLoginState} />}
-      {signupState && <Signup setSignupState={setSignupState} />}
+      {modalState.loginModal && <Login />}
+      {modalState.signupModal && <Signup />}
     </>
   );
 }

@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AppContext from '@context/AppContext';
+import AuthContext from '@context/AuthContext';
+import ModalContext from '@context/ModalContext';
 
 import Home from '@pages/Home';
 import NotFound from '@pages/NotFound';
@@ -15,33 +17,40 @@ import AlbumAdd from '@pages/AlbumAdd';
 import SongAdd from '@pages/SongAdd';
 import PhotocardAdd from '@pages/PhotocardAdd';
 import useInitialState from '@hooks/useInitialState';
-import useExchangeForm from '../hooks/useExchangeForm';
+import useExchangeForm from '@hooks/useExchangeForm';
+import useAuth from '@hooks/useAuth';
+import useModalState from '@hooks/useModalState';
 
 import '@styles/global.scss';
 
 const App = () => {
   const exchangeForm = useExchangeForm();
-  const initialState = useInitialState();
+  const auth = useAuth();
+  const modalState = useModalState();
   return (
-    <AppContext.Provider value={exchangeForm}>
-      <BrowserRouter>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/exchange" element={<Exchange />} />
-            <Route path="/exchange/create" element={<ExchangeCreate />} />
-            <Route path="/new/:newId" element={<New />} />
-            <Route path="/new/create" element={<NewCreate />} />
-            <Route path="/groups/add" element={<GroupAdd />} />
-            <Route path="/idols/add" element={<IdolAdd />} />
-            <Route path="/albums/add" element={<AlbumAdd />} />
-            <Route path="/songs/add" element={<SongAdd />} />
-            <Route path="/photocards/add" element={<PhotocardAdd />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Layout>
-      </BrowserRouter>
-    </AppContext.Provider>
+    <AuthContext.Provider value={auth}>
+      <ModalContext.Provider value={modalState}>
+        <AppContext.Provider value={exchangeForm}>
+          <BrowserRouter>
+            <Layout>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/exchange" element={<Exchange />} />
+                <Route path="/exchange/create" element={<ExchangeCreate />} />
+                <Route path="/new/:newId" element={<New />} />
+                <Route path="/new/create" element={<NewCreate />} />
+                <Route path="/groups/add" element={<GroupAdd />} />
+                <Route path="/idols/add" element={<IdolAdd />} />
+                <Route path="/albums/add" element={<AlbumAdd />} />
+                <Route path="/songs/add" element={<SongAdd />} />
+                <Route path="/photocards/add" element={<PhotocardAdd />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Layout>
+          </BrowserRouter>
+        </AppContext.Provider>
+      </ModalContext.Provider >
+    </AuthContext.Provider>
   )
 }
 

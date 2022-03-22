@@ -23,4 +23,8 @@
 
 .sidebar ul li a {
     color: var(--lightPink);
+    cursor: pointer;
+}
+.sidebar ul li a:hover {
+    color: var(--mediumPink);
 }

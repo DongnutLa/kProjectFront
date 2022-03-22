@@ -1,15 +1,24 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+import AuthContext from '@context/AuthContext';
+import ModalContext from '@context/ModalContext';
+
 import '@styles-containers/Auth.scss';
 import '@styles-utils/buttons.scss';
 
-import useAuth from '@hooks/useAuth';
-
 import kpopColor from '@icons/kpopColor.png';
-import axios from 'axios';
 
-const API = 'http://localhost:3000/api/v1/auth/login';
+const URL = process.env.API;
+const endpoint = 'auth/login'
+const API = `${URL}${endpoint}`;
 
-const Login = ({ setLoginState }) => {
+const Login = () => {
+  const { saveAuthData, getAuthData } = useContext(AuthContext);
+  const { toggleLogin } = useContext(ModalContext);
+  const navigate = useNavigate();
+  
   const form = useRef(null);
 
   const handleSubmit = (event) => {
@@ -19,17 +28,18 @@ const Login = ({ setLoginState }) => {
       password: formData.get('password')
     }
     axios.post(API, data).then(res => {
-      console.log('Response: ', res.data);
-    });
-    /* const response = useAuth(API, data);
-    console.log(response); */
+      saveAuthData(res.data);
+      navigate('/');
+      getAuthData();
+      toggleLogin();
+    }).catch(err => console.error(err));
   }
 
   return (
     <section className="modal">
       <div className="modal-form">
         <div className="form-container">
-          <span onClick={() => setLoginState(prevState => !prevState)}>X</span>
+          <span onClick={() => toggleLogin()}>X</span>
           <img src={kpopColor} alt="Logo K-project"/>
           <form action="" ref={form}>
             <label htmlFor="username">Nombre de usuario</label>

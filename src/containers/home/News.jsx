@@ -4,9 +4,9 @@ import useGetExchanges from '@hooks/useGetExchanges';
 
 import '@styles-containers/News.scss';
 
+const URL = process.env.API;
 const endpoint = 'news'
-//const API = `${process.env.REACT_APP_API}/${endpoint}` || 'http://localhost:3000/api/v1/news';
-const API = 'http://localhost:3000/api/v1/news';
+const API = `${URL}${endpoint}`;
 
 const News = () => {
   const news = useGetExchanges(API);

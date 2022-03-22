@@ -1,10 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import '@styles-components/Filter.scss';
 
 const Filter = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="exchange__filters">
-      <a href=""><span>¿Crear un intercambio?</span></a>
+      <a onClick={() => navigate('/exchange/create')}><span>¿Crear un intercambio?</span></a>
       <p>Filtrar</p>
       <form action="">
         <input list="GgBg" name="GgBg" placeholder="Boy/Girl group" />
