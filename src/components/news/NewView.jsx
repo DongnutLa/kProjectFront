@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { formatDistance, subDays } from 'date-fns';
 
-import useGetExchanges from '@hooks/useGetExchanges';
+import useGetData from '@hooks/useGetData';
 
 import '@styles-components/NewView.scss';
 import ive from '@img/ive.jpeg';
@@ -13,7 +13,7 @@ const endpoint = 'news'
 const NewView = () => {
   const { newId } = useParams();
   const API = `http://localhost:3000/api/v1/news/${newId}`;
-  const newItem = useGetExchanges(API);
+  const newItem = useGetData(API);
   //const creationDate = formatDistance(subDays(new Date(newItem.creationDate), 0), new Date(), { addSuffix: true });
 
   return(

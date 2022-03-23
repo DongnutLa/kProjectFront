@@ -1,11 +1,46 @@
-import React from 'react';
+import React, { useContext, useRef } from 'react';
+import axios from 'axios';
+
+import AuthContext from '@context/AuthContext';
+import useGetData from '@hooks/useGetData';
 
 import '@styles-utils/Forms.scss';
 import '@styles-utils/buttons.scss';
 
+const URL = process.env.API;
+const endpoint = 'songs'
+const API = `${URL}${endpoint}`;
+const API_ALBUMS = `${URL}albums`;
+
 const SongForm = () => {
+  const { userToken } = useContext(AuthContext);
+  const postConfig = {
+    headers: {
+      Authorization: `Bearer ${userToken}`
+    }
+  };
+
+  const albums = useGetData(API_ALBUMS, postConfig);
+  
+  const form = useRef(null);
+
+  const handleSubmit = (event) => {
+    const formData = new FormData(form.current);
+    const data = {
+      title: formData.get('title'),
+      lyrics: formData.get('lyrics').split(" "),
+      music: formData.get('music').split(" "),
+      arrangements: formData.get('arrangements').split(" "),
+      duration: formData.get('duration'),
+      albumId: albums.find(x => x.name === formData.get('album')).id,
+    }
+    axios.post(API, data, postConfig).then(res => {
+      console.log('Response: ', res.data);
+    });
+  }
+
   return (
-    <form action="">
+    <form action="" ref={form}>
       <label htmlFor="title">Título</label>
       <input type="text" name="title" id="title"/>
       <label htmlFor="lyrics">Letra por</label>
@@ -19,12 +54,11 @@ const SongForm = () => {
       <label htmlFor="album">Álbum</label>
       <input list="album" name="album" />
         <datalist id="album">
-          <option value="Escape the era"/>
-          <option value="Poison"/>
-          <option value="Walpurgis Night"/>
-          <option value="Eleven"/>
+          {albums.map(album => (
+            <option key={album.id} value={album.name} />
+          ))}
         </datalist>
-      <button type="button" className="button btn-primary">Agregar canción</button>
+      <button type="button" className="button btn-primary" onClick={handleSubmit}>Agregar canción</button>
     </form>
   );
 }

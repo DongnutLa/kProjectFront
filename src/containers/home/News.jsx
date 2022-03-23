@@ -1,6 +1,6 @@
 import React from 'react';
 import New from '@components/home/New';
-import useGetExchanges from '@hooks/useGetExchanges';
+import useGetData from '@hooks/useGetData';
 
 import '@styles-containers/News.scss';
 
@@ -9,7 +9,7 @@ const endpoint = 'news'
 const API = `${URL}${endpoint}`;
 
 const News = () => {
-  const news = useGetExchanges(API);
+  const news = useGetData(API);
 
   return (
     <section className="news">

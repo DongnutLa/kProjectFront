@@ -1,6 +1,6 @@
 import React from 'react';
 import Exchange from '@components/exchange/Exchange';
-import useGetExchanges from '@hooks/useGetExchanges';
+import useGetData from '@hooks/useGetData';
 
 import '@styles-containers/Exchanges.scss';
 
@@ -9,7 +9,7 @@ const endpoint = 'exchanges'
 const API = `${URL}/${endpoint}`;
 
 const Exchanges = () => {
-  const exchanges = useGetExchanges(API);
+  const exchanges = useGetData(API);
 
   return (
     <div className="exchange__body">
