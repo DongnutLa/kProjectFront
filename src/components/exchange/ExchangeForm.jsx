@@ -1,5 +1,8 @@
 import React, { Fragment, useState, useContext } from 'react';
+
 import AppContext from '@context/AppContext';
+import AuthContext from '@context/AuthContext';
+import useGetData from '@hooks/useGetData';
 
 import '@styles-utils/Forms.scss';
 import '@styles-components/ExchangeForm.scss';
@@ -7,7 +10,21 @@ import '@styles-components/ExchangeForm.scss';
 import Handong from '@img/ETE-O2-Handong.png';
 import Siyeon from '@img/ETE-O3-Siyeon.png';
 
+const URL = process.env.API;
+const endpoint = 'idols'
+const API = `${URL}${endpoint}`;
+const API_GROUPS = `${URL}groups`;
+
 const ExchangeForm = ({type}) => {
+  const [members, setMembers] = useState([]);
+  const [albums, setAlbums] = useState([]);
+  const [pcTypes, setPcTypes] = useState([]);
+  const { userToken } = useContext(AuthContext);
+  const postConfig = {
+    headers: {
+      Authorization: `Bearer ${userToken}`
+    }
+  };
   const { addExchange } = useContext(AppContext);
 
   let pcs = ["JiU", "SuA", "Siyeon", "Handong", "Yoohyeon", "Dami", "Gahyeon"];
@@ -18,6 +35,15 @@ const ExchangeForm = ({type}) => {
     Album: '',
     Member: '',
   });
+
+  const groups = useGetData(API_GROUPS, postConfig);
+  console.log(`groups from ${type}: `, groups);
+
+  const onGroupChange = (e) => {
+    const group = groups.find(x => x.name === e.target.value);
+    setMembers([...group.members]);
+    setAlbums([...group.albums]);
+  }
 
   const onChange = ({target: {name, value}}) => {
     setExchange({...exchange, [name]: value});
@@ -37,35 +63,25 @@ const ExchangeForm = ({type}) => {
           <option value="Mixto"/>
         </datalist>
       <label htmlFor="Group">Grupo</label>
-      <input list="Group" name="Group" placeholder="Grupo" onChange={onChange} value={exchange.Group}/>
-        <datalist id="Group">
-          <option value="IVE"/>
-          <option value="Dreamcatcher"/>
-          <option value="Pink Fantasy"/>
-          <option value="G-Friend"/>
-          <option value="IU"/>
-          <option value="Ailee"/>
+      <input list="Group" name="Group" placeholder="Grupo" onChange={onGroupChange}/>
+      <datalist id="Group">
+          {groups.map(group => (
+            <option key={group.id} value={group.name} />
+          ))}
         </datalist>
       <label htmlFor="Album">Álbum</label>
-      <input list="Album" name="Album" placeholder="Álbum" onChange={onChange} value={exchange.Album}/>
+      <input list="Album" name="Album" placeholder="Álbum"/>
         <datalist id="Album">
-          <option value="Eleven"/>
-          <option value="Escape The Era"/>
-          <option value="Shadow Play"/>
-          <option value="Walpurgis Night"/>
-          <option value="Lilac"/>
-          <option value="Heaven"/>
+          {albums.map(album => (
+            <option key={album.id} value={album.name} />
+          ))}
         </datalist>
       <label htmlFor="Member">Miembro</label>
-      <input list="Member" name="Member" placeholder="Miembro" onChange={onChange} value={exchange.Member}/>
+      <input list="Member" name="Member" placeholder="Miembro"/>
         <datalist id="Member">
-          <option value="JiU"/>
-          <option value="SuA"/>
-          <option value="Siyeon"/>
-          <option value="Handong"/>
-          <option value="Yoohyeon"/>
-          <option value="Dami"/>
-          <option value="Gahyeon"/>
+          {members.map(member => (
+            <option key={member.id} value={member.stageName} />
+          ))}
         </datalist>
       <label htmlFor="Photocard">Selecciona la Photocard</label>
       <div className="form-pcs">
