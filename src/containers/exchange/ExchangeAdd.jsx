@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 
 import ExchangeForm from '@components/exchange/ExchangeForm';
@@ -16,6 +16,7 @@ const ExchangeAdd = () => {
   const { headerConfig } = useContext(AuthContext);
   const [toggleFormHave, setToggleFormHave] = useState(false);
   const [toggleFormWant, setToggleFormWant] = useState(false);
+  const [file, setFile] = useState({});
   const [pcData, setPcData] = useState({
     userId: 1,
     pcFromId: null,
@@ -25,8 +26,18 @@ const ExchangeAdd = () => {
     information: ''
   })
 
-  const onChange = ({target: {name, value}}) => {
-    setDetails({...details, [name]: value});
+  const onChange = (e) => {
+    if (e.target.files.length < 1) {
+      setFile({img: ''});
+    } else {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setFile({img: reader.result});
+        }
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
   }
 
   const pc_have = (data) => {
@@ -70,6 +81,7 @@ const ExchangeAdd = () => {
       <label htmlFor="image">Sube una foto de tu photocard</label>
         <label htmlFor="image" className="img-upload button btn-secondary"><img src={upload} alt=""/> <span>Subir archivo</span></label>
       <input type="file" name="image" id="image" onChange={onChange}/>
+      <img className="img-preview" src={file.img} />
       <label htmlFor="content">Información adicional</label>
       <textarea name="content" id="content" cols="30" rows="10" placeholder="Escribe aquí el contenido" onChange={onDetails}></textarea>
       <button type="button" className="button btn-primary" onClick={onCreateExchange}>¡Crear!</button>

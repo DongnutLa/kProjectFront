@@ -20,6 +20,7 @@ const AlbumForm = () => {
 
   const [togglePcTypes, setTogglePcTypes] = useState(false);
   const [pctypeField, setPctypeField] = useState([{name: "pcVersion"}])
+  const [file, setFile] = useState({});
 
   const groups = useGetData(API_GROUPS, headerConfig);
 
@@ -61,6 +62,20 @@ const AlbumForm = () => {
     setPctypeField(values);
   }
 
+  const onImage = (e) => {
+    if (e.target.files.length < 1) {
+      setFile({img: ''});
+    } else {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setFile({img: reader.result});
+        }
+      }
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  }
+
   return (
     <form action="" ref={form}>
       <label htmlFor="name">Nombre del album</label>
@@ -87,7 +102,8 @@ const AlbumForm = () => {
         <img src={upload} alt=""/>
         <span>Subir archivo</span>
       </label>
-      <input type="file" name="image" id="image"/>
+      <input type="file" name="image" id="image" onChange={onImage}/>
+      <img className="img-preview" src={file.img} />
 
       <div className="sub-form-container" onClick={() => setTogglePcTypes(!togglePcTypes)}>
         <p>Versiones de photocards</p>

@@ -19,6 +19,7 @@ const PhotocardForm = () => {
   const [members, setMembers] = useState([]);
   const [albums, setAlbums] = useState([]);
   const [pcTypes, setPcTypes] = useState([]);
+  const [file, setFile] = useState({});
 
   const groups = useGetData(API_GROUPS, headerConfig);
   console.log(groups)
@@ -52,6 +53,20 @@ const PhotocardForm = () => {
       setPcTypes([...response.data])
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  const onImage = (e) => {
+    if (e.target.files.length < 1) {
+      setFile({img: ''});
+    } else {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setFile({img: reader.result});
+        }
+      }
+      reader.readAsDataURL(e.target.files[0]);
     }
   }
 
@@ -92,7 +107,8 @@ const PhotocardForm = () => {
         <img src={upload} alt=""/>
         <span>Subir archivo</span>
       </label>
-      <input type="file" name="image" id="image"/>
+      <input type="file" name="image" id="image" onChange={onImage}/>
+      <img className="img-preview" src={file.img} />
       <button type="button" className="button btn-primary" onClick={handleSubmit}>Agregar álbum</button>
     </form>
   );

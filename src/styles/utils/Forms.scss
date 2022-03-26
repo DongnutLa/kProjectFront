@@ -133,6 +133,12 @@
     margin-top: 16px;
 }
 
+.new-form form img.img-preview {
+    margin: 0 auto;
+    max-width: 200px;
+    border-radius: 10px;
+}
+
 @media (max-width:850px) {
     .new-form {
         width: 80%;
