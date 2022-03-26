@@ -13,14 +13,9 @@ const API = `${URL}${endpoint}`;
 const API_ALBUMS = `${URL}albums`;
 
 const SongForm = () => {
-  const { userToken } = useContext(AuthContext);
-  const postConfig = {
-    headers: {
-      Authorization: `Bearer ${userToken}`
-    }
-  };
+  const { headerConfig } = useContext(AuthContext);
 
-  const albums = useGetData(API_ALBUMS, postConfig);
+  const albums = useGetData(API_ALBUMS, headerConfig);
   
   const form = useRef(null);
 
@@ -34,7 +29,7 @@ const SongForm = () => {
       duration: formData.get('duration'),
       albumId: albums.find(x => x.name === formData.get('album')).id,
     }
-    axios.post(API, data, postConfig).then(res => {
+    axios.post(API, data, headerConfig).then(res => {
       console.log('Response: ', res.data);
     });
   }

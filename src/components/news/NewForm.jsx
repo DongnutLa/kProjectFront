@@ -12,12 +12,7 @@ const endpoint = 'news'
 const API = `${URL}${endpoint}`;
 
 const NewForm = () => {
-  const { userToken } = useContext(AuthContext);
-  const postConfig = {
-    headers: {
-      Authorization: `Bearer ${userToken}`
-    }
-  };
+  const { headerConfig } = useContext(AuthContext);
 
   const [filename, setFilename] = useState("Subir archivo");
   const form = useRef(null);
@@ -33,7 +28,7 @@ const NewForm = () => {
       creationDate: "2022-03-21"
     }
     console.log(data);
-    axios.post(API, data, postConfig).then(res => {
+    axios.post(API, data, headerConfig).then(res => {
       console.log('Response: ', res.data);
     });
   }

@@ -11,6 +11,7 @@ const useAuth = () => {
 	const [userData, setUserData] = useState({});
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [userRole, setUserRole] = useState(roles);
+	const [headerConfig, setHeaderConfig] = useState({})
 
 	const saveAuthData = (authObject) => {
 		window.localStorage.setItem(
@@ -26,6 +27,11 @@ const useAuth = () => {
 			setUserToken(token);
 			setIsAuthenticated(true);
 			setRoles(user);
+			setHeaderConfig({
+				headers: {
+				  Authorization: `Bearer ${token}`
+				}
+			  })
 		}
 	}
 
@@ -57,7 +63,8 @@ const useAuth = () => {
 		}
 	}
 
-	return { getAuthData, saveAuthData, deleteAuthData, userToken, userData, isAuthenticated, userRole };
+	return { getAuthData, saveAuthData, deleteAuthData,
+		 userToken, userData, isAuthenticated, userRole, headerConfig };
 };
 
 export default useAuth;

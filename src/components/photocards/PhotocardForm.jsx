@@ -15,17 +15,12 @@ const API = `${URL}${endpoint}`;
 const API_GROUPS = `${URL}groups`;
 
 const PhotocardForm = () => {
+  const { headerConfig } = useContext(AuthContext);
   const [members, setMembers] = useState([]);
   const [albums, setAlbums] = useState([]);
   const [pcTypes, setPcTypes] = useState([]);
-  const { userToken } = useContext(AuthContext);
-  const postConfig = {
-    headers: {
-      Authorization: `Bearer ${userToken}`
-    }
-  };
 
-  const groups = useGetData(API_GROUPS, postConfig);
+  const groups = useGetData(API_GROUPS, headerConfig);
   console.log(groups)
 
   const form = useRef(null);
@@ -38,7 +33,7 @@ const PhotocardForm = () => {
       pcTypeId: pcTypes.find(x => x.name === formData.get('pcType')).id,
     }
     console.log(data)
-    axios.post(API, data, postConfig).then(res => {
+    axios.post(API, data, headerConfig).then(res => {
       console.log('Response: ', res.data);
     });
   }
@@ -53,7 +48,7 @@ const PhotocardForm = () => {
     const album = albums.find(x => x.name === e.target.value);
     const API_PCTYPE = `${URL}pctypes/albumId/${album.id}`;
     try {
-      const response = await axios(API_PCTYPE, postConfig);
+      const response = await axios(API_PCTYPE, headerConfig);
       setPcTypes([...response.data])
     } catch (error) {
       console.error(error);

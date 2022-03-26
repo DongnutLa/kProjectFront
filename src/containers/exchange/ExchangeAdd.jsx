@@ -1,28 +1,48 @@
 import React, { useState, useContext } from 'react';
+import axios from 'axios';
+
 import ExchangeForm from '@components/exchange/ExchangeForm';
-import AppContext from '@context/AppContext';
+import AuthContext from '@context/AuthContext';
 
 import '@styles-utils/Forms.scss';
 
 import upload from '@icons/upload.png';
 
-const ExchangeAdd = () => {
-  const { addDetails, joinData } = useContext(AppContext);
+const URL = process.env.API;
+const endpoint = 'exchanges'
+const API = `${URL}${endpoint}`;
 
+const ExchangeAdd = () => {
+  const { headerConfig } = useContext(AuthContext);
   const [toggleFormHave, setToggleFormHave] = useState(false);
   const [toggleFormWant, setToggleFormWant] = useState(false);
-
-  const [details, setDetails] = useState({
-
-  });
+  const [pcData, setPcData] = useState({
+    userId: 1,
+    pcFromId: null,
+    pcToId: null,
+    creationDate: "2022-03-25",
+    active: true,
+    information: ''
+  })
 
   const onChange = ({target: {name, value}}) => {
     setDetails({...details, [name]: value});
   }
 
-  const onCreate = () => {
-    addDetails(details);
-    joinData();
+  const pc_have = (data) => {
+    setPcData({...pcData, pcFromId: parseInt(data.photocard_have)})
+  }
+  const pc_want = (data) => {
+    setPcData({...pcData, pcToId: parseInt(data.photocard_want)})
+  }
+  const onDetails = (e) => {
+    setPcData({...pcData, information: e.target.value})
+  }
+
+  const onCreateExchange = () => {
+    axios.post(API, pcData, headerConfig).then(res => {
+      console.log('Response: ', res.data);
+    });
   }
 
   return (
@@ -35,7 +55,7 @@ const ExchangeAdd = () => {
       </div>
       {toggleFormHave && (
         <>
-          <ExchangeForm type={'have'} key={'have'}/>
+          <ExchangeForm type={'have'} key={'have'} func={pc_have}/>
         </>
       )}
       <div className="sub-form-container" onClick={() => setToggleFormWant(!toggleFormWant)}>
@@ -45,14 +65,14 @@ const ExchangeAdd = () => {
         </svg>
       </div>
       {toggleFormWant && (
-        <ExchangeForm type={'want'} key={'want'}/>
+        <ExchangeForm type={'want'} key={'want'} func={pc_want}/>
       )}
       <label htmlFor="image">Sube una foto de tu photocard</label>
         <label htmlFor="image" className="img-upload button btn-secondary"><img src={upload} alt=""/> <span>Subir archivo</span></label>
       <input type="file" name="image" id="image" onChange={onChange}/>
       <label htmlFor="content">Información adicional</label>
-      <textarea name="content" id="content" cols="30" rows="10" placeholder="Escribe aquí el contenido" onChange={onChange}></textarea>
-      <button type="button" className="button btn-primary" onClick={onCreate}>¡Crear!</button>
+      <textarea name="content" id="content" cols="30" rows="10" placeholder="Escribe aquí el contenido" onChange={onDetails}></textarea>
+      <button type="button" className="button btn-primary" onClick={onCreateExchange}>¡Crear!</button>
     </form>
   );
 }

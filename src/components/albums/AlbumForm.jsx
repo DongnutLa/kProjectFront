@@ -16,16 +16,12 @@ const API_GROUPS = `${URL}groups`;
 const API_PCTYPE = `${URL}pctypes`;
 
 const AlbumForm = () => {
-  const { userToken } = useContext(AuthContext);
-  const postConfig = {
-    headers: {
-      Authorization: `Bearer ${userToken}`
-    }
-  };
+  const { headerConfig } = useContext(AuthContext);
+
   const [togglePcTypes, setTogglePcTypes] = useState(false);
   const [pctypeField, setPctypeField] = useState([{name: "pcVersion"}])
 
-  const groups = useGetData(API_GROUPS, postConfig);
+  const groups = useGetData(API_GROUPS, headerConfig);
 
   const form = useRef(null);
 
@@ -39,14 +35,14 @@ const AlbumForm = () => {
       groupId: groups.find(x => x.name === formData.get('group')).id,
     }
     console.log(data);
-    axios.post(API_ALBUMS, data, postConfig).then(res => {
+    axios.post(API_ALBUMS, data, headerConfig).then(res => {
       console.log('Album response: ', res.data);
       pctypeField.forEach(item => {
         const sendData = {
           albumId: res.data.id,
           name: item.pcVersion
         }
-        axios.post(API_PCTYPE, sendData, postConfig).then(resPt => {
+        axios.post(API_PCTYPE, sendData, headerConfig).then(resPt => {
           console.log('pctypes response: ', resPt.data)
         })
       })

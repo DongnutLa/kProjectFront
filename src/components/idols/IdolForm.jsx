@@ -13,14 +13,9 @@ const API = `${URL}${endpoint}`;
 const API_GROUPS = `${URL}groups`;
 
 const IdolForm = () => {
-  const { userToken } = useContext(AuthContext);
-  const postConfig = {
-    headers: {
-      Authorization: `Bearer ${userToken}`
-    }
-  };
+  const { headerConfig } = useContext(AuthContext);
 
-  const groups = useGetData(API_GROUPS, postConfig);
+  const groups = useGetData(API_GROUPS, headerConfig);
 
   const form = useRef(null);
 
@@ -39,7 +34,7 @@ const IdolForm = () => {
       twitter: formData.get('twitter'),
       groupId: groups.find(x => x.name === formData.get('group')).id,
     }
-    axios.post(API, data, postConfig).then(res => {
+    axios.post(API, data, headerConfig).then(res => {
       console.log('Response: ', res.data);
     });
   }

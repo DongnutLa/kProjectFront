@@ -11,13 +11,7 @@ const endpoint = 'groups'
 const API = `${URL}${endpoint}`;
 
 const GroupForm = () => {
-  const { userToken } = useContext(AuthContext);
-
-  const postConfig = {
-    headers: {
-      Authorization: `Bearer ${userToken}`
-    }
-  };
+  const { headerConfig } = useContext(AuthContext);
   
   const form = useRef(null);
 
@@ -37,7 +31,7 @@ const GroupForm = () => {
       twitter: formData.get('twitter'),
     }
     console.log(data);
-    axios.post(API, data, postConfig).then(res => {
+    axios.post(API, data, headerConfig).then(res => {
       console.log('Response: ', res.data);
     });
   }
