@@ -1,0 +1,46 @@
+@use '../vars';
+
+.toaster-container {
+    position: absolute;
+    width:fit-content;
+    height: 60px;
+    display: flex;
+    justify-content:center;
+    /* background-color: var(--redWarning); */
+    background-color: var(--greenSuccess);
+    place-items: center;
+    left: 0;
+    right: 0;
+    margin: 12px auto;
+    padding: 12px 40px 12px 12px;
+    gap: 12px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.toaster-container .toaster-message {
+    display: flex;
+    flex-direction: column;
+}
+
+.toaster-container span {
+    font-size: var(--text);
+    /* color: var(--redWarningText); */
+    color: var(--greenSuccessText);
+}
+.toaster-container span:nth-child(1) {
+    align-self: center;
+    padding-bottom: 8px;
+}
+
+.toaster-container img {
+    width: 30px;
+    padding: 2px;
+}
+
+.toaster-container span.close-toaster {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 4px;
+}
