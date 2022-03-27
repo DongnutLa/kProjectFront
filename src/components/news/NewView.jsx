@@ -7,12 +7,12 @@ import useGetData from '@hooks/useGetData';
 import '@styles-components/NewView.scss';
 import ive from '@img/ive.jpeg';
 
-const endpoint = 'news'
-//const API = `${process.env.REACT_APP_API}/${endpoint}` || 'http://localhost:3000/api/v1/news';
+const URL = process.env.API;
+const endpoint = 'news';
 
 const NewView = () => {
   const { newId } = useParams();
-  const API = `http://localhost:3000/api/v1/news/${newId}`;
+  const API = `${URL}${endpoint}/${newId}`;
   const newItem = useGetData(API);
   //const creationDate = formatDistance(subDays(new Date(newItem.creationDate), 0), new Date(), { addSuffix: true });
 
@@ -35,7 +35,7 @@ const NewView = () => {
       <div className="new__content">
           <p>{newItem.content}</p>
         <div>
-          <iframe width="100%" height="100%" src="https://www.youtube.com/embed/--FmExEAsM8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe width="100%" height="100%" src="https://www.youtube.com/embed/--FmExEAsM8" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
         </div>
       </div>
       <div className="new__source">

@@ -2,6 +2,7 @@ import React, { useContext, useRef } from 'react';
 import axios from 'axios';
 
 import AuthContext from '@context/AuthContext';
+import ToasterContext from '@context/ToasterContext';
 import useGetData from '@hooks/useGetData';
 
 import '@styles-utils/Forms.scss';
@@ -14,24 +15,29 @@ const API_ALBUMS = `${URL}albums`;
 
 const SongForm = () => {
   const { headerConfig } = useContext(AuthContext);
+  const { types, setOpenToaster } = useContext(ToasterContext);
 
   const albums = useGetData(API_ALBUMS, headerConfig);
   
   const form = useRef(null);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     const formData = new FormData(form.current);
+    const album = albums.find(x => x.name === formData.get('album'));
     const data = {
       title: formData.get('title'),
       lyrics: formData.get('lyrics').split(" "),
       music: formData.get('music').split(" "),
       arrangements: formData.get('arrangements').split(" "),
       duration: formData.get('duration'),
-      albumId: albums.find(x => x.name === formData.get('album')).id,
+      albumId: album !== undefined ? album.id : 0,
     }
-    axios.post(API, data, headerConfig).then(res => {
-      console.log('Response: ', res.data);
-    });
+    try {
+      const res = await axios.post(API, data, headerConfig);
+      setOpenToaster({type: types.SUCCESS, content: 'Canción agregada correctamente'});
+    } catch (error) {
+      setOpenToaster({type: types.ERROR, content: 'No se pudo agregar la canción'});
+    }
   }
 
   return (

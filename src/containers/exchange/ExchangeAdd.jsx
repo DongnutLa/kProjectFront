@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import ExchangeForm from '@components/exchange/ExchangeForm';
 import AuthContext from '@context/AuthContext';
+import ToasterContext from '@context/ToasterContext';
 
 import '@styles-utils/Forms.scss';
 
@@ -14,6 +15,8 @@ const API = `${URL}${endpoint}`;
 
 const ExchangeAdd = () => {
   const { headerConfig } = useContext(AuthContext);
+  const { types, setOpenToaster } = useContext(ToasterContext);
+
   const [toggleFormHave, setToggleFormHave] = useState(false);
   const [toggleFormWant, setToggleFormWant] = useState(false);
   const [file, setFile] = useState({});
@@ -50,10 +53,13 @@ const ExchangeAdd = () => {
     setPcData({...pcData, information: e.target.value})
   }
 
-  const onCreateExchange = () => {
-    axios.post(API, pcData, headerConfig).then(res => {
-      console.log('Response: ', res.data);
-    });
+  const onCreateExchange = async () => {
+    try {
+      const res = await axios.post(API, pcData, headerConfig);
+      setOpenToaster({type: types.SUCCESS, content: 'Intercambio creado correctamente'});
+    } catch (error) {
+      setOpenToaster({type: types.ERROR, content: 'No se pudo crear el intercambio'});
+    }
   }
 
   return (

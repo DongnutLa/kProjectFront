@@ -2,6 +2,7 @@ import React, { useContext, useRef } from 'react';
 import axios from 'axios';
 
 import AuthContext from '@context/AuthContext';
+import ToasterContext from '@context/ToasterContext';
 
 import '@styles-utils/Forms.scss';
 import '@styles-utils/buttons.scss';
@@ -12,10 +13,11 @@ const API = `${URL}${endpoint}`;
 
 const GroupForm = () => {
   const { headerConfig } = useContext(AuthContext);
+  const { types, setOpenToaster } = useContext(ToasterContext);
   
   const form = useRef(null);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     const formData = new FormData(form.current);
     const data = {
       name: formData.get('name'),
@@ -30,10 +32,12 @@ const GroupForm = () => {
       instagram: formData.get('instagram'),
       twitter: formData.get('twitter'),
     }
-    console.log(data);
-    axios.post(API, data, headerConfig).then(res => {
-      console.log('Response: ', res.data);
-    });
+    try {
+      const res = await axios.post(API, data, headerConfig);
+      setOpenToaster({type: types.SUCCESS, content: 'Grupo creado correctamente'});
+    } catch (error) {
+      setOpenToaster({type: types.ERROR, content: 'No se pudo crear el grupo'});
+    }
   }
 
   return (

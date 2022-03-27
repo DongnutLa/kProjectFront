@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import useGetData from '@hooks/useGetData';
 import AuthContext from '@context/AuthContext';
+import ToasterContext from '@context/ToasterContext';
 
 import '@styles-utils/Forms.scss';
 import '@styles-utils/buttons.scss';
@@ -17,6 +18,7 @@ const API_PCTYPE = `${URL}pctypes`;
 
 const AlbumForm = () => {
   const { headerConfig } = useContext(AuthContext);
+  const { types, setOpenToaster } = useContext(ToasterContext);
 
   const [togglePcTypes, setTogglePcTypes] = useState(false);
   const [pctypeField, setPctypeField] = useState([{name: "pcVersion"}])
@@ -26,27 +28,36 @@ const AlbumForm = () => {
 
   const form = useRef(null);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     const formData = new FormData(form.current);
+    const group = groups.find(x => x.name === formData.get('group'));
     const data = {
       name: formData.get('name'),
       koreanName: formData.get('koreanName'),
       releaseDate: formData.get('releaseDate'),
       producers: formData.get('producers').split(" "),
-      groupId: groups.find(x => x.name === formData.get('group')).id,
+      groupId: group !== undefined ? group.id : 0,
     }
-    console.log(data);
-    axios.post(API_ALBUMS, data, headerConfig).then(res => {
-      console.log('Album response: ', res.data);
-      pctypeField.forEach(item => {
+    try {
+      var res = await axios.post(API_ALBUMS, data, headerConfig);
+      setOpenToaster({type: types.SUCCESS, content: 'Álbum creado correctamente'});
+    } catch (error) {
+      setOpenToaster({type: types.ERROR, content: 'Hubo un error al crear el álbum'});
+    }
+    
+    pctypeField.forEach(async (item) => {
+      if (Object.keys(item).length > 1) {
         const sendData = {
           albumId: res.data.id,
           name: item.pcVersion
         }
-        axios.post(API_PCTYPE, sendData, headerConfig).then(resPt => {
-          console.log('pctypes response: ', resPt.data)
-        })
-      })
+        try {
+          const resPt = await axios.post(API_PCTYPE, sendData, headerConfig);
+          setOpenToaster({type: types.SUCCESS, content: 'Versiones de photocards creadas correctamente'});
+        } catch (error) {
+          setOpenToaster({type: types.ERROR, content: 'Hubo un error al crear las versiones de photocards'});
+        }
+      }
     });
   }
 

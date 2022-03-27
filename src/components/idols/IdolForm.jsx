@@ -2,6 +2,8 @@ import React, { useContext, useRef } from 'react';
 import axios from 'axios';
 
 import AuthContext from '@context/AuthContext';
+import ToasterContext from '@context/ToasterContext';
+
 import useGetData from '@hooks/useGetData';
 
 import '@styles-utils/Forms.scss';
@@ -14,13 +16,16 @@ const API_GROUPS = `${URL}groups`;
 
 const IdolForm = () => {
   const { headerConfig } = useContext(AuthContext);
+  const { types, setOpenToaster } = useContext(ToasterContext);
 
   const groups = useGetData(API_GROUPS, headerConfig);
 
   const form = useRef(null);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     const formData = new FormData(form.current);
+    const group = groups.find(x => x.name === formData.get('group'));
+    console.log(group)
     const data = {
       name: formData.get('name'),
       koreanName: formData.get('koreanName'),
@@ -32,11 +37,14 @@ const IdolForm = () => {
       position: formData.get('position'),
       instagram: formData.get('instagram'),
       twitter: formData.get('twitter'),
-      groupId: groups.find(x => x.name === formData.get('group')).id,
+      groupId: group !== undefined ? group.id : 0,
     }
-    axios.post(API, data, headerConfig).then(res => {
-      console.log('Response: ', res.data);
-    });
+    try {
+      const res = await axios.post(API, data, headerConfig)
+      setOpenToaster({type: types.SUCCESS, content: 'Idol agregado correctamente'});
+    } catch (error) {
+      setOpenToaster({type: types.ERROR, content: 'No se pudo agregar al Idol'});
+    }
   }
 
   return (
@@ -57,8 +65,8 @@ const IdolForm = () => {
           <input type="text" name="stageName" id="stageName"/>
         </div>
         <div>
-          <label htmlFor="stageNameKr">Nombre artístico (Kr)</label>
-          <input type="text" name="stageNameKr" id="stageNameKr"/>
+          <label htmlFor="stageNameKr">Nombre artístico</label>
+          <input type="text" name="stageNameKr" id="stageNameKr" placeholder='Coreano'/>
         </div>
       </div>
       <label htmlFor="birthday">Fecha de nacimiento</label>

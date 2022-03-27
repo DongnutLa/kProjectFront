@@ -2,6 +2,7 @@ import React, { useContext, useRef, useState } from 'react';
 import axios from 'axios';
 
 import AuthContext from '@context/AuthContext';
+import ToasterContext from '@context/ToasterContext';
 import useGetData from '@hooks/useGetData';
 
 import '@styles-utils/Forms.scss';
@@ -16,27 +17,34 @@ const API_GROUPS = `${URL}groups`;
 
 const PhotocardForm = () => {
   const { headerConfig } = useContext(AuthContext);
+  const { types, setOpenToaster } = useContext(ToasterContext);
+
   const [members, setMembers] = useState([]);
   const [albums, setAlbums] = useState([]);
   const [pcTypes, setPcTypes] = useState([]);
   const [file, setFile] = useState({});
 
   const groups = useGetData(API_GROUPS, headerConfig);
-  console.log(groups)
 
   const form = useRef(null);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     const formData = new FormData(form.current);
+    const member = members.find(x => x.stageName === formData.get('member'));
+    const pcType = pcTypes.find(x => x.name === formData.get('pcType'));
+    const album = albums.find(x => x.name === formData.get('album'));
     const data = {
       name: formData.get('name'),
-      memberId: members.find(x => x.stageName === formData.get('member')).id,
-      pcTypeId: pcTypes.find(x => x.name === formData.get('pcType')).id,
+      memberId: member !== undefined ? member.id : 0,
+      albumId: album !== undefined ? album.id : 0,
+      pcTypeId: pcType !== undefined ? pcType.id : 0,
     }
-    console.log(data)
-    axios.post(API, data, headerConfig).then(res => {
-      console.log('Response: ', res.data);
-    });
+    try {
+      const res = await axios.post(API, data, headerConfig);
+      setOpenToaster({type: types.SUCCESS, content: 'Photocard creada correctamente'});
+    } catch (error) {
+      setOpenToaster({type: types.ERROR, content: 'No se pudo crear la photocard'});
+    }
   }
 
   const handleGroupSelect = (e) => {
@@ -52,7 +60,7 @@ const PhotocardForm = () => {
       const response = await axios(API_PCTYPE, headerConfig);
       setPcTypes([...response.data])
     } catch (error) {
-      console.error(error);
+      setOpenToaster({type: types.ERROR, content: 'Hubo un error buscando las versiones de photocards'});
     }
   }
 

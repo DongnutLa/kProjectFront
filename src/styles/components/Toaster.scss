@@ -1,13 +1,11 @@
 @use '../vars';
 
 .toaster-container {
-    position: absolute;
+    position: fixed;
     width:fit-content;
     height: 60px;
     display: flex;
     justify-content:center;
-    /* background-color: var(--redWarning); */
-    background-color: var(--greenSuccess);
     place-items: center;
     left: 0;
     right: 0;
@@ -16,16 +14,25 @@
     gap: 12px;
     cursor: pointer;
     border-radius: 12px;
+    z-index: 1;
+}
+.toaster-container.error {
+    background-color: var(--redWarning);
+}
+.toaster-container.success {
+    background-color: var(--greenSuccess);
 }
 
 .toaster-container .toaster-message {
     display: flex;
     flex-direction: column;
+    font-size: var(--text);
 }
 
-.toaster-container span {
-    font-size: var(--text);
-    /* color: var(--redWarningText); */
+.toaster-container .toaster-message.error {
+    color: var(--redWarningText);
+}
+.toaster-container .toaster-message.success {
     color: var(--greenSuccessText);
 }
 .toaster-container span:nth-child(1) {
