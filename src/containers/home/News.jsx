@@ -5,8 +5,12 @@ import useGetData from '@hooks/useGetData';
 import '@styles-containers/News.scss';
 
 const URL = process.env.API;
-const endpoint = 'news'
-const API = `${URL}${endpoint}`;
+const endpoint = 'news';
+const pagination = {
+  limit: 6,
+  offset: 0
+}
+const API = `${URL}${endpoint}?limit=${pagination.limit}&offset=${pagination.offset}`;
 
 const News = () => {
   const news = useGetData(API);
