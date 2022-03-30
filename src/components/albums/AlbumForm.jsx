@@ -20,6 +20,8 @@ const AlbumForm = () => {
   const { headerConfig } = useContext(AuthContext);
   const { types, setOpenToaster } = useContext(ToasterContext);
 
+  const [error, setError] = useState({})
+  const [btnClass, setBtnClass] = useState('button btn-primary');
   const [togglePcTypes, setTogglePcTypes] = useState(false);
   const [pctypeField, setPctypeField] = useState([{name: "pcVersion"}])
   const [file, setFile] = useState({});
@@ -87,18 +89,95 @@ const AlbumForm = () => {
     }
   }
 
+  const onBlur = (e) => {
+    const dateValid = new RegExp(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/);
+    const today = parseInt(new Date().toISOString().split('-', 1).join());
+
+    if (e.target.value.length === 0 && e.target.name !== 'producers') {
+        setError({...error, [e.target.name]: 'Este campo es obligatorio*'});
+    } else {
+      switch (e.target.name) {
+        case 'name':
+          if (e.target.value.length < 3 || e.target.value.length > 20) {
+            setError({...error, name: 'El nombre debe tener entre 3 y 20 carácteres'});
+          } else {
+            deleteProperty(e.target.name);
+          }
+          break;
+        case 'koreanName':
+          if (e.target.value.length <= 1 || e.target.value.length > 10) {
+            setError({...error, koreanName: 'El nombre debe tener entre 1 y 10 carácteres'});
+          } else {
+            deleteProperty(e.target.name);
+          }
+          break;
+        case 'releaseDate':
+          const year = parseInt(e.target.value.split('-', 1).join());
+          if (!dateValid.test(e.target.value)) {
+            setError({...error, releaseDate: 'La fecha no es válida'});
+          } else if (year < 1990 || year > today) {
+            setError({...error, releaseDate: `El año debe ser mayor a 1990 y menor a ${today}`});
+          } else {
+            deleteProperty(e.target.name);
+          }
+          break;
+        case 'producers':
+          if (e.target.value.length < 3 && e.target.value.length > 0) {
+            setError({...error, producers: 'Debe haber al menos un productor mayor a 3 dígitos'});
+          } else {
+            deleteProperty(e.target.name);
+          }
+          break;
+        case 'group':
+          const group = groups.find(x => x.name === e.target.value);
+          if (group === undefined) {
+            setError({...error, group: 'Selecciona una opción válida'});
+          } else {
+            deleteProperty(e.target.name);
+          }
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
+  const deleteProperty = (prop) => {
+    const errorState = JSON.parse(JSON.stringify(error));
+    delete errorState[prop];
+    setError(errorState)
+  }
+
+  useEffect(() => {
+    const formData = new FormData(form.current);
+    const name = formData.get('name');
+    const koreanName = formData.get('koreanName');
+    const releaseDate = formData.get('releaseDate');
+    const group = formData.get('group');
+    if (Object.keys(error).length > 0 || name.length === 0 || koreanName.length === 0 || releaseDate.length === 0 || group.length === 0) {
+      setBtnClass(btnClass + ' disable');
+    } else {
+      setBtnClass('button btn-primary');
+    }
+  }, [error])
+
   return (
     <form action="" ref={form}>
       <label htmlFor="name">Nombre del album</label>
-      <input type="text" name="name" id="name"/>
+      <input type="text" name="name" id="name" onBlur={onBlur}/>
+      {error.name ? <span className='error-msg'>{error.name}</span> : <span className='error-msg'>&nbsp;</span>}
       <label htmlFor="koreanName">Nombre coreano del álbum</label>
-      <input type="text" name="koreanName" id="koreanName"/>
+      <input type="text" name="koreanName" id="koreanName" onBlur={onBlur}/>
+      {error.koreanName ? <span className='error-msg'>{error.koreanName}</span> : <span className='error-msg'>&nbsp;</span>}
       <label htmlFor="releaseDate">Fecha de lanzamiento</label>
-      <input type="date" name="releaseDate" id="releaseDate"/>
+      <input type="date" name="releaseDate" id="releaseDate" onBlur={onBlur}/>
+      {error.releaseDate ? <span className='error-msg'>{error.releaseDate}</span> : <span className='error-msg'>&nbsp;</span>}
       <label htmlFor="producers">Productores</label>
-      <input type="text" name="producers" id="producers" placeholder="Separados por espacios"/>
+      <input type="text" name="producers" id="producers" placeholder="Separados por espacios" onBlur={onBlur}/>
+      {error.producers ? <span className='error-msg'>{error.producers}</span> : <span className='error-msg'>&nbsp;</span>}
       <label htmlFor="group">Grupo</label>
-      <input list="group" name="group" />
+      <input list="group" name="group" onBlur={onBlur}/>
+      {error.group ? <span className='error-msg'>{error.group}</span> : <span className='error-msg'>&nbsp;</span>}
         <datalist id="group">
           {groups.map(group => (
             <option key={group.id} value={group.name} />
@@ -140,7 +219,7 @@ const AlbumForm = () => {
           </div>
         </>
       )}
-      <button type="button" className="button btn-primary" onClick={handleSubmit}>Agregar álbum</button>
+      <button type="button" disabled={Object.keys(error).length > 0} className={btnClass} onClick={handleSubmit}>Agregar álbum</button>
     </form>
   );
 }
