@@ -139,6 +139,31 @@
     border-radius: 10px;
 }
 
+.new-form form .error-msg {
+    margin: 4px 0 0 16px;
+    font-size: var(--text-mini);
+    color: var(--redWarningText);
+}
+
+.new-form form .labels-container {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    margin: 8px 0 0 16px;
+}
+
+.new-form form .labels-container .labels-name {
+    font-size: var(--text-mini);
+    background-color: var(--violete);
+    color: var(--lightPink);
+    border-radius: 4px;
+    padding: 3px;
+    cursor: pointer;
+}
+.new-form form .labels-container .labels-name:hover {
+    opacity: 0.5;
+}
+
 @media (max-width:850px) {
     .new-form {
         width: 80%;

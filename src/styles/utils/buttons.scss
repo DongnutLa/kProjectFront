@@ -8,6 +8,22 @@
   border-radius: 5px;
   transition: 0.3s;
   transform: scale(0.8);
+  &.btn-primary.disable,
+  &.btn-secondary.disable {
+    opacity: 0.7;
+    cursor:not-allowed;
+  }
+  &.btn-primary.disable:hover,
+  &.btn-secondary.disable:hover {
+    transform: scale(0.8);
+  }
+  &.btn-primary.disable:hover {
+    background-color: var(--blue);
+  }
+  &.btn-secondary.disable:hover {
+    background-color: var(--lightPink);
+    color: var(--black);
+  }
 }
 .btn-primary {
   color: var(--lightPink);
