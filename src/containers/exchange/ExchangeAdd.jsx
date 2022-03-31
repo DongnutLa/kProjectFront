@@ -26,8 +26,6 @@ const ExchangeAdd = () => {
     userId: userData.id,
     pcFromId: NaN,
     pcToId: NaN,
-    creationDate: new Date().toISOString().split('T', 1).join(''),//"2022-03-25"
-    active: true,
     information: ''
   })
   const onChange = (e) => {

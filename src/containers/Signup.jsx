@@ -31,7 +31,6 @@ const Signup = () => {
       username: formData.get('username'),
       email: formData.get('email'),
       password: formData.get('password'),
-      roleId: "1"
     }
     try {
       const res = await axios.post(API, data)

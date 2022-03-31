@@ -31,7 +31,6 @@ const NewForm = () => {
       //image: formData.get('image'),
       source: formData.get('source'),
       tags: formData.get('labels').split(" "),
-      creationDate: "2022-03-21"
     }
     try {
       const res = await axios.post(API, data, headerConfig);
