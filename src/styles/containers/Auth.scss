@@ -54,7 +54,7 @@
 .modal-form .form-container form label,
 .modal-form .form-container form span {
     font-size: var(--text);
-    padding: 8px;
+    padding: 4px;
 }
 
 .modal-form .form-container form input {
@@ -90,6 +90,10 @@
     flex-direction: column;
 }
 
+.modal-form .form-container form .error-msg {
+    font-size: var(--text-mini);
+    color: var(--redWarningText);
+}
 
 @media (max-width:900px) {
     .modal-form {

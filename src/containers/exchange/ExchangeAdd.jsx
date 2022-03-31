@@ -14,21 +14,22 @@ const endpoint = 'exchanges'
 const API = `${URL}${endpoint}`;
 
 const ExchangeAdd = () => {
-  const { headerConfig } = useContext(AuthContext);
+  const { headerConfig, userData } = useContext(AuthContext);
   const { types, setOpenToaster } = useContext(ToasterContext);
 
+  const [btnClass, setBtnClass] = useState('button btn-primary');
+  const [error, setError] = useState({pcFrom: {}, pcTo: {}})
   const [toggleFormHave, setToggleFormHave] = useState(false);
   const [toggleFormWant, setToggleFormWant] = useState(false);
   const [file, setFile] = useState({});
   const [pcData, setPcData] = useState({
-    userId: 1,
-    pcFromId: null,
-    pcToId: null,
-    creationDate: "2022-03-25",
+    userId: userData.id,
+    pcFromId: NaN,
+    pcToId: NaN,
+    creationDate: new Date().toISOString().split('T', 1).join(''),//"2022-03-25"
     active: true,
     information: ''
   })
-
   const onChange = (e) => {
     if (e.target.files.length < 1) {
       setFile({img: ''});
@@ -62,6 +63,43 @@ const ExchangeAdd = () => {
     }
   }
 
+  const error_have = (data) => {
+    setError({...error, pcFrom: data})
+  }
+  const error_want = (data) => {
+    setError({...error, pcTo: data})
+  }
+
+  useEffect(() => {
+    if (Object.keys(error.pcFrom).length > 0 || Object.keys(error.pcTo).length > 0 || Object.keys(error).length > 2 || isNaN(pcData.pcFromId) || isNaN(pcData.pcToId) || pcData.information.length < 10) {
+      setBtnClass(btnClass + ' disable');
+    } else {
+      setBtnClass('button btn-primary');
+    }
+  }, [error, pcData])
+
+  const onBlur = (e) => {
+    switch (e.target.name) {
+      case 'content':
+        if (e.target.value.length < 10) {
+          setError({...error, content: 'El contenido debe ser mayor a 10 carácteres'});
+        } else if (e.target.value.length > 400) {
+          setError({...error, content: 'El contenido debe ser menor a 400 carácteres'});
+        } else {
+          deleteProperty(e.target.name);
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+  const deleteProperty = (prop) => {
+    const errorState = JSON.parse(JSON.stringify(error));
+    delete errorState[prop];
+    setError(errorState)
+  }
+
   return (
     <form action="">
       <div className="sub-form-container" onClick={() => setToggleFormHave(!toggleFormHave)}>
@@ -72,7 +110,7 @@ const ExchangeAdd = () => {
       </div>
       {toggleFormHave && (
         <>
-          <ExchangeForm type={'have'} key={'have'} func={pc_have}/>
+          <ExchangeForm type={'have'} key={'have'} func={pc_have} errors={error_have}/>
         </>
       )}
       <div className="sub-form-container" onClick={() => setToggleFormWant(!toggleFormWant)}>
@@ -82,15 +120,16 @@ const ExchangeAdd = () => {
         </svg>
       </div>
       {toggleFormWant && (
-        <ExchangeForm type={'want'} key={'want'} func={pc_want}/>
+        <ExchangeForm type={'want'} key={'want'} func={pc_want} errors={error_want}/>
       )}
       <label htmlFor="image">Sube una foto de tu photocard</label>
         <label htmlFor="image" className="img-upload button btn-secondary"><img src={upload} alt=""/> <span>Subir archivo</span></label>
       <input type="file" name="image" id="image" onChange={onChange}/>
       <img className="img-preview" src={file.img} />
       <label htmlFor="content">Información adicional</label>
-      <textarea name="content" id="content" cols="30" rows="10" placeholder="Escribe aquí el contenido" onChange={onDetails}></textarea>
-      <button type="button" className="button btn-primary" onClick={onCreateExchange}>¡Crear!</button>
+      <textarea name="content" id="content" cols="30" rows="10" placeholder="Escribe aquí el contenido" onChange={onDetails} onBlur={onBlur}></textarea>
+      {error.content ? <span className='error-msg'>{error.content}</span> : <span className='error-msg'>&nbsp;</span>}
+      <button type="button" disabled={Object.keys(error.pcFrom).length > 0 || Object.keys(error.pcTo).length > 0 || Object.keys(error).length > 2} className={btnClass} onClick={onCreateExchange}>¡Crear!</button>
     </form>
   );
 }

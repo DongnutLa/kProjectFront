@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import AuthContext from '@context/AuthContext';
 import ModalContext from '@context/ModalContext';
+import ToasterContext from '@context/ToasterContext';
 
 import '@styles-containers/Auth.scss';
 import '@styles-utils/buttons.scss';
@@ -15,6 +16,7 @@ const endpoint = 'auth/login'
 const API = `${URL}${endpoint}`;
 
 const Login = () => {
+  const { types, setOpenToaster } = useContext(ToasterContext);
   const { saveAuthData, getAuthData } = useContext(AuthContext);
   const { toggleLogin } = useContext(ModalContext);
   const navigate = useNavigate();
@@ -32,7 +34,9 @@ const Login = () => {
       navigate('/');
       getAuthData();
       toggleLogin();
-    }).catch(err => console.error(err));
+    }).catch(err => {
+      setOpenToaster({type: types.ERROR, content: 'Usuario o clave inválida'});
+    });
   }
 
   return (
