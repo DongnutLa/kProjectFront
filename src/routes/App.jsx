@@ -10,7 +10,8 @@ import Layout from '@containers/Layout';
 import Exchange from '@pages/Exchange';
 import ExchangeCreate from '@pages/ExchangeCreate';
 import New from '@pages/New';
-import NewCreate from '@pages/NewCreate'
+import NewCreate from '@pages/NewCreate';
+import NewsTag from '@pages/NewsTag';
 import GroupAdd from '@pages/GroupAdd';
 import IdolAdd from '@pages/IdolAdd';
 import AlbumAdd from '@pages/AlbumAdd';
@@ -38,6 +39,7 @@ const App = () => {
                 <Route path="/exchange" element={<Exchange />} />
                 <Route path="/exchange/create" element={<ExchangeCreate />} />
                 <Route path="/new/:newId" element={<New />} />
+                <Route path="/news/:tag" element={<NewsTag />} />
                 <Route path="/new/create" element={<NewCreate />} />
                 <Route path="/groups/add" element={<GroupAdd />} />
                 <Route path="/idols/add" element={<IdolAdd />} />

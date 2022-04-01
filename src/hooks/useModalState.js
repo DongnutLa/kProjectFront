@@ -21,10 +21,18 @@ const useModalState = () => {
         });
     }
 
+    const toggleForSignup = () => {
+        setModalState({
+            loginModal: true,
+            signupModal: false
+        })
+    }
+
     return {
         modalState,
         toggleLogin,
-        toggleSignup
+        toggleSignup,
+        toggleForSignup
     }
 }
 

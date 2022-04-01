@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { formatDistance, subDays } from 'date-fns';
 import '@styles-components/New.scss';
@@ -17,7 +17,7 @@ const New = ({ item }) => {
       </div>
       <div className="news-card__head">
         {item.tags && item.tags.map(tag => (
-          <p key={tag}>{tag}</p>
+          <p key={tag} onClick={() => navigate(`/news/${tag}`)}>{tag}</p>
         ))}
       </div>
       <div className="news-card__date">

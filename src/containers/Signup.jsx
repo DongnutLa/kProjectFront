@@ -1,4 +1,5 @@
 import React, { useRef, useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import ModalContext from '@context/ModalContext';
@@ -14,13 +15,14 @@ const endpoint = 'users'
 const API = `${URL}${endpoint}`;
 
 const Signup = () => {
-  const { toggleSignup } = useContext(ModalContext);
+  const { toggleSignup, toggleForSignup } = useContext(ModalContext);
   const { types, setOpenToaster } = useContext(ToasterContext);
 
   const [error, setError] = useState({})
   const [btnClass, setBtnClass] = useState('button btn-primary');
 
   const form = useRef(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     const formData = new FormData(form.current);
@@ -35,6 +37,8 @@ const Signup = () => {
     try {
       const res = await axios.post(API, data)
       setOpenToaster({type: types.SUCCESS, content: `Te has registrado correctamente ${data.username}`});
+      navigate('/');
+      toggleForSignup();
     } catch (error) {
       setOpenToaster({type: types.ERROR, content: 'No se pudo completar el registro'});
     }
@@ -108,8 +112,6 @@ const Signup = () => {
       }
     }
   }
-
-  console.log(error)
 
   const deleteProperty = (prop) => {
     const errorState = JSON.parse(JSON.stringify(error));
