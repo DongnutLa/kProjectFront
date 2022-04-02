@@ -52,8 +52,8 @@ const ExchangeForm = ({type, func, errors}) => {
     setSearchPcParams({...searchPcParams, memberId: member.id});
   }
 
-  useEffect(async () => {
-    if( searchPcParams.albumId !== null && searchPcParams.memberId !== null) {
+  useEffect(() => {
+    async function fetchData() {
       try {
         const API_PCS = `${URL}photocards?albumId=${searchPcParams.albumId}&memberId=${searchPcParams.memberId}`;
         const pcRes = await axios(API_PCS);
@@ -61,6 +61,9 @@ const ExchangeForm = ({type, func, errors}) => {
       } catch (error) {
         console.error(error);
       }
+    }
+    if( searchPcParams.albumId !== null && searchPcParams.memberId !== null) {
+      fetchData();
     }
   }, [searchPcParams])
 
