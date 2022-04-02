@@ -3,9 +3,12 @@ import axios from 'axios';
 
 const useGetData = (API, config) => {
 	const [data, setData] = useState([]);
-	useEffect(async () => {
-		const response = await axios(API, config);
-		setData(response.data);
+	useEffect(() => {
+		async function fetchData() {
+			const response = await axios(API, config);
+			setData(response.data);
+		}
+		fetchData();
 	}, []);
 	return data;
 };
