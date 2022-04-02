@@ -20,20 +20,26 @@ const NewForm = () => {
   const [error, setError] = useState({})
   const [btnClass, setBtnClass] = useState('button btn-primary');
   const [filename, setFilename] = useState("Subir archivo");
+  const [file, setFile] = useState(null);
 
   const form = useRef(null);
 
   const handleSubmit = async (event) => {
-    const formData = new FormData(form.current);
-    const data = {
+    const formData = new FormData();
+    const data = new FormData(form.current);
+    /* const data = {
       title: formData.get('title'),
       content: formData.get('content'),
-      //image: formData.get('image'),
       source: formData.get('source'),
       tags: formData.get('labels').split(" "),
-    }
+    } */
+
+    formData.append('title', data.get('title'));
+    formData.append('content', data.get('content'));
+    formData.append('source', data.get('source'));
+    formData.append('file', file);
     try {
-      const res = await axios.post(API, data, headerConfig);
+      const res = await axios.post(API, formData, headerConfig);
       setOpenToaster({type: types.SUCCESS, content: 'Noticia creada correctamente'});
     } catch (error) {
       setOpenToaster({type: types.ERROR, content: 'No se pudo crear la noticia'});
@@ -44,11 +50,12 @@ const NewForm = () => {
     setFilename("Subir archivo");
     if (event.target.files.length > 0) {
       setFilename(event.target.files[0].name);
+      setFile(event.target.files[0]);
     }
   }
 
   const onLabels = (e) => {
-    const validTag = new RegExp(/^[a-z0-9]{3,20}$/);
+    const validTag = new RegExp(/^[A-Za-z0-9]{3,20}$/);
     if (e.target.value.includes(' ')) {
       const value = e.target.value.split(' ', 1).join();
       if (!validTag.test(value)) {
