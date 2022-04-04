@@ -13,6 +13,8 @@ import New from '@pages/New';
 import NewCreate from '@pages/NewCreate';
 import NewsTag from '@pages/NewsTag';
 import GroupAdd from '@pages/GroupAdd';
+import Groups from '@pages/Groups';
+import Albums from '@pages/Albums';
 import IdolAdd from '@pages/IdolAdd';
 import AlbumAdd from '@pages/AlbumAdd';
 import SongAdd from '@pages/SongAdd';
@@ -41,8 +43,10 @@ const App = () => {
                 <Route path="/new/:newId" element={<New />} />
                 <Route path="/news/:tag" element={<NewsTag />} />
                 <Route path="/new/create" element={<NewCreate />} />
+                <Route path="/groups" element={<Groups />} />
                 <Route path="/groups/add" element={<GroupAdd />} />
                 <Route path="/idols/add" element={<IdolAdd />} />
+                <Route path="/albums/:groupId" element={<Albums />} />
                 <Route path="/albums/add" element={<AlbumAdd />} />
                 <Route path="/songs/add" element={<SongAdd />} />
                 <Route path="/photocards/add" element={<PhotocardAdd />} />

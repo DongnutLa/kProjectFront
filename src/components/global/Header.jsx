@@ -33,7 +33,7 @@ const Header = () => {
             <img src={logo} alt="logo"/>
             <ul>
               <li onClick={() => navigate('/')}><a>Inicio</a></li>
-              <li onClick={() => navigate('/news')}><a>Noticias</a></li>
+              <li onClick={() => navigate('/groups')}><a>Grupos</a></li>
               <li onClick={() => navigate('/exchange')}><a>Intercambios</a></li>
               <li onClick={() => navigate('/store')}><a>Ventas</a></li>
             </ul>

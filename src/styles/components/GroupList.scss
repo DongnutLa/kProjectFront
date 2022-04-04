@@ -1,0 +1,88 @@
+@use '../vars';
+
+h2 {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.groups-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+    place-content: center;
+}
+
+.groups-container div {
+    width: 230px;
+    height: 200px;
+    background-color: var(--mediumPink05);
+    align-items: center;
+    display: flex;
+    place-content: center;
+    border-radius: 8px;
+}
+
+.groups-container .group-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: 0.3s;
+    transform: scale(1);
+}
+.groups-container .group-card:hover {
+    transform: scale(1.03);
+}
+.groups-container .group-card:hover img {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.groups-container .group-card .group-card__image {
+    width: 230px;
+    height: fit-content;
+}
+
+.groups-container .group-card .group-card__image img {
+    background: no-repeat center center/cover;
+    border-radius: 8px;
+    padding: 4px;
+    width: 100%;
+    transition: 0.3s;
+}
+
+.groups-container .group-card .group-card__body {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 8px;
+}
+.groups-container .group-card .group-card__body h4 {
+    width: 100%;
+    color: var(--blue);
+    transition: 0.5s;
+}
+
+.groups-container .group-card .group-card__body h4:hover {
+    cursor: pointer;
+    color: var(--violete);
+}
+
+.groups-container .group-card .group-card__body .group-card__body-icons {
+    width: fit-content;
+    height: fit-content;
+    background-color: transparent;
+    display: flex;
+    gap: 8px;
+    justify-content: end;
+}
+
+.groups-container .group-card .group-card__body img {
+    width: 20px;
+    height: 20px;
+    transition: 0.3s;
+}
+
+.groups-container .group-card .group-card__body img:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}

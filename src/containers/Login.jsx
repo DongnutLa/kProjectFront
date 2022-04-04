@@ -17,7 +17,7 @@ const API = `${URL}${endpoint}`;
 
 const Login = () => {
   const { types, setOpenToaster } = useContext(ToasterContext);
-  const { saveAuthData, getAuthData } = useContext(AuthContext);
+  const { saveAuthData, getAuthData, headerConfig } = useContext(AuthContext);
   const { toggleLogin } = useContext(ModalContext);
   const navigate = useNavigate();
   
@@ -29,7 +29,7 @@ const Login = () => {
       username: formData.get('username'),
       password: formData.get('password')
     }
-    axios.post(API, data).then(res => {
+    axios.post(API, data, headerConfig).then(res => {
       saveAuthData(res.data);
       navigate('/');
       getAuthData();

@@ -56,7 +56,7 @@ const ExchangeForm = ({type, func, errors}) => {
     async function fetchData() {
       try {
         const API_PCS = `${URL}photocards?albumId=${searchPcParams.albumId}&memberId=${searchPcParams.memberId}`;
-        const pcRes = await axios(API_PCS);
+        const pcRes = await axios(API_PCS, headerConfig);
         setPhotocards([...pcRes.data]);
       } catch (error) {
         console.error(error);

@@ -11,7 +11,7 @@ const useAuth = () => {
 	const [userData, setUserData] = useState({});
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [userRole, setUserRole] = useState(roles);
-	const [headerConfig, setHeaderConfig] = useState({})
+	const [headerConfig, setHeaderConfig] = useState({headers: {api: process.env.API_KEY}})
 
 	const saveAuthData = (authObject) => {
 		window.localStorage.setItem(
@@ -29,9 +29,10 @@ const useAuth = () => {
 			setRoles(user);
 			setHeaderConfig({
 				headers: {
-				  Authorization: `Bearer ${token}`
+					api: process.env.API_KEY,
+				  Authorization: `Bearer ${token}`,
 				}
-			  })
+			})
 		}
 	}
 
@@ -46,19 +47,25 @@ const useAuth = () => {
 		if (user.roleId === 1) {
 			setUserRole({
 				...userRole,
+				isUser: true,
+				isEditor: true,
 				isAdmin: true
 			})
 		}
 		if (user.roleId === 2) {
 			setUserRole({
 				...userRole,
-				isUser: true
+				isUser: true,
+				isEditor: false,
+				isAdmin: false
 			})
 		}
 		if (user.roleId === 3) {
 			setUserRole({
 				...userRole,
-				isEditor: true
+				isUser: true,
+				isEditor: true,
+				isAdmin: false
 			})
 		}
 	}

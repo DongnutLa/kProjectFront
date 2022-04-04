@@ -1,0 +1,118 @@
+@use '../vars';
+
+.albums h2 {
+    text-align: center;
+    margin: 40px 0;
+
+}
+
+.albums .albums-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    place-content: center;
+}
+
+.album-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+    place-content: center;
+    perspective: 1000px;
+}
+
+.album-container div {
+    width: 230px;
+    height: fit-content;
+    align-items: center;
+    display: flex;
+    place-content: center;
+    border-radius: 8px;
+}
+
+.album-container .album-card {
+    background-color: var(--mediumPink05);
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.album-container:hover .album-card {
+    transform: rotateY(180deg);
+}
+
+.album-container .album-card .album-card__front,
+.album-container .album-card .album-card__back {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+}
+
+.album-container .album-card .album-card__back {
+    position: absolute;
+    transform: rotateY(180deg);
+    justify-content: flex-start;
+    padding: 8px;
+    background-color: var(--lightPink01);
+}
+
+.album-container .album-card .album-card__image {
+    width: 230px;
+    height: fit-content;
+}
+
+.album-container .album-card .album-card__image img {
+    background: no-repeat center center/cover;
+    border-radius: 8px;
+    padding: 4px;
+    width: 100%;
+    transition: 0.3s;
+}
+
+.album-container .album-card .album-card__body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+    color: var(--blue);
+}
+
+.album-container .album-card .album-card__body p {
+    font-size: var(--text);
+}
+
+.album-card .album-card__back .album-data {
+    display: flex;
+    flex-direction: column;
+    margin: 4px;
+}
+.album-card .album-card__back .album-data p {
+    color: var(--blue);
+    font-weight: bold;
+}
+.album-card .album-card__back .album-data span {
+    font-size: var(--text-med);
+    color: var(--black);
+}
+.album-card .album-card__back .album-data .songs-list {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    place-content: center;
+    padding: 8px;
+    column-gap: 16px;
+}
+
+.album-card .album-card__back .album-data .songs-list span {
+    padding: 2px;
+}
+
+.album-card .album-card__back .album-data .songs-list span:nth-child(2n) {
+    color: var(--violete);
+}

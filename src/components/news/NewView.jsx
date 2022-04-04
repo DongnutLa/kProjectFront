@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { useParams } from 'react-router-dom';
 import { formatDistance, subDays } from 'date-fns';
 
 import useGetData from '@hooks/useGetData';
+import AuthContext from '@context/AuthContext';
 
 import '@styles-components/NewView.scss';
 import ive from '@img/ive.jpeg';
@@ -11,9 +12,10 @@ const URL = process.env.API;
 const endpoint = 'news';
 
 const NewView = () => {
+  const { headerConfig } = useContext(AuthContext);
   const { newId } = useParams();
   const API = `${URL}${endpoint}/${newId}`;
-  const newItem = useGetData(API);
+  const newItem = useGetData(API, headerConfig);
   //const creationDate = formatDistance(subDays(new Date(newItem.creationDate), 0), new Date(), { addSuffix: true });
 
   return(
