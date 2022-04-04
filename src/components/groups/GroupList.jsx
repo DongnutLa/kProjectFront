@@ -23,7 +23,7 @@ const GroupList = ({ group }) => {
 					<div className="group-card__body-icons">
 						{/* <img src={heart} alt=""/> */}
 						<img src={disk} onClick={() => navigate(`/albums/${group.id}`)} alt=""/>
-						<img src={card} onClick={() => navigate(`/photocards/${group.id}`)} alt=""/>
+						<img src={card} onClick={() => navigate(`/photocards/${group.name}/${group.id}`)} alt=""/>
 					</div>
 				</div>
 			</div>

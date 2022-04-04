@@ -19,6 +19,7 @@ import IdolAdd from '@pages/IdolAdd';
 import AlbumAdd from '@pages/AlbumAdd';
 import SongAdd from '@pages/SongAdd';
 import PhotocardAdd from '@pages/PhotocardAdd';
+import Photocards from '@pages/Photocards';
 import useInitialState from '@hooks/useInitialState';
 import useAuth from '@hooks/useAuth';
 import useModalState from '@hooks/useModalState';
@@ -49,6 +50,7 @@ const App = () => {
                 <Route path="/albums/:groupId" element={<Albums />} />
                 <Route path="/albums/add" element={<AlbumAdd />} />
                 <Route path="/songs/add" element={<SongAdd />} />
+                <Route path="/photocards/:group/:groupId" element={<Photocards />} />
                 <Route path="/photocards/add" element={<PhotocardAdd />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

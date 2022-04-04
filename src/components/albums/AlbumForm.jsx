@@ -51,6 +51,7 @@ const AlbumForm = () => {
       if (Object.keys(item).length > 1) {
         const sendData = {
           albumId: res.data.id,
+          groupId: res.data.groupId,
           name: item.pcVersion
         }
         try {

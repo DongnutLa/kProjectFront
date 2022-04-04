@@ -35,11 +35,13 @@ const PhotocardForm = () => {
     const member = members.find(x => x.stageName === formData.get('member'));
     const pcType = pcTypes.find(x => x.name === formData.get('pcType'));
     const album = albums.find(x => x.name === formData.get('album'));
+    const group = groups.find(x => x.name === formData.get('group'));
     const data = {
       name: formData.get('name'),
       memberId: member !== undefined ? member.id : 0,
       albumId: album !== undefined ? album.id : 0,
       pcTypeId: pcType !== undefined ? pcType.id : 0,
+      groupId: group !== undefined ? group.id : 0,
     }
     try {
       const res = await axios.post(API, data, headerConfig);
@@ -194,7 +196,7 @@ const PhotocardForm = () => {
       </label>
       <input type="file" name="image" id="image" onChange={onImage}/>
       <img className="img-preview" src={file.img} />
-      <button type="button" disabled={Object.keys(error).length > 0} className={btnClass} onClick={handleSubmit}>Agregar álbum</button>
+      <button type="button" disabled={Object.keys(error).length > 0} className={btnClass} onClick={handleSubmit}>Agregar photocard</button>
     </form>
   );
 }

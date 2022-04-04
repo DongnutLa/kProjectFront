@@ -1,0 +1,56 @@
+@use '../vars';
+
+.photocards h2 {
+    text-align: center;
+    margin: 20px auto;
+}
+.photocards-section {
+    width: 70vw;
+    height: 50px;
+    background-color: var(--mediumPink05);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    place-items: center;
+    padding: 12px;
+    left: 0;
+    right: 0;
+    margin: 8px auto;
+    cursor: pointer;
+}
+.photocards-section p {
+    display: flex;
+    place-content: center;
+    width: 100%;
+    color: var(--blue);
+    font-weight: bold;
+}
+
+.photocards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    place-content: center;
+    padding: 0 40px;
+    margin-bottom: 20px;
+}
+.photocards-container .photocard-img {
+    width: 100px;
+    height: 140px;
+}
+.photocards-container .photocard-img img {
+    width: 100%;
+    height: 100%;
+    background: no-repeat center center/cover;
+    border-radius: 8px;
+    border: 1px solid var(--purple);
+    transition: 0.5s;
+}
+
+.photocards-container .photocard-img img:hover {
+    opacity: 0.6;
+    border: 1px solid var(--violete);
+}
+.photocards-container .photocard-img img:hover .member-name {
+    display: block;
+}
