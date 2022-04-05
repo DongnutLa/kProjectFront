@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { formatDistance, subDays } from 'date-fns';
 import '@styles-components/New.scss';
 
-import ive from '@img/ive.jpeg';
-
 const New = ({ item }) => {
   const creationDate = formatDistance(subDays(new Date(item.creationDate), 0), new Date(), { addSuffix: true });
 
@@ -13,7 +11,7 @@ const New = ({ item }) => {
   return (
     <div className="news-card">
       <div className="news-card__img">
-        <img src={ive} alt="ive"/>
+        <img src={item.fileUrl} alt="ive"/>
       </div>
       <div className="news-card__head">
         {item.tags && item.tags.map(tag => (

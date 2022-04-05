@@ -20,24 +20,16 @@ const NewForm = () => {
   const [error, setError] = useState({})
   const [btnClass, setBtnClass] = useState('button btn-primary');
   const [filename, setFilename] = useState("Subir archivo");
-  const [file, setFile] = useState(null);
 
   const form = useRef(null);
 
   const handleSubmit = async (event) => {
-    const formData = new FormData();
-    const data = new FormData(form.current);
-    /* const data = {
-      title: formData.get('title'),
-      content: formData.get('content'),
-      source: formData.get('source'),
-      tags: formData.get('labels').split(" "),
-    } */
-
-    formData.append('title', data.get('title'));
-    formData.append('content', data.get('content'));
-    formData.append('source', data.get('source'));
-    formData.append('file', file);
+    const formData = new FormData(form.current);
+    if(labels.length > 0) {
+      labels.forEach(tag => {
+        formData.append('tags[]', tag);
+      })
+    }
     try {
       const res = await axios.post(API, formData, headerConfig);
       setOpenToaster({type: types.SUCCESS, content: 'Noticia creada correctamente'});
@@ -50,7 +42,6 @@ const NewForm = () => {
     setFilename("Subir archivo");
     if (event.target.files.length > 0) {
       setFilename(event.target.files[0].name);
-      setFile(event.target.files[0]);
     }
   }
 
@@ -116,7 +107,6 @@ const NewForm = () => {
     const formData = new FormData(form.current);
     const title = formData.get('title');
     const content = formData.get('content');
-    //image: formData.get('image'),
     const source = formData.get('source');
     const tags = formData.get('labels');
     if (Object.keys(error).length > 0 || title.length === 0 || content.length === 0 || source.length === 0) {
@@ -141,14 +131,14 @@ const NewForm = () => {
         <label htmlFor="content">contenido</label>
         <textarea name="content" id="content" cols="30" rows="10" placeholder="Escribe aquí el contenido" onBlur={onBlur}></textarea>
         {error.content ? <span className='error-msg'>{error.content}</span> : <span className='error-msg'>&nbsp;</span>}
-        <label htmlFor="image">Imagen</label>
-        <label htmlFor="image" className="img-upload button btn-secondary"><img src={upload} alt=""/> <span>{filename}</span></label>
-        <input type="file" name="image" id="image" onChange={onFileCharge}/>
+        <label htmlFor="file">Imagen</label>
+        <label htmlFor="file" className="img-upload button btn-secondary"><img src={upload} alt=""/> <span>{filename}</span></label>
+        <input type="file" name="file" id="file" onChange={onFileCharge}/>
         <label htmlFor="source">Fuente</label>
         <input type="text" name="source" id="source" placeholder="Fuente de la información" onBlur={onBlur}/>
         {error.source ? <span className='error-msg'>{error.source}</span> : <span className='error-msg'>&nbsp;</span>}
         <label htmlFor="labels">Etiquetas</label>
-        <input type="text" name="labels" id="labels" placeholder="Separadas por espacios" onChange={onLabels} onBlur={onBlur}/>
+        <input type="text" id="labels" placeholder="Separadas por espacios" onChange={onLabels} onBlur={onBlur}/>
         {error.labels && <span className='error-msg'>{error.labels}</span>}
         <div className='labels-container'>
           {labels.map((label, index) => (

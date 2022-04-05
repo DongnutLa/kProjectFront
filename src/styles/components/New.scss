@@ -10,8 +10,10 @@
 }
 
 .news-card .news-card__img img {
-    width: 100%;
+    display: block;
     max-height: 170px;
+    object-fit: cover;
+    width: 100%;
     cursor: pointer;
     transition: 0.3s;
     transform: scale(1);

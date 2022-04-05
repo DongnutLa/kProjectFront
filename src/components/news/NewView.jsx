@@ -6,7 +6,6 @@ import useGetData from '@hooks/useGetData';
 import AuthContext from '@context/AuthContext';
 
 import '@styles-components/NewView.scss';
-import ive from '@img/ive.jpeg';
 
 const URL = process.env.API;
 const endpoint = 'news';
@@ -21,7 +20,7 @@ const NewView = () => {
   return(
     <section className="new">
       <div className="new__img">
-        <img src={ive} alt="IVE"/>
+        <img src={newItem.fileUrl} alt="IVE"/>
       </div>
       <div className="new__title">
         <h1>{newItem.title}</h1>
