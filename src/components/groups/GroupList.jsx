@@ -7,7 +7,6 @@ import '@styles-components/GroupList.scss';
 import heart from '@icons/heart.svg';
 import disk from '@icons/disk.svg';
 import card from '@icons/card.svg';
-import dreamcatcher from '@img/dreamcatcher.jpeg';
 
 const GroupList = ({ group }) => {
 	const navigate = useNavigate();
@@ -16,7 +15,7 @@ const GroupList = ({ group }) => {
 		<>
 			<div className="group-card">
 				<div className="group-card__image">
-					<img src={dreamcatcher} alt="dreamcatcher"/>
+					<img src={group.filesUrls[0]} alt="dreamcatcher"/>
 				</div>
 				<div className="group-card__body">
 					<h4>{group.name}</h4>

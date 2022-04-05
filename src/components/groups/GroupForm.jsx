@@ -7,12 +7,14 @@ import ToasterContext from '@context/ToasterContext';
 import '@styles-utils/Forms.scss';
 import '@styles-utils/buttons.scss';
 
+import upload from '@icons/upload.png';
+
 const URL = process.env.API;
 const endpoint = 'groups'
 const API = `${URL}${endpoint}`;
 
 const groupTypes = ['Girl group', 'Boy group', 'Mixto'];
-const active = ['Activo', 'Inactivo'];
+const activeData = ['Activo', 'Inactivo'];
 
 const GroupForm = () => {
   const { headerConfig } = useContext(AuthContext);
@@ -20,27 +22,18 @@ const GroupForm = () => {
 
   const [error, setError] = useState({})
   const [btnClass, setBtnClass] = useState('button btn-primary');
-  
+  const [active, setActive] = useState(null);
   const form = useRef(null);
 
   const handleSubmit = async (event) => {
     const formData = new FormData(form.current);
-    const data = {
-      name: formData.get('name'),
-      koreanName: formData.get('koreanName'),
-      debutDate: formData.get('debutDate'),
-      membersNumber: parseInt(formData.get('membersNumber')),
-      type: formData.get('type'),
-      company: formData.get('company'),
-      active: formData.get('active') === active[0] ? true : false,
-    }
-    if (formData.get('fanclubName').length > 0) data.fanclubName = formData.get('fanclubName');
-    if (formData.get('fanclubBirth').length > 0) data.fanclubBirth = formData.get('fanclubBirth');
-    if (formData.get('instagram').length > 0) data.instagram = formData.get('instagram');
-    if (formData.get('twitter').length > 0) data.twitter = formData.get('twitter');
-
+    if (formData.get('fanclubName').length == 0) formData.delete('fanclubName')
+    if (formData.get('fanclubBirth').length == 0) formData.delete('fanclubBirth')
+    if (formData.get('instagram').length == 0) formData.delete('instagram')
+    if (formData.get('twitter').length == 0) formData.delete('twitter')
+    formData.append('active', active);
     try {
-      const res = await axios.post(API, data, headerConfig);
+      const res = await axios.post(API, formData, headerConfig);
       setOpenToaster({type: types.SUCCESS, content: 'Grupo agregado correctamente'});
     } catch (error) {
       setOpenToaster({type: types.ERROR, content: 'No se pudo agregar el grupo'});
@@ -50,8 +43,7 @@ const GroupForm = () => {
   const onBlur = (e) => {
     const dateValid = new RegExp(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/);
     const today = parseInt(new Date().toISOString().split('-', 1).join());
-
-    if (e.target.value.length === 0 && e.target.name !== 'instagram' && e.target.name !== 'twitter' && e.target.name !== 'fanclubName' && e.target.name !== 'fanclubBirth') {
+    if ((e.target.value === null || e.target.value.length === 0) && e.target.name !== 'instagram' && e.target.name !== 'twitter' && e.target.name !== 'fanclubName' && e.target.name !== 'fanclubBirth') {
         setError({...error, [e.target.name]: 'Este campo es obligatorio*'});
     } else {
       switch (e.target.name) {
@@ -103,7 +95,7 @@ const GroupForm = () => {
           }
           break;
         case 'fanclubName':
-          if (e.target.value.length < 3 || e.target.value.length > 20) {
+          if (e.target.value === null || e.target.value.length < 3 || e.target.value.length > 20) {
             setError({...error, fanclubName: 'El nombre debe tener entre 3 y 20 carácteres'});
           } else {
             deleteProperty(e.target.name);
@@ -140,20 +132,19 @@ const GroupForm = () => {
 
   useEffect(() => {
     const formData = new FormData(form.current);
-    const name = formData.get('name');
-    const koreanName = formData.get('koreanName');
-    const debutDate = formData.get('debutDate');
-    const membersNumber = formData.get('membersNumber');
-    const type = formData.get('type');
-    const company = formData.get('company');
-    //image: formData.get('image'),
-    const active = formData.get('active');
-    if (Object.keys(error).length > 0 || name.length === 0 || koreanName.length === 0 || debutDate.length === 0 || membersNumber.length === 0 || type.length === 0 || company.length === 0 || active.length === 0) {
+    if (Object.keys(error).length > 0 || formData.get('name').length === 0 
+      || formData.get('koreanName').length === 0 || formData.get('debutDate').length === 0 
+      || formData.get('membersNumber').length === 0 || formData.get('type').length === 0 
+      || formData.get('company').length === 0 || active === null) {
       setBtnClass(btnClass + ' disable');
     } else {
       setBtnClass('button btn-primary');
     }
-  }, [error])
+  }, [error, active])
+
+  const onChangeActive = (e) => {
+    setActive(e.target.value === 'Activo' ? true : false);
+  }
 
   return (
     <form action="" ref={form}>
@@ -193,10 +184,10 @@ const GroupForm = () => {
       <input type="date" name="fanclubBirth" id="fanclubBirth" onBlur={onBlur}/>
       {error.fanclubBirth ? <span className='error-msg'>{error.fanclubBirth}</span> : <span className='error-msg'>&nbsp;</span>}
       <label htmlFor="active">Actividad</label>
-      <input list="active" name="active" onBlur={onBlur}/>
+      <input list="active" onBlur={onBlur} onChange={onChangeActive}/>
       {error.active ? <span className='error-msg'>{error.active}</span> : <span className='error-msg'>&nbsp;</span>}
         <datalist id="active">
-          {active && active.map(item =>
+          {activeData && activeData.map(item =>
             <option key={item} value={item}/>
           )}
         </datalist>
@@ -206,6 +197,9 @@ const GroupForm = () => {
       <label htmlFor="twitter">Twitter del grupo</label>
       <input type="text" name="twitter" id="twitter" onBlur={onBlur}/>
       {error.twitter ? <span className='error-msg'>{error.twitter}</span> : <span className='error-msg'>&nbsp;</span>}
+      <label htmlFor="file">Imágenes</label>
+      <label htmlFor="file" className="img-upload button btn-secondary"><img src={upload} alt=""/> <span>Seleccionar fotos</span></label>
+      <input type="file" multiple name="file" id="file"/>
       <button type="button" disabled={Object.keys(error).length > 0} className={btnClass} onClick={handleSubmit}>Agregar grupo</button>
     </form>
   );
