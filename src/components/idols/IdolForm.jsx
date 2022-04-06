@@ -5,6 +5,7 @@ import AuthContext from '@context/AuthContext';
 import ToasterContext from '@context/ToasterContext';
 
 import useGetData from '@hooks/useGetData';
+import upload from '@icons/upload.png';
 
 import '@styles-utils/Forms.scss';
 import '@styles-utils/buttons.scss';
@@ -27,23 +28,12 @@ const IdolForm = () => {
 
   const handleSubmit = async (event) => {
     const formData = new FormData(form.current);
-    const group = groups.find(x => x.name === formData.get('group'));
-    console.log(group)
-    const data = {
-      name: formData.get('name'),
-      koreanName: formData.get('koreanName'),
-      stageName: formData.get('stageName'),
-      koreanStageName: formData.get('stageNameKr'),
-      birthday: formData.get('birthday'),
-      nationality: formData.get('nationality'),
-      birthPlace: formData.get('birthPlace'),
-      position: formData.get('position'),
-      groupId: group !== undefined ? group.id : 0,
-    }
-    if (formData.get('instagram').length > 0) data.instagram = formData.get('instagram');
-    if (formData.get('twitter').length > 0) data.twitter = formData.get('twitter');
+    const group = groups.find(x => x.name === formData.get('groupId'));
+    if (formData.get('instagram').length == 0) formData.delete('instagram')
+    if (formData.get('twitter').length == 0) formData.delete('twitter')
+    formData.set('groupId', group.id);
     try {
-      const res = await axios.post(API, data, headerConfig)
+      const res = await axios.post(API, formData, headerConfig)
       setOpenToaster({type: types.SUCCESS, content: 'Idol agregado correctamente'});
     } catch (error) {
       setOpenToaster({type: types.ERROR, content: 'No se pudo agregar al Idol'});
@@ -79,9 +69,9 @@ const IdolForm = () => {
             deleteProperty(e.target.name);
           }
           break;
-        case 'stageNameKr':
+        case 'koreanStageName':
           if (e.target.value.length <= 1 || e.target.value.length > 10) {
-            setError({...error, stageNameKr: 'El nombre debe tener entre 1 y 10 carácteres'});
+            setError({...error, koreanStageName: 'El nombre debe tener entre 1 y 10 carácteres'});
           } else {
             deleteProperty(e.target.name);
           }
@@ -117,10 +107,10 @@ const IdolForm = () => {
             deleteProperty(e.target.name);
           }
           break;
-        case 'group':
+        case 'groupId':
           const group = groups.find(x => x.name === e.target.value);
           if (group === undefined) {
-            setError({...error, group: 'Selecciona una opción válida'});
+            setError({...error, groupId: 'Selecciona una opción válida'});
           } else {
             deleteProperty(e.target.name);
           }
@@ -142,13 +132,13 @@ const IdolForm = () => {
     const name = formData.get('name');
     const koreanName = formData.get('koreanName');
     const stageName = formData.get('stageName');
-    const stageNameKr = formData.get('stageNameKr');
+    const koreanStageName = formData.get('koreanStageName');
     const birthday = formData.get('birthday');
     const nationality = formData.get('nationality');
     const birthPlace = formData.get('birthPlace');
     const position = formData.get('position');
-    const group = formData.get('group');
-    if (Object.keys(error).length > 0 || name.length === 0 || koreanName.length === 0 || stageName.length === 0 || stageNameKr.length === 0 || birthday.length === 0 || nationality.length === 0 || birthPlace.length === 0 || position.length === 0 || group.length === 0) {
+    const group = formData.get('groupId');
+    if (Object.keys(error).length > 0 || name.length === 0 || koreanName.length === 0 || stageName.length === 0 || koreanStageName.length === 0 || birthday.length === 0 || nationality.length === 0 || birthPlace.length === 0 || position.length === 0 || group.length === 0) {
       setBtnClass(btnClass + ' disable');
     } else {
       setBtnClass('button btn-primary');
@@ -176,9 +166,9 @@ const IdolForm = () => {
           {error.stageName ? <span className='error-msg'>{error.stageName}</span> : <span className='error-msg'>&nbsp;</span>}
         </div>
         <div>
-          <label htmlFor="stageNameKr">Nombre artístico</label>
-          <input type="text" name="stageNameKr" id="stageNameKr" placeholder='Coreano' onBlur={onBlur}/>
-          {error.stageNameKr ? <span className='error-msg'>{error.stageNameKr}</span> : <span className='error-msg'>&nbsp;</span>}
+          <label htmlFor="koreanStageName">Nombre artístico</label>
+          <input type="text" name="koreanStageName" id="koreanStageName" placeholder='Coreano' onBlur={onBlur}/>
+          {error.koreanStageName ? <span className='error-msg'>{error.koreanStageName}</span> : <span className='error-msg'>&nbsp;</span>}
         </div>
       </div>
       <label htmlFor="birthday">Fecha de nacimiento</label>
@@ -199,14 +189,17 @@ const IdolForm = () => {
       <label htmlFor="twitter">Twitter</label>
       <input type="text" name="twitter" id="twitter" onBlur={onBlur}/>
       {error.twitter ? <span className='error-msg'>{error.twitter}</span> : <span className='error-msg'>&nbsp;</span>}
-      <label htmlFor="group">Grupo</label>
-      <input list="group" name="group" onBlur={onBlur}/>
-      {error.group ? <span className='error-msg'>{error.group}</span> : <span className='error-msg'>&nbsp;</span>}
-        <datalist id="group">
+      <label htmlFor="groupId">Grupo</label>
+      <input list="groupId" name="groupId" onBlur={onBlur}/>
+      {error.groupId ? <span className='error-msg'>{error.groupId}</span> : <span className='error-msg'>&nbsp;</span>}
+        <datalist id="groupId">
           {groups.map(group => (
             <option key={group.id} value={group.name} />
           ))}
         </datalist>
+      <label htmlFor="file">Imágenes</label>
+      <label htmlFor="file" className="img-upload button btn-secondary"><img src={upload} alt=""/> <span>Seleccionar fotos</span></label>
+      <input type="file" multiple name="file" id="file"/>
       <button type="button" disabled={Object.keys(error).length > 0} className={btnClass} onClick={handleSubmit}>Agregar Idol</button>
     </form>
   );

@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 import '@styles-components/PhotocardList.scss';
 
 import arrow from '@icons/arrow.svg';
-import handong from '@img/ETE-O2-Handong.png';
 
 const PhotocardList = ({pcType, photocards}) => {
 	const [togglePcSection, setTogglePcSection] = useState(false);
@@ -18,7 +17,7 @@ const PhotocardList = ({pcType, photocards}) => {
 				<div className="photocards-container">
 					{photocards.map(photocard => (
 						<div key={photocard.id} className="photocard-img">
-							<img src={handong} alt="" />
+							<img src={photocard.fileUrl} alt="" />
 						</div>
 					))}
 				</div>

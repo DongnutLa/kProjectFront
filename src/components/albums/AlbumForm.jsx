@@ -32,16 +32,17 @@ const AlbumForm = () => {
 
   const handleSubmit = async (event) => {
     const formData = new FormData(form.current);
-    const group = groups.find(x => x.name === formData.get('group'));
-    const data = {
-      name: formData.get('name'),
-      koreanName: formData.get('koreanName'),
-      releaseDate: formData.get('releaseDate'),
-      producers: formData.get('producers').split(" "),
-      groupId: group !== undefined ? group.id : 0,
-    }
+    const group = groups.find(x => x.name === formData.get('groupId'));
+    formData.set('groupId', group.id);
+    const producers = formData.get('producers').split(" ");
+    formData.delete('producers');
+    producers.forEach(producer => {
+      formData.append('producers[]', producer);
+    });
+    if(formData.get('pcVersion')) formData.delete('pcVersion');
+    
     try {
-      var res = await axios.post(API_ALBUMS, data, headerConfig);
+      var res = await axios.post(API_ALBUMS, formData, headerConfig);
       setOpenToaster({type: types.SUCCESS, content: 'Álbum creado correctamente'});
     } catch (error) {
       setOpenToaster({type: types.ERROR, content: 'Hubo un error al crear el álbum'});
@@ -129,10 +130,10 @@ const AlbumForm = () => {
             deleteProperty(e.target.name);
           }
           break;
-        case 'group':
+        case 'groupId':
           const group = groups.find(x => x.name === e.target.value);
           if (group === undefined) {
-            setError({...error, group: 'Selecciona una opción válida'});
+            setError({...error, groupId: 'Selecciona una opción válida'});
           } else {
             deleteProperty(e.target.name);
           }
@@ -154,7 +155,7 @@ const AlbumForm = () => {
     const name = formData.get('name');
     const koreanName = formData.get('koreanName');
     const releaseDate = formData.get('releaseDate');
-    const group = formData.get('group');
+    const group = formData.get('groupId');
     if (Object.keys(error).length > 0 || name.length === 0 || koreanName.length === 0 || releaseDate.length === 0 || group.length === 0) {
       setBtnClass(btnClass + ' disable');
     } else {
@@ -176,24 +177,24 @@ const AlbumForm = () => {
       <label htmlFor="producers">Productores</label>
       <input type="text" name="producers" id="producers" placeholder="Separados por espacios" onBlur={onBlur}/>
       {error.producers ? <span className='error-msg'>{error.producers}</span> : <span className='error-msg'>&nbsp;</span>}
-      <label htmlFor="group">Grupo</label>
-      <input list="group" name="group" onBlur={onBlur}/>
-      {error.group ? <span className='error-msg'>{error.group}</span> : <span className='error-msg'>&nbsp;</span>}
-        <datalist id="group">
+      <label htmlFor="groupId">Grupo</label>
+      <input list="groupId" name="groupId" onBlur={onBlur}/>
+      {error.groupId ? <span className='error-msg'>{error.groupId}</span> : <span className='error-msg'>&nbsp;</span>}
+        <datalist id="groupId">
           {groups.map(group => (
             <option key={group.id} value={group.name} />
           ))}
         </datalist>
-      <label htmlFor="version">Versiones</label>
+      {/* <label htmlFor="version">Versiones</label>
       <input type="text" name="version" id="version"/>
       <br/>
-      <input type="text" name="version" id="version"/>
-      <label htmlFor="image">Portada</label>
-      <label htmlFor="image" className="img-upload button btn-secondary">
+      <input type="text" name="version" id="version"/> */}
+      <label htmlFor="file">Portadas</label>
+      <label htmlFor="file" className="img-upload button btn-secondary">
         <img src={upload} alt=""/>
         <span>Subir archivo</span>
       </label>
-      <input type="file" name="image" id="image" onChange={onImage}/>
+      <input type="file" multiple name="file" id="file" onChange={onImage}/>
       <img className="img-preview" src={file.img} />
 
       <div className="sub-form-container" onClick={() => setTogglePcTypes(!togglePcTypes)}>

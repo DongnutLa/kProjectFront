@@ -32,19 +32,16 @@ const PhotocardForm = () => {
 
   const handleSubmit = async (event) => {
     const formData = new FormData(form.current);
-    const member = members.find(x => x.stageName === formData.get('member'));
-    const pcType = pcTypes.find(x => x.name === formData.get('pcType'));
-    const album = albums.find(x => x.name === formData.get('album'));
-    const group = groups.find(x => x.name === formData.get('group'));
-    const data = {
-      name: formData.get('name'),
-      memberId: member !== undefined ? member.id : 0,
-      albumId: album !== undefined ? album.id : 0,
-      pcTypeId: pcType !== undefined ? pcType.id : 0,
-      groupId: group !== undefined ? group.id : 0,
-    }
+    const member = members.find(x => x.stageName === formData.get('memberId'));
+    const pcType = pcTypes.find(x => x.name === formData.get('pcTypeId'));
+    const album = albums.find(x => x.name === formData.get('albumId'));
+    const group = groups.find(x => x.name === formData.get('groupId'));
+    formData.set('memberId', member.id);
+    formData.set('pcTypeId', pcType.id);
+    formData.set('albumId', album.id);
+    formData.set('groupId', group.id);
     try {
-      const res = await axios.post(API, data, headerConfig);
+      const res = await axios.post(API, formData, headerConfig);
       setOpenToaster({type: types.SUCCESS, content: 'Photocard creada correctamente'});
     } catch (error) {
       setOpenToaster({type: types.ERROR, content: 'No se pudo crear la photocard'});
@@ -94,34 +91,34 @@ const PhotocardForm = () => {
             deleteProperty(e.target.name);
           }
         break;
-        case 'group':
+        case 'groupId':
           const group = groups.find(x => x.name === e.target.value);
           if (group === undefined) {
-            setError({...error, group: 'Selecciona una opción válida'});
+            setError({...error, groupId: 'Selecciona una opción válida'});
           } else {
             deleteProperty(e.target.name);
           }
         break;
-        case 'album':
+        case 'albumId':
           const album = albums.find(x => x.name === e.target.value);
           if (album === undefined) {
-            setError({...error, album: 'Selecciona una opción válida'});
+            setError({...error, albumId: 'Selecciona una opción válida'});
           } else {
             deleteProperty(e.target.name);
           }
         break;
-        case 'pcType':
+        case 'pcTypeId':
           const pcType = pcTypes.find(x => x.name === e.target.value);
           if (pcType === undefined) {
-            setError({...error, pcType: 'Selecciona una opción válida'});
+            setError({...error, pcTypeId: 'Selecciona una opción válida'});
           } else {
             deleteProperty(e.target.name);
           }
         break;
-        case 'member':
+        case 'memberId':
           const member = members.find(x => x.stageName === e.target.value);
           if (member === undefined) {
-            setError({...error, member: 'Selecciona una opción válida'});
+            setError({...error, memberId: 'Selecciona una opción válida'});
           } else {
             deleteProperty(e.target.name);
           }
@@ -141,15 +138,15 @@ const PhotocardForm = () => {
   useEffect(() => {
     const formData = new FormData(form.current);
     const name = formData.get('name');
-    const member = formData.get('member');
-    const group = formData.get('group');
-    const album = formData.get('album');
-    const pcType = formData.get('pcType');
-    if (Object.keys(error).length > 0 || name.length === 0 || member.length === 0 || group.length === 0 || album.length === 0 || pcType.length === 0) {
+    const member = formData.get('memberId');
+    const group = formData.get('groupId');
+    const album = formData.get('albumId');
+    const pcType = formData.get('pcTypeId');
+    /* if (Object.keys(error).length > 0 || name.length === 0 || member.length === 0 || group.length === 0 || album.length === 0 || pcType.length === 0) {
       setBtnClass(btnClass + ' disable');
     } else {
       setBtnClass('button btn-primary');
-    }
+    } */
   }, [error])
 
   return (
@@ -157,44 +154,44 @@ const PhotocardForm = () => {
       <label htmlFor="name">Nombre de la photocard</label>
       <input type="text" name="name" id="name" onBlur={onBlur}/>
       {error.name ? <span className='error-msg'>{error.name}</span> : <span className='error-msg'>&nbsp;</span>}
-      <label htmlFor="group">Grupo</label>
-      <input list="group" name="group" onChange={handleGroupSelect} onBlur={onBlur}/>
-      {error.group ? <span className='error-msg'>{error.group}</span> : <span className='error-msg'>&nbsp;</span>}
-        <datalist id="group">
+      <label htmlFor="groupId">Grupo</label>
+      <input list="groupId" name="groupId" onChange={handleGroupSelect} onBlur={onBlur}/>
+      {error.groupId ? <span className='error-msg'>{error.groupId}</span> : <span className='error-msg'>&nbsp;</span>}
+        <datalist id="groupId">
           {groups.map(group => (
             <option key={group.id} value={group.name} />
           ))}
         </datalist>
-      <label htmlFor="album">Álbum</label>
-      <input list="album" name="album" onChange={handleAlbumSelect} onBlur={onBlur}/>
-      {error.album ? <span className='error-msg'>{error.album}</span> : <span className='error-msg'>&nbsp;</span>}
-        <datalist id="album">
+      <label htmlFor="albumId">Álbum</label>
+      <input list="albumId" name="albumId" onChange={handleAlbumSelect} onBlur={onBlur}/>
+      {error.albumId ? <span className='error-msg'>{error.albumId}</span> : <span className='error-msg'>&nbsp;</span>}
+        <datalist id="albumId">
           {albums.map(album => (
             <option key={album.id} value={album.name} />
           ))}
         </datalist>
-      <label htmlFor="pcType">Versión de photocard</label>
-      <input list="pcType" name="pcType" onBlur={onBlur}/>
-      {error.pcType ? <span className='error-msg'>{error.pcType}</span> : <span className='error-msg'>&nbsp;</span>}
-        <datalist id="pcType">
+      <label htmlFor="pcTypeId">Versión de photocard</label>
+      <input list="pcTypeId" name="pcTypeId" onBlur={onBlur}/>
+      {error.pcTypeId ? <span className='error-msg'>{error.pcTypeId}</span> : <span className='error-msg'>&nbsp;</span>}
+        <datalist id="pcTypeId">
           {pcTypes.map(pcType => (
             <option key={pcType.id} value={pcType.name} />
           ))}
         </datalist>
-      <label htmlFor="member">Miembro</label>
-      <input list="member" name="member" onBlur={onBlur}/>
-      {error.member ? <span className='error-msg'>{error.member}</span> : <span className='error-msg'>&nbsp;</span>}
-        <datalist id="member">
+      <label htmlFor="memberId">Miembro</label>
+      <input list="memberId" name="memberId" onBlur={onBlur}/>
+      {error.memberId ? <span className='error-msg'>{error.memberId}</span> : <span className='error-msg'>&nbsp;</span>}
+        <datalist id="memberId">
           {members.map(member => (
             <option key={member.id} value={member.stageName} />
           ))}
         </datalist>
-      <label htmlFor="image">Imagen</label>
-      <label htmlFor="image" className="img-upload button btn-secondary">
+      <label htmlFor="file">Imagen</label>
+      <label htmlFor="file" className="img-upload button btn-secondary">
         <img src={upload} alt=""/>
         <span>Subir archivo</span>
       </label>
-      <input type="file" name="image" id="image" onChange={onImage}/>
+      <input type="file" name="file" id="file" onChange={onImage}/>
       <img className="img-preview" src={file.img} />
       <button type="button" disabled={Object.keys(error).length > 0} className={btnClass} onClick={handleSubmit}>Agregar photocard</button>
     </form>

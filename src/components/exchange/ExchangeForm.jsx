@@ -7,9 +7,6 @@ import useGetData from '@hooks/useGetData';
 import '@styles-utils/Forms.scss';
 import '@styles-components/ExchangeForm.scss';
 
-import Handong from '@img/ETE-O2-Handong.png';
-import Siyeon from '@img/ETE-O3-Siyeon.png';
-
 const URL = process.env.API;
 const endpoint = 'idols'
 const API = `${URL}${endpoint}`;
@@ -152,7 +149,7 @@ const ExchangeForm = ({type, func, errors}) => {
         {photocards.map(pc => (
           <Fragment key={pc.id}>
             <input type="radio" className="radio_item" name={`photocard_${type}`} id={`${pc.name}_${type}`} onChange={onChange} value={pc.id} onBlur={onBlur}/>
-            <label htmlFor={`${pc.name}_${type}`} className="label_item" > <img src={Handong}/> </label>
+            <label htmlFor={`${pc.name}_${type}`} className="label_item" > <img src={pc.fileUrl}/> </label>
           </Fragment>
         ))}
       </div>

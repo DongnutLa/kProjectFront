@@ -4,7 +4,6 @@ import '@styles-utils/buttons.scss';
 import '@styles-components/AlbumList.scss';
 
 import dystopia from '@img/DystopiaLoseMyself.jpg';
-
 const GroupList = ({ album }) => {
 
 	return (
@@ -13,7 +12,7 @@ const GroupList = ({ album }) => {
 				<div className="album-card">
 						<div className="album-card__front">
 								<div className="album-card__image">
-										<img src={dystopia} alt="Dystopia"/>
+										<img src={album.filesUrls.length ? album.filesUrls[0] : dystopia} alt={album.name}/>
 								</div>
 								<div className="album-card__body">
 										<h4>{album.name}</h4>
@@ -27,7 +26,7 @@ const GroupList = ({ album }) => {
 								</div>
 								<div className="album-data">
 										<p>Productores:</p>
-										<span>{album.producers.join(', ')}</span>
+										<span>{album.producers && album.producers.join(', ')}</span>
 								</div>
 								<div className="album-data">
 										<p>Canciones:</p>

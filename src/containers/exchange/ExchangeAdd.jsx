@@ -120,9 +120,9 @@ const ExchangeAdd = () => {
       {toggleFormWant && (
         <ExchangeForm type={'want'} key={'want'} func={pc_want} errors={error_want}/>
       )}
-      <label htmlFor="image">Sube una foto de tu photocard</label>
-        <label htmlFor="image" className="img-upload button btn-secondary"><img src={upload} alt=""/> <span>Subir archivo</span></label>
-      <input type="file" name="image" id="image" onChange={onChange}/>
+      <label htmlFor="file">Sube una foto de tu photocard</label>
+        <label htmlFor="file" className="img-upload button btn-secondary"><img src={upload} alt=""/> <span>Subir archivo</span></label>
+      <input type="file" name="file" id="file" onChange={onChange}/>
       <img className="img-preview" src={file.img} />
       <label htmlFor="content">Información adicional</label>
       <textarea name="content" id="content" cols="30" rows="10" placeholder="Escribe aquí el contenido" onChange={onDetails} onBlur={onBlur}></textarea>
