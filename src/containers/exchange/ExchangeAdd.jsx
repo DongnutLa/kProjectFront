@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 import ExchangeForm from '@components/exchange/ExchangeForm';
@@ -28,6 +28,9 @@ const ExchangeAdd = () => {
     pcToId: NaN,
     information: ''
   })
+
+  const form = useRef(null);
+
   const onChange = (e) => {
     if (e.target.files.length < 1) {
       setFile({img: ''});
@@ -53,8 +56,14 @@ const ExchangeAdd = () => {
   }
 
   const onCreateExchange = async () => {
+    const formData = new FormData(form.current);
+    formData.delete('photocard_have');
+    formData.delete('photocard_want');
+    formData.append('userId', pcData.userId);
+    formData.append('pcFromId', pcData.pcFromId);
+    formData.append('pcToId', pcData.pcToId);
     try {
-      const res = await axios.post(API, pcData, headerConfig);
+      const res = await axios.post(API, formData, headerConfig);
       setOpenToaster({type: types.SUCCESS, content: 'Intercambio creado correctamente'});
     } catch (error) {
       setOpenToaster({type: types.ERROR, content: 'No se pudo crear el intercambio'});
@@ -99,7 +108,7 @@ const ExchangeAdd = () => {
   }
 
   return (
-    <form action="">
+    <form action="" ref={form}>
       <div className="sub-form-container" onClick={() => setToggleFormHave(!toggleFormHave)}>
         <p>Datos de la photocard que tienes</p>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right-short" viewBox="0 0 16 16">
@@ -124,9 +133,9 @@ const ExchangeAdd = () => {
         <label htmlFor="file" className="img-upload button btn-secondary"><img src={upload} alt=""/> <span>Subir archivo</span></label>
       <input type="file" name="file" id="file" onChange={onChange}/>
       <img className="img-preview" src={file.img} />
-      <label htmlFor="content">Información adicional</label>
-      <textarea name="content" id="content" cols="30" rows="10" placeholder="Escribe aquí el contenido" onChange={onDetails} onBlur={onBlur}></textarea>
-      {error.content ? <span className='error-msg'>{error.content}</span> : <span className='error-msg'>&nbsp;</span>}
+      <label htmlFor="information">Información adicional</label>
+      <textarea name="information" id="information" cols="30" rows="10" placeholder="Escribe aquí el contenido" onChange={onDetails} onBlur={onBlur}></textarea>
+      {error.information ? <span className='error-msg'>{error.information}</span> : <span className='error-msg'>&nbsp;</span>}
       <button type="button" disabled={Object.keys(error.pcFrom).length > 0 || Object.keys(error.pcTo).length > 0 || Object.keys(error).length > 2} className={btnClass} onClick={onCreateExchange}>¡Crear!</button>
     </form>
   );

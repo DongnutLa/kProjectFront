@@ -112,14 +112,14 @@ const ExchangeForm = ({type, func, errors}) => {
   return (
     <>
       <label htmlFor="GgBg">Boy/Girl group</label>
-      <input list="GgBg" name="GgBg" placeholder="Boy/Girl group"/>
+      <input list="GgBg" placeholder="Boy/Girl group"/>
         <datalist id="GgBg">
           <option value="Girl group"/>
           <option value="Boy group"/>
           <option value="Mixto"/>
         </datalist>
       <label htmlFor="Group">Grupo</label>
-      <input list="Group" name="Group" placeholder="Grupo" onChange={onGroupChange} onBlur={onBlur}/>
+      <input list="Group" placeholder="Grupo" onChange={onGroupChange} onBlur={onBlur}/>
       {error.Group ? <span className='error-msg'>{error.Group}</span> : <span className='error-msg'>&nbsp;</span>}
       <datalist id="Group">
           {groups.map(group => (
@@ -127,7 +127,7 @@ const ExchangeForm = ({type, func, errors}) => {
           ))}
         </datalist>
       <label htmlFor="Album">Álbum</label>
-      <input list="Album" name="Album" placeholder="Álbum" onChange={onAlbumChange} onBlur={onBlur}/>
+      <input list="Album" placeholder="Álbum" onChange={onAlbumChange} onBlur={onBlur}/>
       {error.Album ? <span className='error-msg'>{error.Album}</span> : <span className='error-msg'>&nbsp;</span>}
         <datalist id="Album">
           {albums.map(album => (
@@ -135,7 +135,7 @@ const ExchangeForm = ({type, func, errors}) => {
           ))}
         </datalist>
       <label htmlFor="Member">Miembro</label>
-      <input list="Member" name="Member" placeholder="Miembro" onChange={onMemberChange} onBlur={onBlur}/>
+      <input list="Member" placeholder="Miembro" onChange={onMemberChange} onBlur={onBlur}/>
       {error.Member ? <span className='error-msg'>{error.Member}</span> : <span className='error-msg'>&nbsp;</span>}
         <datalist id="Member">
           {members.map(member => (
