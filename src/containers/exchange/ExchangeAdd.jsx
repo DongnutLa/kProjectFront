@@ -21,6 +21,7 @@ const ExchangeAdd = () => {
   const [error, setError] = useState({pcFrom: {}, pcTo: {}})
   const [toggleFormHave, setToggleFormHave] = useState(false);
   const [toggleFormWant, setToggleFormWant] = useState(false);
+  const [labels, setLabels] = useState([]);
   const [file, setFile] = useState({});
   const [pcData, setPcData] = useState({
     userId: userData.id,
@@ -62,6 +63,11 @@ const ExchangeAdd = () => {
     formData.append('userId', pcData.userId);
     formData.append('pcFromId', pcData.pcFromId);
     formData.append('pcToId', pcData.pcToId);
+    if(labels.length > 0) {
+      labels.forEach(tag => {
+        formData.append('tags[]', tag);
+      })
+    }
     try {
       const res = await axios.post(API, formData, headerConfig);
       setOpenToaster({type: types.SUCCESS, content: 'Intercambio creado correctamente'});
@@ -85,19 +91,28 @@ const ExchangeAdd = () => {
     }
   }, [error, pcData])
 
+  useEffect(() => {
+    if (labels.length === 0) setError({...error, labels: 'Este campo es obligatorio*'});
+    if (labels.length > 0) deleteProperty('labels');
+  }, [labels])
+
   const onBlur = (e) => {
-    switch (e.target.name) {
-      case 'content':
-        if (e.target.value.length < 10) {
-          setError({...error, content: 'El contenido debe ser mayor a 10 carácteres'});
-        } else if (e.target.value.length > 400) {
-          setError({...error, content: 'El contenido debe ser menor a 400 carácteres'});
-        } else {
-          deleteProperty(e.target.name);
-        }
-        break;
-      default:
-        break;
+    if (labels.length === 0 && e.target.value.length === 0) {
+      setError({...error, [e.target.name]: 'Este campo es obligatorio*'});
+    } else {
+      switch (e.target.name) {
+        case 'content':
+          if (e.target.value.length < 10) {
+            setError({...error, content: 'El contenido debe ser mayor a 10 carácteres'});
+          } else if (e.target.value.length > 400) {
+            setError({...error, content: 'El contenido debe ser menor a 400 carácteres'});
+          } else {
+            deleteProperty(e.target.name);
+          }
+          break;
+        default:
+          break;
+      }
     }
   }
 
@@ -105,6 +120,28 @@ const ExchangeAdd = () => {
     const errorState = JSON.parse(JSON.stringify(error));
     delete errorState[prop];
     setError(errorState)
+  }
+
+  const onLabels = (e) => {
+    const validTag = new RegExp(/^[A-Za-z0-9]{3,20}$/);
+    if (e.target.value.includes(' ')) {
+      const value = e.target.value.split(' ', 1).join();
+      if (!validTag.test(value)) {
+        setError({...error, labels: 'La etiqueta debe ser mayor a 2 carácteres y menor a 20'});
+        e.target.value = value;
+      } else {
+        deleteProperty(e.target.name);
+        setLabels([...labels, value]);
+        e.target.value = '';
+      }
+    }
+  }
+
+  const onDeleteLabel = (e) => {
+    const values = [...labels];
+    const index = values.indexOf(e.target.textContent)
+    values.splice(index, 1);
+    setLabels(values);
   }
 
   return (
@@ -133,6 +170,14 @@ const ExchangeAdd = () => {
         <label htmlFor="file" className="img-upload button btn-secondary"><img src={upload} alt=""/> <span>Subir archivo</span></label>
       <input type="file" name="file" id="file" onChange={onChange}/>
       <img className="img-preview" src={file.img} />
+      <label htmlFor="labels">Etiquetas</label>
+      <input type="text" id="labels" placeholder="Separadas por espacios" onChange={onLabels} onBlur={onBlur}/>
+      {error.labels && <span className='error-msg'>{error.labels}</span>}
+      <div className='labels-container'>
+        {labels.map((label, index) => (
+          <span className='labels-name' id={index} key={index} onClick={onDeleteLabel}>{label}</span>
+        ))}
+      </div>
       <label htmlFor="information">Información adicional</label>
       <textarea name="information" id="information" cols="30" rows="10" placeholder="Escribe aquí el contenido" onChange={onDetails} onBlur={onBlur}></textarea>
       {error.information ? <span className='error-msg'>{error.information}</span> : <span className='error-msg'>&nbsp;</span>}

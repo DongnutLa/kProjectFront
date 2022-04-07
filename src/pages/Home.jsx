@@ -7,8 +7,8 @@ import '@styles-pages/Home.scss';
 const Home = () => {
   return (
     <>
-      {/* <Head /> */}
         <div className='Home'>
+          <Head />
           <About />
           <News />
         </div>

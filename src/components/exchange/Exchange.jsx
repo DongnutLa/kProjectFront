@@ -18,33 +18,35 @@ const Exchange = ({ exchange }) => {
   return (
     <>
       <div className="exchange-card">
-        <div className="card-title">
-          <h4>Tengo</h4>
-          <h4>Quiero</h4>
-        </div>
-        <div className="card-main">
-          <div className="card-main__have" style={{ backgroundImage: `url("${pcHave}")` }}>
+        <div>
+          <div className="card-title">
+            <h4>Tengo</h4>
+            <h4>Quiero</h4>
           </div>
-          <img src={exch} alt="exchange logo"/>
-          <div className="card-main__want" style={{ backgroundImage: `url("${pcWant}")` }}>
-          </div>
-        </div>
-        <div className="card-data">
-          <div className="card-data__labels">
-            {exchange.tags && exchange.tags.map(tag => (
-              <span key={tag} >{tag}</span>
-            ))}
-          </div>
-          <div className="card-data__info">
-            <div>
-                <p>{exchange.user.username}</p>
-                <p>&#8226;</p>
-                <p>Bogotá</p>
+          <div className="card-main">
+            <div className="card-main__have" style={{ backgroundImage: `url("${pcHave}")` }}>
             </div>
-            <span>{creationDate}</span>
+            <img src={exch} alt="exchange logo"/>
+            <div className="card-main__want" style={{ backgroundImage: `url("${pcWant}")` }}>
+            </div>
           </div>
-          <div className="card-data__description">
-            <p>{exchange.information}</p>
+          <div className="card-data">
+            <div className="card-data__labels">
+              {exchange.tags && exchange.tags.map(tag => (
+                <span key={tag} >{tag}</span>
+              ))}
+            </div>
+            <div className="card-data__info">
+              <div>
+                  <p>{exchange.user.username}</p>
+                  <p>&#8226;</p>
+                  <p>Bogotá</p>
+              </div>
+              <span>{creationDate}</span>
+            </div>
+            <div className="card-data__description">
+              <p>{exchange.information}</p>
+            </div>
           </div>
         </div>
         <div className="card-data__buttons">

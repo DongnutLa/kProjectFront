@@ -51,8 +51,9 @@
     justify-content: space-between;
     width: 100%;
     height: 100%;
-    -webkit-backface-visibility: hidden; /* Safari */
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden; /* Safari */
+    transform: rotateX(0deg);
 }
 
 .album-container .album-card .album-card__back {
