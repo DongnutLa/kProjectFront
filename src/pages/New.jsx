@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
 import NewView from '@components/news/NewView';
+import AuthContext from '@context/AuthContext';
 
 const New = () => {
+  const { userPermissions } = useContext(AuthContext);
+  
   return (
     <>
-      <section className="new">
-        <NewView />
-      </section>
+      {userPermissions.includes('VIEW_NEWS') ? 
+        <section className="new">
+          <NewView />
+        </section> :
+        <p>Inicia sesión para acceder a esta página :D</p>
+      }
     </>
   );
 }

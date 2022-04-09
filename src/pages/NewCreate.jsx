@@ -4,15 +4,14 @@ import NewForm from '@components/news/NewForm';
 import AuthContext from '@context/AuthContext';
 
 const NewCreate = () => {
-  const { userRole } = useContext(AuthContext);
+  const { userPermissions } = useContext(AuthContext);
   return (
     <>
-      {userRole.isEditor || userRole.isAdmin ? (
+      {userPermissions.includes('EDIT_NEWS') ? 
         <section className="new-form">
           <h4>Nueva noticia</h4>
           <NewForm />
-        </section>
-      ) :
+        </section> :
         <p>Inicia sesión para acceder a esta página :D</p>
       }
     </>

@@ -14,18 +14,22 @@ const pagination = {
 const API = `${URL}${endpoint}?limit=${pagination.limit}&offset=${pagination.offset}`;
 
 const News = () => {
-  const { headerConfig } = useContext(AuthContext);
+  const { headerConfig, userPermissions } = useContext(AuthContext);
   const news = useGetData(API, headerConfig);
 
   return (
-    <section className="news">
-      <h2>Lo nuevo en K-Pop</h2>
-      <div className="news-container">
-        {news.map(item => (
-          <New item={item} key={item.id} />
-        ))}
-      </div>
-    </section>
+    <>
+      {userPermissions.includes('VIEW_NEWS') &&
+        <section className="news">
+          <h2>Lo nuevo en K-Pop</h2>
+          <div className="news-container">
+            {news.map(item => (
+              <New item={item} key={item.id} />
+            ))}
+          </div>
+        </section>
+      }
+    </>
   );
 }
 

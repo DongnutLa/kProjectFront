@@ -4,11 +4,10 @@ import GroupForm from '@components/groups/GroupForm';
 import AuthContext from '@context/AuthContext';
 
 const GroupAdd = () => {
-  const { userRole } = useContext(AuthContext);
-
+  const { userPermissions } = useContext(AuthContext);
   return (
     <>
-      {userRole.isAdmin ? 
+      {userPermissions.includes('EDIT_GROUPS') ? 
         <section className="new-form">
           <h4>Agregar grupo</h4>
           <GroupForm />

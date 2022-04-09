@@ -4,11 +4,11 @@ import AuthContext from '@context/AuthContext';
 import ExchangeAdd from '@containers/exchange/ExchangeAdd';
 
 const ExchangeCreate = () => {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { userPermissions } = useContext(AuthContext);
 
   return (
     <>
-      { isAuthenticated ? (
+      { userPermissions.includes('EDIT_EXCHANGES') ? (
         <section className="new-form">
           <h4>Nuevo intercambio</h4>
           <ExchangeAdd />

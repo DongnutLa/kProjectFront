@@ -9,7 +9,7 @@ const URL = process.env.API;
 const endpoint = 'albums'
 
 const Albums = () => {
-  const { headerConfig } = useContext(AuthContext);
+  const { headerConfig, userPermissions } = useContext(AuthContext);
   const { groupId } = useParams();
 
 	const API = `${URL}${endpoint}/group/${groupId}`;
@@ -17,14 +17,16 @@ const Albums = () => {
 
   return (
     <>
-			<section className="albums">
-				<h2>Álbumes</h2>
-				<article className="albums-section">
-					{albums.map(album => (
-						<AlbumList key={album.id} album={album}/>
-					))}
-				</article>
-			</section>
+      {userPermissions.includes('VIEW_ALBUMS') ? 
+				<section className="albums">
+					<h2>Álbumes</h2>
+					<article className="albums-section">
+						{albums.map(album => (
+							<AlbumList key={album.id} album={album}/>
+						))}
+					</article>
+				</section>
+			: <p>Inicia sesión para acceder a esta página :D</p>}
     </>
   );
 }

@@ -11,7 +11,7 @@ import '@styles-components/Sidebar.scss';
 const Sidebar = () => {
   const navigate = useNavigate();
 
-  const { deleteAuthData, userData, isAuthenticated } = useContext(AuthContext);
+  const { deleteAuthData, userData, isAuthenticated, userPermissions } = useContext(AuthContext);
   const { toggleLogin, toggleSignup, modalState } = useContext(ModalContext);
 
   const onLogout = () => {
@@ -24,9 +24,13 @@ const Sidebar = () => {
       <div className="sidebar">
         <ul className="sidebar__up">
           <li><a onClick={() => navigate('/')}>Inicio</a></li>
-          <li><a onClick={() => navigate('/news')}>Noticias</a></li>
-          <li><a onClick={() => navigate('/exchange')}>Intercambios</a></li>
-          <li><a onClick={() => navigate('/store')}>Ventas</a></li>
+          {userPermissions.includes('VIEW_GROUPS') &&
+            <li><a onClick={() => navigate('/groups')}>Grupos</a></li>
+          }
+          {userPermissions.includes('VIEW_EXCHANGES') &&
+            <li><a onClick={() => navigate('/exchange')}>Intercambios</a></li>
+          }
+          {/* <li><a onClick={() => navigate('/store')}>Ventas</a></li> */}
         </ul>
         <ul className="sidebar__down">
           {!isAuthenticated && (

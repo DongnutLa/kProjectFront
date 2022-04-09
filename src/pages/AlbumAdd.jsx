@@ -4,11 +4,11 @@ import AlbumForm from '@components/albums/AlbumForm';
 import AuthContext from '@context/AuthContext';
 
 const AlbumAdd = () => {
-  const { userRole } = useContext(AuthContext);
+  const { userPermissions } = useContext(AuthContext);
 
   return (
     <>
-      {userRole.isAdmin ? 
+      {userPermissions.includes('EDIT_ALBUMS') ? 
         <section className="new-form">
           <h4>Agregar álbum</h4>
           <AlbumForm />

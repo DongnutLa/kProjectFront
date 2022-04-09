@@ -4,11 +4,11 @@ import AuthContext from '@context/AuthContext';
 import SongForm from '@components/songs/SongForm';
 
 const SongAdd = () => {
-  const { userRole } = useContext(AuthContext);
+  const { userPermissions } = useContext(AuthContext);
 
   return (
     <>
-      {userRole.isAdmin ? 
+      {userPermissions.includes('EDIT_SONGS') ? 
         <section className="new-form">
           <h4>Agregar canción</h4>
           <SongForm />

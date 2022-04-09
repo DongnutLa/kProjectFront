@@ -4,11 +4,11 @@ import IdolForm from '@components/idols/IdolForm';
 import AuthContext from '@context/AuthContext';
 
 const IdolAdd = () => {
-  const { userRole } = useContext(AuthContext);
+  const { userPermissions } = useContext(AuthContext);
   
   return (
     <>
-      {userRole.isAdmin ? 
+      {userPermissions.includes('EDIT_IDOLS') ? 
         <section className="new-form">
           <h4>Agregar idol</h4>
           <IdolForm />

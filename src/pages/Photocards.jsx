@@ -10,7 +10,7 @@ const endpoint = 'photocards';
 const endpointTypes = 'pctypes';
 
 const Photocards = () => {
-  const { headerConfig } = useContext(AuthContext);
+  const { headerConfig, userPermissions } = useContext(AuthContext);
   const { group, groupId } = useParams();
 	
 	const API = `${URL}${endpoint}/group/${groupId}`;
@@ -20,12 +20,15 @@ const Photocards = () => {
 
   return (
     <>
-			<section className="photocards">
-				<h2>Photocards - {group}</h2>
-				{pcTypes.map(pcType => (
-					<PhotocardList key={pcType.id} pcType={pcType} photocards={photocards.filter(x => x.pcTypeId === pcType.id)}/>
-				))}
-			</section>
+      {userPermissions.includes('VIEW_PHOTOCARDS') ? 
+        <section className="photocards">
+          <h2>Photocards - {group}</h2>
+          {pcTypes.map(pcType => (
+            <PhotocardList key={pcType.id} pcType={pcType} photocards={photocards.filter(x => x.pcTypeId === pcType.id)}/>
+          ))}
+        </section> : 
+        <p>Inicia sesión para acceder a esta página :D</p>
+      }
     </>
   );
 }

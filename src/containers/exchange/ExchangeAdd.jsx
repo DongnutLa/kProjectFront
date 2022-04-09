@@ -14,7 +14,7 @@ const endpoint = 'exchanges'
 const API = `${URL}${endpoint}`;
 
 const ExchangeAdd = () => {
-  const { headerConfig, userData } = useContext(AuthContext);
+  const { headerConfig, userData, userPermissions } = useContext(AuthContext);
   const { types, setOpenToaster } = useContext(ToasterContext);
 
   const [btnClass, setBtnClass] = useState('button btn-primary');
@@ -181,7 +181,9 @@ const ExchangeAdd = () => {
       <label htmlFor="information">Información adicional</label>
       <textarea name="information" id="information" cols="30" rows="10" placeholder="Escribe aquí el contenido" onChange={onDetails} onBlur={onBlur}></textarea>
       {error.information ? <span className='error-msg'>{error.information}</span> : <span className='error-msg'>&nbsp;</span>}
-      <button type="button" disabled={Object.keys(error.pcFrom).length > 0 || Object.keys(error.pcTo).length > 0 || Object.keys(error).length > 2} className={btnClass} onClick={onCreateExchange}>¡Crear!</button>
+      {userPermissions.includes('EDIT_EXCHANGES') ?
+        <button type="button" disabled={Object.keys(error.pcFrom).length > 0 || Object.keys(error.pcTo).length > 0 || Object.keys(error).length > 2} className={btnClass} onClick={onCreateExchange}>¡Crear!</button> 
+      : <p>No tienes permisos para crear un intercambio</p>}
     </form>
   );
 }

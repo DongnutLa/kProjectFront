@@ -15,7 +15,7 @@ import menu from '@icons/menu.svg';
 const Header = () => {
   const navigate = useNavigate();
 
-  const { deleteAuthData, userData, isAuthenticated } = useContext(AuthContext);
+  const { deleteAuthData, userData, isAuthenticated, userPermissions } = useContext(AuthContext);
   const { modalState, toggleLogin, toggleSignup } = useContext(ModalContext);
 
   const [menuState, setMenuState] = useState(false);
@@ -33,9 +33,13 @@ const Header = () => {
             <img src={logo} alt="logo"/>
             <ul>
               <li onClick={() => navigate('/')}><a>Inicio</a></li>
-              <li onClick={() => navigate('/groups')}><a>Grupos</a></li>
-              <li onClick={() => navigate('/exchange')}><a>Intercambios</a></li>
-              <li onClick={() => navigate('/store')}><a>Ventas</a></li>
+              {userPermissions.includes('VIEW_GROUPS') &&
+                <li onClick={() => navigate('/groups')}><a>Grupos</a></li>
+              }
+              {userPermissions.includes('VIEW_EXCHANGES') &&
+                <li onClick={() => navigate('/exchange')}><a>Intercambios</a></li>
+              }
+              {/* <li onClick={() => navigate('/store')}><a>Ventas</a></li> */}
             </ul>
           </div>
           <ul className="navbar-item__right">

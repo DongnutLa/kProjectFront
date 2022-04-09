@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import AuthContext from '@context/AuthContext';
 
 import '@styles-components/Filter.scss';
 
 const Filter = () => {
+  const { userPermissions } = useContext(AuthContext);
   const navigate = useNavigate();
 
   return (
     <div className="exchange__filters">
-      <a onClick={() => navigate('/exchange/create')}><span>¿Crear un intercambio?</span></a>
+      {userPermissions.includes('EDIT_EXCHANGES') && 
+        <a onClick={() => navigate('/exchange/create')}><span>¿Crear un intercambio?</span></a>
+      }
       <p>Filtrar</p>
       <form action="">
         <input list="GgBg" name="GgBg" placeholder="Boy/Girl group" />
