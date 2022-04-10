@@ -28,9 +28,17 @@
     border-radius: 12px;
 }
 .modal-form .form-container form {
+    min-width: 236px;
     display: flex;
     flex-direction: column;
+    &.login {
+        max-width: 250px;
+    }
+    &.signup {
+        max-width: 390px;
+    }
 }
+
 .modal-form .form-container > span {
     font-size: var(--text);
     color: var(--blue);

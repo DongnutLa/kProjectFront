@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AuthContext from '@context/AuthContext';
 import ModalContext from '@context/ModalContext';
@@ -36,25 +36,27 @@ const App = () => {
       <ModalContext.Provider value={modalState}>
         <ToasterContext.Provider value={toasterState}>
           <BrowserRouter>
-            <Layout>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/exchange" element={<Exchange />} />
-                <Route path="/exchange/create" element={<ExchangeCreate />} />
-                <Route path="/new/:newId" element={<New />} />
-                <Route path="/news/:tag" element={<NewsTag />} />
-                <Route path="/new/create" element={<NewCreate />} />
-                <Route path="/groups" element={<Groups />} />
-                <Route path="/groups/add" element={<GroupAdd />} />
-                <Route path="/idols/add" element={<IdolAdd />} />
-                <Route path="/albums/:groupId" element={<Albums />} />
-                <Route path="/albums/add" element={<AlbumAdd />} />
-                <Route path="/songs/add" element={<SongAdd />} />
-                <Route path="/photocards/:group/:groupId" element={<Photocards />} />
-                <Route path="/photocards/add" element={<PhotocardAdd />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Layout>
+            <Suspense fallback="Loading translations...">
+              <Layout>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/exchange" element={<Exchange />} />
+                  <Route path="/exchange/create" element={<ExchangeCreate />} />
+                  <Route path="/new/:newId" element={<New />} />
+                  <Route path="/news/:tag" element={<NewsTag />} />
+                  <Route path="/new/create" element={<NewCreate />} />
+                  <Route path="/groups" element={<Groups />} />
+                  <Route path="/groups/add" element={<GroupAdd />} />
+                  <Route path="/idols/add" element={<IdolAdd />} />
+                  <Route path="/albums/:groupId" element={<Albums />} />
+                  <Route path="/albums/add" element={<AlbumAdd />} />
+                  <Route path="/songs/add" element={<SongAdd />} />
+                  <Route path="/photocards/:group/:groupId" element={<Photocards />} />
+                  <Route path="/photocards/add" element={<PhotocardAdd />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Layout>
+            </Suspense>
           </BrowserRouter>
         </ToasterContext.Provider>
       </ModalContext.Provider >

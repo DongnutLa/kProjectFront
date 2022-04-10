@@ -1,4 +1,5 @@
 import React, { useRef, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -16,6 +17,7 @@ const endpoint = 'auth/login'
 const API = `${URL}${endpoint}`;
 
 const Login = () => {
+  const { t } = useTranslation(['home']);
   const { types, setOpenToaster } = useContext(ToasterContext);
   const { saveAuthData, getAuthData, headerConfig } = useContext(AuthContext);
   const { toggleLogin } = useContext(ModalContext);
@@ -45,17 +47,17 @@ const Login = () => {
         <div className="form-container">
           <span onClick={() => toggleLogin()}>X</span>
           <img src={kpopColor} alt="Logo K-project"/>
-          <form action="" ref={form}>
-            <label htmlFor="username">Nombre de usuario</label>
+          <form action="" ref={form} className="login">
+            <label htmlFor="username">{t('login.username')}</label>
             <input type="text" name="username" id="username"/>
-            <label htmlFor="password">Contraseña</label>
+            <label htmlFor="password">{t('login.password')}</label>
             <input type="password" name="password" id="password"/>
             <button className="button btn-primary" 
               type="button" 
               onClick={handleSubmit}>
-                Iniciar sesión
+                {t('login.login')}
             </button>
-            <span>¿No tienes cuenta?, <a href="">¡Crea una!</a></span>
+            <span>{t('login.no_account')} <a href="">{t('login.create')}</a></span>
           </form>
         </div>
       </div>

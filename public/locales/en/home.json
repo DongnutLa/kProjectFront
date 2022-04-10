@@ -1,0 +1,74 @@
+{
+  "header": {
+    "home": "Home",
+    "groups": "Groups",
+    "exchanges": "Exchanges",
+    "login": "Login",
+    "signup": "Signup",
+    "logout": "Logout"
+  },
+  "footer": {
+    "site": {
+      "title": "Site",
+      "home": "Home",
+      "groups": "Groups",
+      "exchange": "Exchange"
+    },
+    "info": {
+      "title": "Information",
+      "about": "About",
+      "terms": "Terms and conditions",
+      "privacy": "Privacy policy",
+      "cookies": "Cookies usage"
+    },
+    "links": {
+      "exchange": "Exchange, sell and buy k-pop merch",
+      "news": "Get the latest news"
+    }
+  },
+  "home": {
+    "head": {
+      "exchange": "Exchange, sell and buy k-pop merch"
+    },
+    "news": {
+      "title": "New on K-Pop"
+    }
+  },
+  "about": {
+    "exchange": {
+      "title": "Exchange!",
+      "text": "You can exchange K-pop merch, find photocards you have been looking for",
+      "button": "Enter!"
+    },
+    "sells": {
+      "title": "Sell!",
+      "text": "You can sell K-pop merchandise and buy what you have been looking for",
+      "button": "Enter!"
+    },
+    "news": {
+      "title": "Find out!",
+      "text": "There will be news about K-pop world and more!",
+      "button": "Enter!"
+    }
+  },
+  "login": {
+    "username": "Username",
+    "password": "Password",
+    "login": "Login",
+    "no_account": "Not registered?, ",
+    "create": "Sign up!"
+  },
+  "signup": {
+    "name": "Name",
+    "lastname": "Lastname",
+    "birthday": "Birthday",
+    "username": "Username",
+    "email": "E-mail",
+    "password": "Password",
+    "password_confirm": "Confirm password",
+    "signup": "Signup",
+    "have_account": "Have account?, ",
+    "login": "Login!"
+    
+  }
+}
