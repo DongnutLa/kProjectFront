@@ -1,18 +1,20 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import AuthContext from '@context/AuthContext';
 
 import '@styles-components/Filter.scss';
 
 const Filter = () => {
+  const { t } = useTranslation(['exchanges']);
   const { userPermissions } = useContext(AuthContext);
   const navigate = useNavigate();
 
   return (
     <div className="exchange__filters">
       {userPermissions.includes('EDIT_EXCHANGES') && 
-        <a onClick={() => navigate('/exchange/create')}><span>¿Crear un intercambio?</span></a>
+        <a onClick={() => navigate('/exchange/create')}><span>{t('home.create')}</span></a>
       }
       <p>Filtrar</p>
       <form action="">

@@ -1,5 +1,6 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 import useGetData from '@hooks/useGetData';
 import AuthContext from '@context/AuthContext';
@@ -17,6 +18,7 @@ const API_GROUPS = `${URL}groups`;
 const API_PCTYPE = `${URL}pctypes`;
 
 const AlbumForm = () => {
+  const { t } = useTranslation(['albums', 'validations', 'toaster']);
   const { headerConfig } = useContext(AuthContext);
   const { types, setOpenToaster } = useContext(ToasterContext);
 
@@ -43,9 +45,9 @@ const AlbumForm = () => {
     
     try {
       var res = await axios.post(API_ALBUMS, formData, headerConfig);
-      setOpenToaster({type: types.SUCCESS, content: 'Álbum creado correctamente'});
+      setOpenToaster({type: types.SUCCESS, content: t('albums.success', { ns: 'toaster' })});
     } catch (error) {
-      setOpenToaster({type: types.ERROR, content: 'Hubo un error al crear el álbum'});
+      setOpenToaster({type: types.ERROR, content: t('albums.error', { ns: 'toaster' })});
     }
     
     pctypeField.forEach(async (item) => {
@@ -57,9 +59,9 @@ const AlbumForm = () => {
         }
         try {
           const resPt = await axios.post(API_PCTYPE, sendData, headerConfig);
-          setOpenToaster({type: types.SUCCESS, content: 'Versiones de photocards creadas correctamente'});
+          setOpenToaster({type: types.SUCCESS, content: t('pc_types.success', { ns: 'toaster' })});
         } catch (error) {
-          setOpenToaster({type: types.ERROR, content: 'Hubo un error al crear las versiones de photocards'});
+          setOpenToaster({type: types.ERROR, content: t('pc_types.error', { ns: 'toaster' })});
         }
       }
     });
@@ -96,19 +98,19 @@ const AlbumForm = () => {
     const today = parseInt(new Date().toISOString().split('-', 1).join());
 
     if (e.target.value.length === 0 && e.target.name !== 'producers') {
-        setError({...error, [e.target.name]: 'Este campo es obligatorio*'});
+        setError({...error, [e.target.name]: t('required', { ns: 'validations' })});
     } else {
       switch (e.target.name) {
         case 'name':
           if (e.target.value.length < 3 || e.target.value.length > 20) {
-            setError({...error, name: 'El nombre debe tener entre 3 y 20 carácteres'});
+            setError({...error, name: t('albums.name', { ns: 'validations' })});
           } else {
             deleteProperty(e.target.name);
           }
           break;
         case 'koreanName':
           if (e.target.value.length <= 1 || e.target.value.length > 10) {
-            setError({...error, koreanName: 'El nombre debe tener entre 1 y 10 carácteres'});
+            setError({...error, koreanName: t('albums.korean_name', { ns: 'validations' })});
           } else {
             deleteProperty(e.target.name);
           }
@@ -116,16 +118,16 @@ const AlbumForm = () => {
         case 'releaseDate':
           const year = parseInt(e.target.value.split('-', 1).join());
           if (!dateValid.test(e.target.value)) {
-            setError({...error, releaseDate: 'La fecha no es válida'});
+            setError({...error, releaseDate: t('invalid_date', { ns: 'validations' })});
           } else if (year < 1990 || year > today) {
-            setError({...error, releaseDate: `El año debe ser mayor a 1990 y menor a ${today}`});
+            setError({...error, releaseDate: t('albums.release', { ns: 'validations', today: today })});
           } else {
             deleteProperty(e.target.name);
           }
           break;
         case 'producers':
           if (e.target.value.length < 3 && e.target.value.length > 0) {
-            setError({...error, producers: 'Debe haber al menos un productor mayor a 3 dígitos'});
+            setError({...error, producers: t('albums.producers', { ns: 'validations' })});
           } else {
             deleteProperty(e.target.name);
           }
@@ -133,7 +135,7 @@ const AlbumForm = () => {
         case 'groupId':
           const group = groups.find(x => x.name === e.target.value);
           if (group === undefined) {
-            setError({...error, groupId: 'Selecciona una opción válida'});
+            setError({...error, groupId: t('invalid_option', { ns: 'validations' })});
           } else {
             deleteProperty(e.target.name);
           }
@@ -165,19 +167,19 @@ const AlbumForm = () => {
 
   return (
     <form action="" ref={form}>
-      <label htmlFor="name">Nombre del album</label>
+      <label htmlFor="name">{t('form.name')}</label>
       <input type="text" name="name" id="name" onBlur={onBlur}/>
       {error.name ? <span className='error-msg'>{error.name}</span> : <span className='error-msg'>&nbsp;</span>}
-      <label htmlFor="koreanName">Nombre coreano del álbum</label>
+      <label htmlFor="koreanName">{t('form.korean_name')}</label>
       <input type="text" name="koreanName" id="koreanName" onBlur={onBlur}/>
       {error.koreanName ? <span className='error-msg'>{error.koreanName}</span> : <span className='error-msg'>&nbsp;</span>}
-      <label htmlFor="releaseDate">Fecha de lanzamiento</label>
+      <label htmlFor="releaseDate">{t('form.release')}</label>
       <input type="date" name="releaseDate" id="releaseDate" onBlur={onBlur}/>
       {error.releaseDate ? <span className='error-msg'>{error.releaseDate}</span> : <span className='error-msg'>&nbsp;</span>}
-      <label htmlFor="producers">Productores</label>
-      <input type="text" name="producers" id="producers" placeholder="Separados por espacios" onBlur={onBlur}/>
+      <label htmlFor="producers">{t('form.producers')}</label>
+      <input type="text" name="producers" id="producers" placeholder={t('form.producers_placeholder')} onBlur={onBlur}/>
       {error.producers ? <span className='error-msg'>{error.producers}</span> : <span className='error-msg'>&nbsp;</span>}
-      <label htmlFor="groupId">Grupo</label>
+      <label htmlFor="groupId">{t('form.group')}</label>
       <input list="groupId" name="groupId" onBlur={onBlur}/>
       {error.groupId ? <span className='error-msg'>{error.groupId}</span> : <span className='error-msg'>&nbsp;</span>}
         <datalist id="groupId">
@@ -189,16 +191,16 @@ const AlbumForm = () => {
       <input type="text" name="version" id="version"/>
       <br/>
       <input type="text" name="version" id="version"/> */}
-      <label htmlFor="file">Portadas</label>
+      <label htmlFor="file">{t('form.cover_page')}</label>
       <label htmlFor="file" className="img-upload button btn-secondary">
         <img src={upload} alt=""/>
-        <span>Subir archivo</span>
+        <span>{t('form.upload')}</span>
       </label>
       <input type="file" multiple name="file" id="file" onChange={onImage}/>
       <img className="img-preview" src={file.img} />
 
       <div className="sub-form-container" onClick={() => setTogglePcTypes(!togglePcTypes)}>
-        <p>Versiones de photocards</p>
+        <p>{t('form.pc_type')}</p>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right-short" viewBox="0 0 16 16">
           <path fillRule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
         </svg>
@@ -213,15 +215,15 @@ const AlbumForm = () => {
         ))}
           <div className="form__divided">
             <a 
-              onClick={() => setPctypeField([...pctypeField, {name: "pcVersion"}])}>Agregar
+              onClick={() => setPctypeField([...pctypeField, {name: "pcVersion"}])}>{t('form.pc_type_add')}
             </a>
             <a 
-              onClick={() => onDeleteInput()}>Borrar último
+              onClick={() => onDeleteInput()}>{t('form.pc_type_delete')}
             </a>
           </div>
         </>
       )}
-      <button type="button" disabled={Object.keys(error).length > 0} className={btnClass} onClick={handleSubmit}>Agregar álbum</button>
+      <button type="button" disabled={Object.keys(error).length > 0} className={btnClass} onClick={handleSubmit}>{t('form.button')}</button>
     </form>
   );
 }

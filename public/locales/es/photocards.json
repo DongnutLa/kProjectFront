@@ -1,0 +1,14 @@
+{
+  "title": "Photocards",
+  "add_photocard": "Agregar photocard",
+  "form": {
+    "name": "Nombre de la photocard",
+    "group": "Grupo",
+    "album": "Álbum",
+    "pc_type": "Versión de photocard",
+    "member": "Miembro",
+    "image": "Imagen",
+    "upload": "Subir archivo",
+    "button": "Agregar photocard"
+  }
+}

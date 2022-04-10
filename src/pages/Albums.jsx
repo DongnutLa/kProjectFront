@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import AlbumList from '@components/albums/AlbumList';
 import useGetData from '@hooks/useGetData';
@@ -9,6 +10,7 @@ const URL = process.env.API;
 const endpoint = 'albums'
 
 const Albums = () => {
+	const { t } = useTranslation(['albums']);
   const { headerConfig, userPermissions } = useContext(AuthContext);
   const { groupId } = useParams();
 
@@ -19,7 +21,7 @@ const Albums = () => {
     <>
       {userPermissions.includes('VIEW_ALBUMS') ? 
 				<section className="albums">
-					<h2>Álbumes</h2>
+					<h2>{t('title')}</h2>
 					<article className="albums-section">
 						{albums.map(album => (
 							<AlbumList key={album.id} album={album}/>

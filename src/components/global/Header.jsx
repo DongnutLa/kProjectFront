@@ -30,6 +30,7 @@ const Header = () => {
   const changeLanguage = () => {
     switch (i18n.language) {
       case 'en':
+      case 'en-US':
         i18n.changeLanguage('es');
         break;
       case 'es-US':
@@ -58,19 +59,19 @@ const Header = () => {
             </ul>
           </div>
           <ul className="navbar-item__right">
-              {!isAuthenticated && (
-                <>
-                  <li onClick={() => toggleLogin()}><a>{t('header.login')}</a></li>
-                  <li onClick={() => toggleSignup()}><a>{t('header.signup')}</a></li>
-                </>
-              )}
-                <li onClick={changeLanguage}><a>{i18n.language}</a></li>
-              {isAuthenticated && (
-                <>
-                  <li><a>{userData.username}</a></li>
-                  <li><a href="" onClick={onLogout}>{t('header.logout')}</a></li>
-                </>
-              )}
+            {!isAuthenticated && (
+              <>
+                <li onClick={() => toggleLogin()}><a>{t('header.login')}</a></li>
+                <li onClick={() => toggleSignup()}><a>{t('header.signup')}</a></li>
+              </>
+            )}
+            {isAuthenticated && (
+              <>
+                <li><a>{userData.username}</a></li>
+                <li><a href="" onClick={onLogout}>{t('header.logout')}</a></li>
+              </>
+            )}
+            <li onClick={changeLanguage}><a>{i18n.language}</a></li>
           </ul>
           <div className="navbar-item__menu">
               <a href="#" onClick={() => setMenuState(!menuState)}>

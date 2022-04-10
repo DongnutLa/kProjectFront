@@ -1,0 +1,21 @@
+{
+  "title": "Álbumes",
+  "add_album": "Agregar álbum",
+  "release": "Lanzamiento:",
+  "producers": "Productores:",
+  "songs": "Canciones:",
+  "form": {
+    "name": "Nombre del álbum",
+    "korean_name": "Nombre coreano",
+    "release": "Fecha de lanzamiento",
+    "producers": "Productores",
+    "producers_placeholder": "Separados por espacios",
+    "group": "Grupo",
+    "cover_page": "Portada",
+    "pc_type": "Versiones de photocards",
+    "upload": "Subir archivos",
+    "pc_type_add": "Agregar",
+    "pc_type_delete": "Borrar",
+    "button": "Agregar grupo"
+  }
+}

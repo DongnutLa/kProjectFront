@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { formatDistance, subDays } from 'date-fns';
 import '@styles-components/Exchange.scss';
+import { useTranslation } from 'react-i18next';
 
 import exch from '@img/exchange.png';
 
 const Exchange = ({ exchange }) => {
+  const { t } = useTranslation(['exchanges']);
   const [attach, setAttach] = useState(false);
   const creationDate = formatDistance(subDays(new Date(exchange.creationDate), 0), new Date(), { addSuffix: true });
 
@@ -20,8 +22,8 @@ const Exchange = ({ exchange }) => {
       <div className="exchange-card">
         <div>
           <div className="card-title">
-            <h4>Tengo</h4>
-            <h4>Quiero</h4>
+            <h4>{t('home.have')}</h4>
+            <h4>{t('home.want')}</h4>
           </div>
           <div className="card-main">
             <div className="card-main__have" style={{ backgroundImage: `url("${pcHave}")` }}>
@@ -50,9 +52,9 @@ const Exchange = ({ exchange }) => {
           </div>
         </div>
         <div className="card-data__buttons">
-          <a href="#" onClick={getAnexos}>Anexos</a>
-          <button type="button" className="button btn-secondary">Guardar</button>
-          <button type="button" className="button btn-primary">Intercambiar</button>
+          <a href="#" onClick={getAnexos}>{t('home.attachments')}</a>
+          <button type="button" className="button btn-secondary">{t('home.save')}</button>
+          <button type="button" className="button btn-primary">{t('home.exchange')}</button>
         </div>
       </div>
       {attach && (

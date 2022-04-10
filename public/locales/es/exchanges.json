@@ -1,0 +1,26 @@
+{
+  "title": "Intercambios",
+  "add_exchange": "Agregar intercambio",
+  "home": {
+    "have": "Tengo",
+    "want": "Quiero",
+    "attachments": "Anexos",
+    "save": "Guardar",
+    "exchange": "Intercambiar",
+    "create": "Crea un intercambio"
+  },
+  "form": {
+    "pc_have_title": "Datos de la photocard que tienes",
+    "pc_want_title": "Datos de la photocard que quieres",
+    "type": "Tipo de grupo",
+    "group": "Grupo",
+    "album": "Álbum",
+    "member": "Miembro",
+    "photocard": "Selecciona la photocard",
+    "pc_file": "Sube una foto de tu photocard",
+    "tags": "Etiquetas",
+    "information": "Información adicional",
+    "information_placeholder": "Escribe acá el contenido",
+    "button": "¡Crear!"
+  }
+}

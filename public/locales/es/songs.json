@@ -1,0 +1,13 @@
+{
+  "title": "Canciones",
+  "add_song": "Agregar canción",
+  "form": {
+    "title": "Título",
+    "lyrics": "Letra por",
+    "music": "Música por",
+    "arrangements": "Arreglos por",
+    "duration": "Duración",
+    "album": "Álbum",
+    "button": "Agregar canción"
+  }
+}

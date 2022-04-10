@@ -1,10 +1,12 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import '@styles-utils/buttons.scss';
 import '@styles-components/AlbumList.scss';
 
 import dystopia from '@img/DystopiaLoseMyself.jpg';
 const GroupList = ({ album }) => {
+	const { t } = useTranslation(['albums']);
 
 	return (
 		<>
@@ -21,15 +23,15 @@ const GroupList = ({ album }) => {
 						</div>
 						<div className="album-card__back">
 								<div className="album-data">
-										<p>Lanzamiento:</p>
+										<p>{t('release')}</p>
 										<span>{album.releaseDate}</span>
 								</div>
 								<div className="album-data">
-										<p>Productores:</p>
+										<p>{t('producers')}</p>
 										<span>{album.producers && album.producers.join(', ')}</span>
 								</div>
 								<div className="album-data">
-										<p>Canciones:</p>
+										<p>{t('songs')}</p>
 										<div className="songs-list">
 											{album.songs.map(song => (
 												<React.Fragment key={song.id}>

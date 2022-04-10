@@ -1,0 +1,13 @@
+{
+  "title": "Songs",
+  "add_song": "Add song",
+  "form": {
+    "title": "Title",
+    "lyrics": "Lyrics by",
+    "music": "Music by",
+    "arrangements": "Arrangements by",
+    "duration": "Duration",
+    "album": "Album",
+    "button": "Add song"
+  }
+}

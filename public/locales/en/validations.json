@@ -4,6 +4,7 @@
   "invalid_email": "E-mail not valid",
   "invalid_type": "Type not valid",
   "invalid_option": "Option not valid",
+  "invalid_time": "Duration invalid",
   "signup": {
     "name": "Name should be between 3 and 20 characters",
     "lastname": "Lastname should be between 3 and 20 characters",
@@ -19,5 +20,22 @@
     "members_less": "Select less than 30",
     "members_more": "Select at least one",
     "company": "Company should be between 3 and 50 characters"
+  },
+  "albums": {
+    "name": "Name should be between 3 and 20 characters",
+    "korean_name": "Name should be between 1 and 10 characters",
+    "release": "Year should be greater than 1990 and less than {{ today }}",
+    "producers": "It should be at least one producer greater than 3 characters"
+  },
+  "photocards": {
+    "name": "Name should be between 3 and 20 characters"
+  },
+  "songs": {
+    "title": "Title should be between 3 and 20 characters"
+  },
+  "exchanges": {
+    "content_more": "Content must be greater than 10 characters",
+    "content_less": "Content must be less than 400 characters",
+    "tag": "label should be between 2 and 20 characters"
   }
 }

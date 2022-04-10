@@ -6,5 +6,26 @@
   "groups": {
     "success": "Grupo agregado correctamente",
     "error": "No se pudo agregar el grupo"
+  },
+  "albums": {
+    "success": "Álbum agregado correctamente",
+    "error": "No se pudo agregar el álbum"
+  },
+  "pc_types": {
+    "success": "Versiones de photocards agregadas correctamente",
+    "error": "No se pudo agregar las versiones de photocards"
+  },
+  "photocards": {
+    "success": "Photocard agregada correctamente",
+    "error": "No se pudo agregar la photocard",
+    "pc_type_failed": "Hubo un error buscando las versiones de photocards"
+  },
+  "songs": {
+    "success": "Canción agregada correctamente",
+    "error": "No se pudo agregar la canción"
+  },
+  "exchanges": {
+    "success": "Intercambio agregado correctamente",
+    "error": "No se pudo agregar el intercambio"
   }
 }

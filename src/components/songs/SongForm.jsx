@@ -1,5 +1,6 @@
 import React, { useContext, useRef, useState, useEffect } from 'react';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 import AuthContext from '@context/AuthContext';
 import ToasterContext from '@context/ToasterContext';
@@ -14,6 +15,7 @@ const API = `${URL}${endpoint}`;
 const API_ALBUMS = `${URL}albums`;
 
 const SongForm = () => {
+  const { t } = useTranslation(['songs', 'validations', 'toaster']);
   const { headerConfig } = useContext(AuthContext);
   const { types, setOpenToaster } = useContext(ToasterContext);
 
@@ -37,28 +39,28 @@ const SongForm = () => {
     if (formData.get('arrangements').length > 0) data.arrangements = formData.get('arrangements').split(" ");
     try {
       const res = await axios.post(API, data, headerConfig);
-      setOpenToaster({type: types.SUCCESS, content: 'Canción agregada correctamente'});
+      setOpenToaster({type: types.SUCCESS, content: t('songs.success', { ns: 'toaster' })});
     } catch (error) {
-      setOpenToaster({type: types.ERROR, content: 'No se pudo agregar la canción'});
+      setOpenToaster({type: types.ERROR, content: t('songs.error', { ns: 'toaster' })});
     }
   }
 
   const onBlur = (e) => {
     const timeValid = new RegExp(/^([0-1]?[0-9]|5[0-9]):[0-5][0-9]$/);
     if (e.target.value.length === 0 && e.target.name !== 'lyrics' && e.target.name !== 'music' && e.target.name !== 'arrangements') {
-        setError({...error, [e.target.name]: 'Este campo es obligatorio*'});
+        setError({...error, [e.target.name]: t('required', { ns: 'validations' })});
     } else {
       switch (e.target.name) {
         case 'title':
           if (e.target.value.length < 3 || e.target.value.length > 20) {
-            setError({...error, title: 'El título debe tener entre 3 y 20 carácteres'});
+            setError({...error, title: t('songs.title', { ns: 'validations' })});
           } else {
             deleteProperty(e.target.name);
           }
           break;
         case 'duration':
           if (!timeValid.test(e.target.value)) {
-            setError({...error, duration: 'No es una duración válida'});
+            setError({...error, duration: t('invalid_time', { ns: 'validations' })});
           } else {
             deleteProperty(e.target.name);
           }
@@ -66,7 +68,7 @@ const SongForm = () => {
         case 'album':
           const album = albums.find(x => x.name === e.target.value);
           if (album === undefined) {
-            setError({...error, album: 'Selecciona una opción válida'});
+            setError({...error, album: t('invalid_option', { ns: 'validations' })});
           } else {
             deleteProperty(e.target.name);
           }
@@ -109,22 +111,22 @@ const SongForm = () => {
 
   return (
     <form action="" ref={form}>
-      <label htmlFor="title">Título</label>
+      <label htmlFor="title">{t('form.title')}</label>
       <input type="text" name="title" id="title" onBlur={onBlur}/>
       {error.title ? <span className='error-msg'>{error.title}</span> : <span className='error-msg'>&nbsp;</span>}
-      <label htmlFor="lyrics">Letra por</label>
+      <label htmlFor="lyrics">{t('form.lyrics')}</label>
       <input type="text" name="lyrics" id="lyrics" onBlur={onBlur}/>
       {error.lyrics ? <span className='error-msg'>{error.lyrics}</span> : <span className='error-msg'>&nbsp;</span>}
-      <label htmlFor="music">Musica por</label>
+      <label htmlFor="music">{t('form.music')}</label>
       <input type="text" name="music" id="music" onBlur={onBlur}/>
       {error.music ? <span className='error-msg'>{error.music}</span> : <span className='error-msg'>&nbsp;</span>}
-      <label htmlFor="arrangements">Arreglos por</label>
+      <label htmlFor="arrangements">{t('form.arrangements')}</label>
       <input type="text" name="arrangements" id="arrangements" onBlur={onBlur}/>
       {error.arrangements ? <span className='error-msg'>{error.arrangements}</span> : <span className='error-msg'>&nbsp;</span>}
-      <label htmlFor="duration">Duración</label>
+      <label htmlFor="duration">{t('form.duration')}</label>
       <input type="text" name="duration" id="duration" onBlur={onBlur} onChange={onChangeDuration}/>
       {error.duration ? <span className='error-msg'>{error.duration}</span> : <span className='error-msg'>&nbsp;</span>}
-      <label htmlFor="album">Álbum</label>
+      <label htmlFor="album">{t('form.album')}</label>
       <input list="album" name="album" onBlur={onBlur}/>
       {error.album ? <span className='error-msg'>{error.album}</span> : <span className='error-msg'>&nbsp;</span>}
         <datalist id="album">
@@ -132,7 +134,7 @@ const SongForm = () => {
             <option key={album.id} value={album.name} />
           ))}
         </datalist>
-      <button type="button" disabled={Object.keys(error).length > 0} className={btnClass} onClick={handleSubmit}>Agregar canción</button>
+      <button type="button" disabled={Object.keys(error).length > 0} className={btnClass} onClick={handleSubmit}>{t('form.button')}</button>
     </form>
   );
 }

@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import PhotocardList from '@components/photocards/PhotocardList';
 import useGetData from '@hooks/useGetData';
@@ -10,6 +11,7 @@ const endpoint = 'photocards';
 const endpointTypes = 'pctypes';
 
 const Photocards = () => {
+  const { t } = useTranslation(['photocards']);
   const { headerConfig, userPermissions } = useContext(AuthContext);
   const { group, groupId } = useParams();
 	
@@ -22,7 +24,7 @@ const Photocards = () => {
     <>
       {userPermissions.includes('VIEW_PHOTOCARDS') ? 
         <section className="photocards">
-          <h2>Photocards - {group}</h2>
+          <h2>{t('title')} - {group}</h2>
           {pcTypes.map(pcType => (
             <PhotocardList key={pcType.id} pcType={pcType} photocards={photocards.filter(x => x.pcTypeId === pcType.id)}/>
           ))}

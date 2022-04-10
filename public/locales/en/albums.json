@@ -1,0 +1,21 @@
+{
+  "title": "Albums",
+  "add_album": "Add album",
+  "release": "Release:",
+  "producers": "Producers:",
+  "songs": "Songs:",
+  "form": {
+    "name": "Album name",
+    "korean_name": "Korean name",
+    "release": "Release date",
+    "producers": "Producers",
+    "producers_placeholder": "Space-separated",
+    "group": "Group",
+    "cover_page": "Cover page",
+    "pc_type": "Photocard versions",
+    "upload": "Upload files",
+    "pc_type_add": "Add",
+    "pc_type_delete": "Delete",
+    "button": "Add group"
+  }
+}
