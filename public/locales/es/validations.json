@@ -1,0 +1,13 @@
+{
+  "required": "Este campo es obligatorio",
+  "invalid_date": "La fecha no es válida",
+  "invalid_email": "No es un correo válido",
+  "signup": {
+    "name": "El nombre debe tener entre 3 y 20 carácteres",
+    "lastname": "El apellido debe tener entre 3 y 20 carácteres",
+    "birthday": "El año debe ser menor a 2012",
+    "username": "El usuario debe contener letras, números y guiones bajos",
+    "password": "La contraseña debe tener entre 3 y 50 carácteres",
+    "password_confirm": "Las contraseñas deben coincidir"
+  }
+}

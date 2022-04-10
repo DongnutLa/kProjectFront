@@ -1,0 +1,6 @@
+{
+  "signup": {
+    "success": "Te has registrado correctamente {{username}}",
+    "error": "No se pudo completar el registro"
+  }
+}

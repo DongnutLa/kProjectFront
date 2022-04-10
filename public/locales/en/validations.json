@@ -1,0 +1,13 @@
+{
+  "required": "This field is required",
+  "invalid_date": "Date not valid",
+  "invalid_email": "E-mail not valid",
+  "signup": {
+    "name": "Name should be between 3 and 20 characters",
+    "lastname": "Lastname should be between 3 and 20 characters",
+    "birthday": "Year should be less than 2012",
+    "username": "User should have letters, numbers and underscores",
+    "password": "Password should be between 3 and 50 characters",
+    "password_confirm": "Passwords must match"
+  }
+}

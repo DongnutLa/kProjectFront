@@ -1,7 +1,9 @@
 import React, { useRef, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
+import AuthContext from '@context/AuthContext';
 import ModalContext from '@context/ModalContext';
 import ToasterContext from '@context/ToasterContext';
 
@@ -15,7 +17,9 @@ const endpoint = 'users'
 const API = `${URL}${endpoint}`;
 
 const Signup = () => {
+  const { t } = useTranslation(['home', 'validations', 'toaster'])
   const { toggleSignup, toggleForSignup } = useContext(ModalContext);
+  const { headerConfig } = useContext(AuthContext);
   const { types, setOpenToaster } = useContext(ToasterContext);
 
   const [error, setError] = useState({})
@@ -35,12 +39,12 @@ const Signup = () => {
       password: formData.get('password'),
     }
     try {
-      const res = await axios.post(API, data)
-      setOpenToaster({type: types.SUCCESS, content: `Te has registrado correctamente ${data.username}`});
+      const res = await axios.post(API, data, headerConfig)
+      setOpenToaster({type: types.SUCCESS, content: t('signup.success', { ns: 'toaster', username: data.username})});
       navigate('/');
       toggleForSignup();
     } catch (error) {
-      setOpenToaster({type: types.ERROR, content: 'No se pudo completar el registro'});
+      setOpenToaster({type: types.ERROR, content: t('signup.error', { ns: 'toaster' })});
     }
 
   }
@@ -51,19 +55,19 @@ const Signup = () => {
     const emailValid = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
 
     if (e.target.value.length === 0) {
-        setError({...error, [e.target.name]: 'Este campo es obligatorio*'});
+        setError({...error, [e.target.name]: t('required', { ns: 'validations'})});
     } else {
       switch (e.target.name) {
         case 'name':
           if (e.target.value.length < 3 || e.target.value.length > 20) {
-            setError({...error, name: 'El nombre debe tener entre 3 y 20 carácteres'});
+            setError({...error, name: t('signup.name', { ns: 'validations'})});
           } else {
             deleteProperty(e.target.name);
           }
           break;
         case 'lastname':
           if (e.target.value.length <= 3 || e.target.value.length > 20) {
-            setError({...error, lastname: 'El nombre debe tener entre 3 y 20 carácteres'});
+            setError({...error, lastname: t('signup.lastname', { ns: 'validations'})});
           } else {
             deleteProperty(e.target.name);
           }
@@ -71,30 +75,30 @@ const Signup = () => {
         case 'birthday':
           const year = parseInt(e.target.value.split('-', 1).join());
           if (!dateValid.test(e.target.value)) {
-            setError({...error, birthday: 'La fecha no es válida'});
+            setError({...error, birthday: t('invalid_date', { ns: 'validations'})});
           } else if (year > 2012) {
-            setError({...error, birthday: 'El año debe ser menor a 2012'});
+            setError({...error, birthday: t('signup.birthday', { ns: 'validations'})});
           } else {
             deleteProperty(e.target.name);
           }
           break;
         case 'username':
           if (!usernameValid.test(e.target.value)) {
-            setError({...error, username: 'El usuario debe contener letras, números y guiones bajos'});
+            setError({...error, username: t('signup.username', { ns: 'validations'})});
           } else {
             deleteProperty(e.target.name);
           }
           break;
         case 'email':
           if (!emailValid.test(e.target.value)) {
-            setError({...error, email: 'No es un correo válido'});
+            setError({...error, email: t('invalid_email', { ns: 'validations'})});
           } else {
             deleteProperty(e.target.name);
           }
           break;
         case 'password':
           if (e.target.value.length < 5 || e.target.value.length > 50) {
-            setError({...error, password: 'La contraseña debe tener entre 3 y 50 carácteres'});
+            setError({...error, password: t('signup.password', { ns: 'validations'})});
           } else {
             deleteProperty(e.target.name);
           }
@@ -102,7 +106,7 @@ const Signup = () => {
         case 'password_confirm':
           const formData = new FormData(form.current);
           if (formData.get('password') !== e.target.value) {
-            setError({...error, password_confirm: 'Las contraseñas deben coincidir'});
+            setError({...error, password_confirm: t('signup.password_confirm', { ns: 'validations'})});
           } else {
             deleteProperty(e.target.name);
           }
@@ -141,39 +145,39 @@ const Signup = () => {
         <div className="form-container">
           <span onClick={() => toggleSignup()}>X</span>
           <img src={kpopColor} alt="Logo K-project"/>
-          <form action="" ref={form}>
+          <form action="" ref={form} className="signup">
             <div className="form__fullname">
               <div>
-                <label htmlFor="name">Nombres</label>
+                <label htmlFor="name">{t('signup.name')}</label>
                 <input type="text" name="name" id="name" onBlur={onBlur}/>
                 {error.name ? <span className='error-msg'>{error.name}</span> : <span className='error-msg'>&nbsp;</span>}
               </div>
               <div>
-                <label htmlFor="lastname">Apellidos</label>
+                <label htmlFor="lastname">{t('signup.lastname')}</label>
                 <input type="text" name="lastname" id="lastname" onBlur={onBlur}/>
                 {error.lastname ? <span className='error-msg'>{error.lastname}</span> : <span className='error-msg'>&nbsp;</span>}
               </div>
             </div>
-            <label htmlFor="birthday">Fecha de nacimiento</label>
+            <label htmlFor="birthday">{t('signup.birthday')}</label>
             <input type="date" name="birthday" id="birthday" onBlur={onBlur}/>
             {error.birthday ? <span className='error-msg'>{error.birthday}</span> : <span className='error-msg'>&nbsp;</span>}
-            <label htmlFor="username">Nombre de usuario</label>
+            <label htmlFor="username">{t('signup.username')}</label>
             <input type="text" name="username" id="username" onBlur={onBlur}/>
             {error.username ? <span className='error-msg'>{error.username}</span> : <span className='error-msg'>&nbsp;</span>}
-            <label htmlFor="email">Correo</label>
+            <label htmlFor="email">{t('signup.email')}</label>
             <input type="email" name="email" id="email" onBlur={onBlur}/>
             {error.email ? <span className='error-msg'>{error.email}</span> : <span className='error-msg'>&nbsp;</span>}
-            <label htmlFor="password">Contraseña</label>
+            <label htmlFor="password">{t('signup.password')}</label>
             <input type="password" name="password" id="password" onBlur={onBlur}/>
             {error.password ? <span className='error-msg'>{error.password}</span> : <span className='error-msg'>&nbsp;</span>}
-            <label htmlFor="password_confirm">Confirmar contraseña</label>
+            <label htmlFor="password_confirm">{t('signup.password_confirm')}</label>
             <input type="password" name="password_confirm" id="password_confirm" onBlur={onBlur}/>
             {error.password_confirm ? <span className='error-msg'>{error.password_confirm}</span> : <span className='error-msg'>&nbsp;</span>}
             <button type="button"
               onClick={handleSubmit}
               disabled={Object.keys(error).length > 0} 
-              className={btnClass}>Registrarse</button>
-            <span>¿Ya tienes cuenta?, <a href="">¡Inicia sesión!</a></span>
+              className={btnClass}>{t('signup.signup')}</button>
+            <span>{t('signup.have_account')}<a href="">{t('signup.login')}</a></span>
           </form>
         </div>
       </div>

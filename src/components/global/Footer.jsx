@@ -1,4 +1,6 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+
 import '@styles-components/Footer.scss';
 
 import fb from '@icons/fb.svg';
@@ -6,31 +8,33 @@ import tw from '@icons/tw.svg';
 import ig from '@icons/ig.svg';
 
 const Footer = () => {
+  const { t } = useTranslation(['home']);
+
   return (
     <footer className="footer-container">
       <div className="footer-links">
         <div className="footer-links__main">
-          <h4>Sitio</h4>
+          <h4>{t('footer.site.title')}</h4>
           <ul>
-            <li><a href="/">Inicio</a></li>
-            <li><a href="/news">Noticias</a></li>
-            <li><a href="/exchanges">Intercambios</a></li>
-            <li><a href="/store">Ventas</a></li>
+            <li><a href="/">{t('footer.site.home')}</a></li>
+            <li><a href="/groups">{t('footer.site.groups')}</a></li>
+            <li><a href="/exchanges">{t('footer.site.exchange')}</a></li>
+            {/* <li><a href="/store">Ventas</a></li> */}
           </ul>
         </div>
         <div className="footer-links__about">
-          <h4>Información</h4>
+          <h4>{t('footer.info.title')}</h4>
           <ul>
-            <li><a href="">Acerca de</a></li>
-            <li><a href="">Términos y condiciones</a></li>
-            <li><a href="">Política de privacidad</a></li>
-            <li><a href="">Uso de Cookies</a></li>
+            <li><a href="">{t('footer.info.about')}</a></li>
+            <li><a href="">{t('footer.info.terms')}</a></li>
+            <li><a href="">{t('footer.info.privacy')}</a></li>
+            <li><a href="">{t('footer.info.cookies')}</a></li>
           </ul>
         </div>
         <div className="footer-links__description">
           <h4>K-Project</h4>
-          <p>Intercambia, compra y vende mercancía de K-Pop</p>
-          <p>Entérate de las últimas noticias</p>
+          <p>{t('footer.links.exchange')}</p>
+          <p>{t('footer.links.news')}</p>
         </div>
       </div>
       <div className="footer-networks">

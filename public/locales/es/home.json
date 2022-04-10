@@ -1,0 +1,73 @@
+{
+  "header": {
+    "home": "Inicio",
+    "groups": "Grupos",
+    "exchanges": "Intercambios",
+    "login": "Login",
+    "signup": "Signup",
+    "logout": "Logout"
+  },
+  "footer": {
+    "site": {
+      "title": "Sitio",
+      "home": "Inicio",
+      "groups": "Grupos",
+      "exchange": "Intercambio"
+    },
+    "info": {
+      "title": "Información",
+      "about": "Acerca de",
+      "terms": "Términos y condiciones",
+      "privacy": "Política de privacidad",
+      "cookies": "Uso de cookies"
+    },
+    "links": {
+      "exchange": "Intercambia, compra y vende mercancía de K-Pop",
+      "news": "Entérate de las últimas noticias"
+    }
+  },
+  "home": {
+    "head": {
+      "exchange": "Intercambia, compra y vende mercancía de K-Pop"
+    },
+    "news": {
+      "title": "Lo nuevo en K-Pop"
+    }
+  },
+  "about": {
+    "exchange": {
+      "title": "¡Intercambia!",
+      "text": "Puedes intercambiar mercancía de K-Pop, encontrar esa photocard que has buscado hace tiempo",
+      "button": "¡Entrar!"
+    },
+    "sells": {
+      "title": "¡Vende!",
+      "text": "Puedes poner en venta esa mercancía de k-pop y comprar eso que has estado buscando",
+      "button": "¡Entrar!"
+    },
+    "news": {
+      "title": "¡Entérate!",
+      "text": "¡Habrá noticias relacionadas al mundo del K-pop y más!",
+      "button": "¡Entrar!"
+    }
+  },
+  "login": {
+    "username": "Nombre de usuario",
+    "password": "Contraseña",
+    "login": "Iniciar sesión",
+    "no_account": "¿No tienes cuenta?, ",
+    "create": "¡Crea una!"
+  },
+  "signup": {
+    "name": "Nombres",
+    "lastname": "Apellidos",
+    "birthday": "Fecha de nacimiento",
+    "username": "Nombre de usuario",
+    "email": "Correo",
+    "password": "Contraseña",
+    "password_confirm": "Confirmar contraseña",
+    "signup": "Registrarse",
+    "have_account": "¿Ya tienes cuenta?, ",
+    "login": "¡Inicia sesión!"
+  }
+}
