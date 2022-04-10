@@ -1,10 +1,12 @@
 import { useState } from 'react';
 
+const initPermissions = ['VIEW_NEWS', 'VIEW_GROUPS', 'VIEW_ALBUMS', 'VIEW_PHOTOCARDS', 'VIEW_SONGS', 'VIEW_IDOLS']
+
 const useAuth = () => {
 	const [userToken, setUserToken] = useState(null);
 	const [userData, setUserData] = useState({});
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
-	const [userPermissions, setUserPermissions] = useState([]);
+	const [userPermissions, setUserPermissions] = useState(initPermissions);
 	const [headerConfig, setHeaderConfig] = useState({headers: {api: process.env.API_KEY}})
 
 	const saveAuthData = (authObject) => {
@@ -21,7 +23,7 @@ const useAuth = () => {
 			setUserToken(token);
 			setIsAuthenticated(true);
 			const permissions = user.role.permissions.map(x => x.permission);
-			setUserPermissions(...userPermissions, permissions)
+			setUserPermissions(permissions)
 			setHeaderConfig({
 				headers: {
 					api: process.env.API_KEY,

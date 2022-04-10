@@ -2,6 +2,8 @@
   "required": "This field is required",
   "invalid_date": "Date not valid",
   "invalid_email": "E-mail not valid",
+  "invalid_type": "Type not valid",
+  "invalid_option": "Option not valid",
   "signup": {
     "name": "Name should be between 3 and 20 characters",
     "lastname": "Lastname should be between 3 and 20 characters",
@@ -9,5 +11,13 @@
     "username": "User should have letters, numbers and underscores",
     "password": "Password should be between 3 and 50 characters",
     "password_confirm": "Passwords must match"
+  },
+  "groups": {
+    "name": "Name should be between 3 and 20 characters",
+    "korean_name": "Name should be between 1 and 10 characters",
+    "debut": "Year should be greater than 1990 and less than {{ today }}",
+    "members_less": "Select less than 30",
+    "members_more": "Select at least one",
+    "company": "Company should be between 3 and 50 characters"
   }
 }

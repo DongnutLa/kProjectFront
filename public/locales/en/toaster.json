@@ -2,5 +2,9 @@
   "signup": {
     "success": "Signed up successfully, {{username}}",
     "error": "Signing up failed"
+  },
+  "groups": {
+    "success": "Group added successfully",
+    "error": "Failed to add group"
   }
 }

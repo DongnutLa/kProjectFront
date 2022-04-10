@@ -1,4 +1,5 @@
 import React, {useContext} from 'react';
+import { useTranslation } from 'react-i18next';
 
 import GroupList from '@components/groups/GroupList';
 import useGetData from '@hooks/useGetData';
@@ -9,6 +10,7 @@ const endpoint = 'groups'
 const API = `${URL}${endpoint}`;
 
 const Groups = () => {
+	const { t } = useTranslation(['groups'])
   const { headerConfig, userPermissions } = useContext(AuthContext);
   const groups = useGetData(API, headerConfig);
 
@@ -16,7 +18,7 @@ const Groups = () => {
     <>
       {userPermissions.includes('VIEW_GROUPS') ? 
 				<section className="groups">
-					<h2>Grupos</h2>
+					<h2>{t('title')}</h2>
 					<article className="groups-container">
 						{groups.map(group => (
 							<GroupList key={group.id} group={group}/>

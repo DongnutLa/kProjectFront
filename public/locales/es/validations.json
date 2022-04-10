@@ -2,6 +2,8 @@
   "required": "Este campo es obligatorio",
   "invalid_date": "La fecha no es válida",
   "invalid_email": "No es un correo válido",
+  "invalid_type": "Selecciona un tipo válido",
+  "invalid_option": "Selecciona una opción válida",
   "signup": {
     "name": "El nombre debe tener entre 3 y 20 carácteres",
     "lastname": "El apellido debe tener entre 3 y 20 carácteres",
@@ -9,5 +11,13 @@
     "username": "El usuario debe contener letras, números y guiones bajos",
     "password": "La contraseña debe tener entre 3 y 50 carácteres",
     "password_confirm": "Las contraseñas deben coincidir"
+  },
+  "groups": {
+    "name": "El nombre debe tener entre 3 y 20 carácteres",
+    "korean_name": "El nombre debe tener entre 1 y 10 carácteres",
+    "debut": "El año debe ser mayor a 1990 y menor a {{ today }}",
+    "members_less": "Selecciona menos de 30",
+    "members_more": "Selecciona al menos 1",
+    "company": "La empresa debe tener entre 3 y 50 carácteres"
   }
 }
