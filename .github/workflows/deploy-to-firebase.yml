@@ -15,9 +15,9 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
-          env:
-            API_KEY: ${{ secrets.API_KEY }}
-            API: ${{ secrets.API }}
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+          API: ${{ secrets.API }}
       - name: Archive Production Artifact
         uses: actions/upload-artifact@main
         with:
