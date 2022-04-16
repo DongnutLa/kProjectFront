@@ -4,6 +4,10 @@ on:
     branches:
       - main
 
+env:
+  API_KEY: 1597
+  API: https://kproject-api.herokuapp.com/api/v1/
+
 jobs:
   build:
     name: Build
