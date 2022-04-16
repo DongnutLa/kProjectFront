@@ -15,6 +15,10 @@ const URL = process.env.API;
 const endpoint = 'photocards'
 const API = `${URL}${endpoint}`;
 const API_GROUPS = `${URL}groups`;
+const groupsParams = {
+  includeDeleted: false,
+	includeUnpublished: false
+}
 
 const PhotocardForm = () => {
   const { t } = useTranslation(['photocards', 'validations', 'toaster']);
@@ -28,7 +32,7 @@ const PhotocardForm = () => {
   const [pcTypes, setPcTypes] = useState([]);
   const [file, setFile] = useState({});
 
-  const groups = useGetData(API_GROUPS, headerConfig);
+  const groups = useGetData(API_GROUPS, groupsParams);
 
   const form = useRef(null);
 

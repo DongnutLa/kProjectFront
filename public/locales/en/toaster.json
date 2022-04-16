@@ -27,5 +27,8 @@
   "exchanges": {
     "success": "Exchange added successfully",
     "error": "Failed to add exchange"
+  },
+  "login": {
+    "not_valid_data": "Username or password not valid"
   }
 }

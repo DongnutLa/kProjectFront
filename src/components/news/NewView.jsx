@@ -15,8 +15,9 @@ const NewView = () => {
   const { newId } = useParams();
   const API = `${URL}${endpoint}/${newId}`;
   const newItem = useGetData(API, headerConfig);
-  //const creationDate = formatDistance(subDays(new Date(newItem.creationDate), 0), new Date(), { addSuffix: true });
-
+  if (newItem.creationDate) {
+    var creationDate = formatDistance(subDays(new Date(newItem.creationDate), 0), new Date(), { addSuffix: true });
+  }
   return(
     <section className="new">
       <div className="new__img">
@@ -31,7 +32,7 @@ const NewView = () => {
             <p key={tag}>{tag}</p>
           ))}
         </div>
-        <span>{newItem.creationDate}</span>
+        <span>{creationDate}</span>
       </div>
       <div className="new__content">
           <p>{newItem.content}</p>

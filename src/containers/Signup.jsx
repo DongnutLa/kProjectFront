@@ -17,7 +17,7 @@ const endpoint = 'users'
 const API = `${URL}${endpoint}`;
 
 const Signup = () => {
-  const { t } = useTranslation(['home', 'validations', 'toaster'])
+  const { t, i18n } = useTranslation(['home', 'validations', 'toaster'])
   const { toggleSignup, toggleForSignup } = useContext(ModalContext);
   const { headerConfig } = useContext(AuthContext);
   const { types, setOpenToaster } = useContext(ToasterContext);
@@ -39,12 +39,14 @@ const Signup = () => {
       password: formData.get('password'),
     }
     try {
-      const res = await axios.post(API, data, headerConfig)
+      const res = await axios.post(API, data, headerConfig);
+      console.log(res);
       setOpenToaster({type: types.SUCCESS, content: t('signup.success', { ns: 'toaster', username: data.username})});
       navigate('/');
       toggleForSignup();
     } catch (error) {
-      setOpenToaster({type: types.ERROR, content: t('signup.error', { ns: 'toaster' })});
+      if(!error.response) setOpenToaster({type: types.ERROR, content: error.message})
+      setOpenToaster({type: types.ERROR, content: error.response.data.message})
     }
 
   }

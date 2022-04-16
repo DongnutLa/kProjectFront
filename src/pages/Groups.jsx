@@ -1,18 +1,26 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+//import axios from 'axios';
 
-import GroupList from '@components/groups/GroupList';
 import useGetData from '@hooks/useGetData';
+import GroupList from '@components/groups/GroupList';
 import AuthContext from '@context/AuthContext';
 
 const URL = process.env.API;
 const endpoint = 'groups'
 const API = `${URL}${endpoint}`;
+const params = { 
+	limit: 20,
+	offset: 0,
+	includeDeleted: false,
+	includeUnpublished: false
+};
 
 const Groups = () => {
 	const { t } = useTranslation(['groups'])
-  const { headerConfig, userPermissions } = useContext(AuthContext);
-  const groups = useGetData(API, headerConfig);
+  const { userPermissions } = useContext(AuthContext);
+
+  const groups = useGetData(API, params);
 
   return (
     <>

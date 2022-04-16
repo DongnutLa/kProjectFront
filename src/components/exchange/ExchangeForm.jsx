@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext, useEffect } from 'react';
+import React, { Fragment, useState, useContext, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 
@@ -9,9 +9,11 @@ import '@styles-utils/Forms.scss';
 import '@styles-components/ExchangeForm.scss';
 
 const URL = process.env.API;
-const endpoint = 'idols'
-const API = `${URL}${endpoint}`;
 const API_GROUPS = `${URL}groups`;
+const globalParams = {
+  includeDeleted: false,
+	includeUnpublished: false
+}
 
 const ExchangeForm = ({type, func, errors}) => {
   const { t } = useTranslation(['exchanges', 'validations']);
@@ -20,16 +22,17 @@ const ExchangeForm = ({type, func, errors}) => {
   const [albums, setAlbums] = useState([]);
   const [photocards, setPhotocards] = useState([]);
   const [searchPcParams, setSearchPcParams] = useState({
+    ...globalParams,
     albumId: null,
     memberId: null
   })
   const { headerConfig } = useContext(AuthContext);
-
+  
   const [exchange, setExchange] = useState({
     section: type
   });
-
-  const groups = useGetData(API_GROUPS, headerConfig);
+  
+  const groups = useGetData(API_GROUPS, globalParams);
 
   const onGroupChange = (e) => {
     const group = groups.find(x => x.name === e.target.value);
@@ -56,8 +59,9 @@ const ExchangeForm = ({type, func, errors}) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const API_PCS = `${URL}photocards?albumId=${searchPcParams.albumId}&memberId=${searchPcParams.memberId}`;
-        const pcRes = await axios(API_PCS, headerConfig);
+        const API_PCS = `${URL}photocards`;
+        const config = {...headerConfig, searchPcParams}
+        const pcRes = await axios(API_PCS, config);
         setPhotocards([...pcRes.data]);
       } catch (error) {
         console.error(error);
@@ -123,7 +127,7 @@ const ExchangeForm = ({type, func, errors}) => {
           <option value="Mixto"/>
         </datalist>
       <label htmlFor="Group">{t('form.group')}</label>
-      <input list="Group" id="Group" onChange={onGroupChange} onBlur={onBlur}/>
+      <input list="Group" onChange={onGroupChange} onBlur={onBlur}/>
       {error.Group ? <span className='error-msg'>{error.Group}</span> : <span className='error-msg'>&nbsp;</span>}
       <datalist id="Group">
           {groups.map(group => (
@@ -131,7 +135,7 @@ const ExchangeForm = ({type, func, errors}) => {
           ))}
         </datalist>
       <label htmlFor="Album">{t('form.album')}</label>
-      <input list="Album" id="Album" onChange={onAlbumChange} onBlur={onBlur}/>
+      <input list="Album" onChange={onAlbumChange} onBlur={onBlur}/>
       {error.Album ? <span className='error-msg'>{error.Album}</span> : <span className='error-msg'>&nbsp;</span>}
         <datalist id="Album">
           {albums.map(album => (
@@ -139,7 +143,7 @@ const ExchangeForm = ({type, func, errors}) => {
           ))}
         </datalist>
       <label htmlFor="Member">{t('form.member')}</label>
-      <input list="Member" id="Member" onChange={onMemberChange} onBlur={onBlur}/>
+      <input list="Member" onChange={onMemberChange} onBlur={onBlur}/>
       {error.Member ? <span className='error-msg'>{error.Member}</span> : <span className='error-msg'>&nbsp;</span>}
         <datalist id="Member">
           {members.map(member => (

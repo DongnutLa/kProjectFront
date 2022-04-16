@@ -12,17 +12,22 @@ import '@styles-utils/buttons.scss';
 const URL = process.env.API;
 const endpoint = 'songs'
 const API = `${URL}${endpoint}`;
-const API_ALBUMS = `${URL}albums`;
+const API_GROUPS = `${URL}groups`;
+const groupsParams = {
+  includeDeleted: false,
+	includeUnpublished: false
+}
 
 const SongForm = () => {
   const { t } = useTranslation(['songs', 'validations', 'toaster']);
   const { headerConfig } = useContext(AuthContext);
   const { types, setOpenToaster } = useContext(ToasterContext);
 
+  const [albums, setAlbums] = useState([]);
   const [error, setError] = useState({})
   const [btnClass, setBtnClass] = useState('button btn-primary');
 
-  const albums = useGetData(API_ALBUMS, headerConfig);
+  const groups = useGetData(API_GROUPS, groupsParams);
   
   const form = useRef(null);
 
@@ -73,6 +78,14 @@ const SongForm = () => {
             deleteProperty(e.target.name);
           }
           break;
+        case 'group':
+          const group = groups.find(x => x.name === e.target.value);
+          if (group === undefined) {
+            setError({...error, group: t('invalid_option', { ns: 'validations' })});
+          } else {
+            deleteProperty(e.target.name);
+          }
+          break;
         default:
           break;
       }
@@ -109,6 +122,13 @@ const SongForm = () => {
     }
   }
 
+  const handleGroupSelect = (e) => {
+    const group = groups.find(x => x.name === e.target.value);
+    if(group) {
+      setAlbums([...group.albums]);
+    }
+  }
+
   return (
     <form action="" ref={form}>
       <label htmlFor="title">{t('form.title')}</label>
@@ -126,6 +146,16 @@ const SongForm = () => {
       <label htmlFor="duration">{t('form.duration')}</label>
       <input type="text" name="duration" id="duration" onBlur={onBlur} onChange={onChangeDuration}/>
       {error.duration ? <span className='error-msg'>{error.duration}</span> : <span className='error-msg'>&nbsp;</span>}
+      
+      <label htmlFor="group">{t('form.group')}</label>
+      <input list="group" name="group" onBlur={onBlur} onChange={handleGroupSelect}/>
+      {error.group ? <span className='error-msg'>{error.group}</span> : <span className='error-msg'>&nbsp;</span>}
+        <datalist id="group">
+          {groups.map(group => (
+            <option key={group.id} value={group.name} />
+          ))}
+        </datalist>
+      
       <label htmlFor="album">{t('form.album')}</label>
       <input list="album" name="album" onBlur={onBlur}/>
       {error.album ? <span className='error-msg'>{error.album}</span> : <span className='error-msg'>&nbsp;</span>}

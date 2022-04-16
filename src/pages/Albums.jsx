@@ -11,11 +11,11 @@ const endpoint = 'albums'
 
 const Albums = () => {
 	const { t } = useTranslation(['albums']);
-  const { headerConfig, userPermissions } = useContext(AuthContext);
+  const { userPermissions } = useContext(AuthContext);
   const { groupId } = useParams();
 
 	const API = `${URL}${endpoint}/group/${groupId}`;
-  const albums = useGetData(API, headerConfig);
+  const albums = useGetData(API);
 
   return (
     <>

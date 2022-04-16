@@ -9,16 +9,18 @@ import '@styles-containers/News.scss';
 
 const URL = process.env.API;
 const endpoint = 'news';
-const pagination = {
+const params = {
   limit: 6,
-  offset: 0
+  offset: 0,
+  includeDeleted: false,
+  includeUnpublished: false
 }
-const API = `${URL}${endpoint}?limit=${pagination.limit}&offset=${pagination.offset}`;
+const API = `${URL}${endpoint}`;
 
 const News = () => {
   const { t } = useTranslation(['home']);
-  const { headerConfig, userPermissions } = useContext(AuthContext);
-  const news = useGetData(API, headerConfig);
+  const { userPermissions } = useContext(AuthContext);
+  const news = useGetData(API, params);
 
   return (
     <>

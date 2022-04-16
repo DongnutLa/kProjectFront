@@ -1,17 +1,19 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import Exchange from '@components/exchange/Exchange';
 import useGetData from '@hooks/useGetData';
 
 import '@styles-containers/Exchanges.scss';
-import AuthContext from '@context/AuthContext';
 
 const URL = process.env.API;
 const endpoint = 'exchanges'
 const API = `${URL}/${endpoint}`;
+const params = {
+  includeDeleted: false,
+  includeUnpublished: false
+}
 
 const Exchanges = () => {
-  const { headerConfig } = useContext(AuthContext);
-  const exchanges = useGetData(API, headerConfig);
+  const exchanges = useGetData(API, params);
 
   return (
     <div className="exchange__body">

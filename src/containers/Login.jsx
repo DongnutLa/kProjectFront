@@ -17,7 +17,7 @@ const endpoint = 'auth/login'
 const API = `${URL}${endpoint}`;
 
 const Login = () => {
-  const { t } = useTranslation(['home']);
+  const { t } = useTranslation(['home', 'toaster']);
   const { types, setOpenToaster } = useContext(ToasterContext);
   const { saveAuthData, getAuthData, headerConfig } = useContext(AuthContext);
   const { toggleLogin } = useContext(ModalContext);
@@ -36,8 +36,9 @@ const Login = () => {
       navigate('/');
       getAuthData();
       toggleLogin();
-    }).catch(err => {
-      setOpenToaster({type: types.ERROR, content: 'Usuario o clave inválida'});
+    }).catch(error => {
+      if(!error.response) setOpenToaster({type: types.ERROR, content: error.message})
+      setOpenToaster({type: types.ERROR, content: t('login.not_valid_data', { ns: 'toaster' })});
     });
   }
 

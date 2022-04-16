@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext, useEffect } from 'react';
+import React, { useRef, useState, useContext, useEffect,useCallback } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 
@@ -16,6 +16,10 @@ const endpoint = 'albums'
 const API_ALBUMS = `${URL}${endpoint}`;
 const API_GROUPS = `${URL}groups`;
 const API_PCTYPE = `${URL}pctypes`;
+const groupsParams = {
+  includeDeleted: false,
+	includeUnpublished: false
+}
 
 const AlbumForm = () => {
   const { t } = useTranslation(['albums', 'validations', 'toaster']);
@@ -28,7 +32,7 @@ const AlbumForm = () => {
   const [pctypeField, setPctypeField] = useState([{name: "pcVersion"}])
   const [file, setFile] = useState({});
 
-  const groups = useGetData(API_GROUPS, headerConfig);
+  const groups = useGetData(API_GROUPS, groupsParams);
 
   const form = useRef(null);
 

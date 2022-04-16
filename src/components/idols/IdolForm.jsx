@@ -1,10 +1,10 @@
-import React, { useContext, useRef, useState, useEffect } from 'react';
+import React, { useContext, useRef, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 import AuthContext from '@context/AuthContext';
 import ToasterContext from '@context/ToasterContext';
-
 import useGetData from '@hooks/useGetData';
+
 import upload from '@icons/upload.png';
 
 import '@styles-utils/Forms.scss';
@@ -14,6 +14,10 @@ const URL = process.env.API;
 const endpoint = 'idols'
 const API = `${URL}${endpoint}`;
 const API_GROUPS = `${URL}groups`;
+const groupsParams = {
+  includeDeleted: false,
+	includeUnpublished: false
+}
 
 const IdolForm = () => {
   const { headerConfig } = useContext(AuthContext);
@@ -22,7 +26,7 @@ const IdolForm = () => {
   const [error, setError] = useState({})
   const [btnClass, setBtnClass] = useState('button btn-primary');
 
-  const groups = useGetData(API_GROUPS, headerConfig);
+  const groups = useGetData(API_GROUPS, groupsParams);
 
   const form = useRef(null);
 

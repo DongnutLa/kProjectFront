@@ -11,7 +11,7 @@ const New = ({ item }) => {
   return (
     <div className="news-card">
       <div className="news-card__img">
-        <img src={item.fileUrl} alt="ive"/>
+        <img src={item.fileUrl} alt="ive" onClick={() => { navigate(`/new/${item.id}`) }}/>
       </div>
       <div className="news-card__head">
         {item.tags && item.tags.map(tag => (

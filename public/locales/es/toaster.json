@@ -27,5 +27,8 @@
   "exchanges": {
     "success": "Intercambio agregado correctamente",
     "error": "No se pudo agregar el intercambio"
+  },
+  "login": {
+    "not_valid_data": "Usuario o contraseña inválida"
   }
 }

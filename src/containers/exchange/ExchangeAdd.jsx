@@ -16,7 +16,7 @@ const API = `${URL}${endpoint}`;
 
 const ExchangeAdd = () => {
   const { t } = useTranslation(['exchanges', 'validations', 'toaster']);
-  const { headerConfig, userData, userPermissions } = useContext(AuthContext);
+  const { headerConfig } = useContext(AuthContext);
   const { types, setOpenToaster } = useContext(ToasterContext);
 
   const [btnClass, setBtnClass] = useState('button btn-primary');
@@ -26,7 +26,6 @@ const ExchangeAdd = () => {
   const [labels, setLabels] = useState([]);
   const [file, setFile] = useState({});
   const [pcData, setPcData] = useState({
-    userId: userData.id,
     pcFromId: NaN,
     pcToId: NaN,
     information: ''
@@ -62,7 +61,6 @@ const ExchangeAdd = () => {
     const formData = new FormData(form.current);
     formData.delete('photocard_have');
     formData.delete('photocard_want');
-    formData.append('userId', pcData.userId);
     formData.append('pcFromId', pcData.pcFromId);
     formData.append('pcToId', pcData.pcToId);
     if(labels.length > 0) {
