@@ -4,10 +4,6 @@ on:
     branches:
       - main
 
-env:
-  API_KEY: 1597
-  API: https://kproject-api.herokuapp.com/api/v1/
-
 jobs:
   build:
     name: Build
@@ -19,6 +15,9 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
+          env:
+            API_KEY: ${{ secrets.API_KEY }}
+            API: ${{ secrets.API }}
       - name: Archive Production Artifact
         uses: actions/upload-artifact@main
         with:
