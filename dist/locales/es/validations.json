@@ -1,0 +1,41 @@
+{
+  "required": "Este campo es obligatorio",
+  "invalid_date": "La fecha no es válida",
+  "invalid_email": "No es un correo válido",
+  "invalid_type": "Selecciona un tipo válido",
+  "invalid_option": "Selecciona una opción válida",
+  "invalid_time": "No es una duración válida",
+  "signup": {
+    "name": "El nombre debe tener entre 3 y 20 carácteres",
+    "lastname": "El apellido debe tener entre 3 y 20 carácteres",
+    "birthday": "El año debe ser menor a 2012",
+    "username": "El usuario debe contener letras, números y guiones bajos",
+    "password": "La contraseña debe tener entre 3 y 50 carácteres",
+    "password_confirm": "Las contraseñas deben coincidir"
+  },
+  "groups": {
+    "name": "El nombre debe tener entre 3 y 20 carácteres",
+    "korean_name": "El nombre debe tener entre 1 y 10 carácteres",
+    "debut": "El año debe ser mayor a 1990 y menor a {{ today }}",
+    "members_less": "Selecciona menos de 30",
+    "members_more": "Selecciona al menos 1",
+    "company": "La empresa debe tener entre 3 y 50 carácteres"
+  },
+  "albums": {
+    "name": "El nombre debe tener entre 3 y 20 carácteres",
+    "korean_name": "El nombre debe tener entre 1 y 10 carácteres",
+    "release": "El año debe ser mayor a 1990 y menor a {{ today }}",
+    "producers": "Debe haber al menos un productor mayor a 3 dígitos"
+  },
+  "photocards": {
+    "name": "El nombre debe tener entre 3 y 20 carácteres"
+  },
+  "songs": {
+    "title": "El título debe tener entre 3 y 20 carácteres"
+  },
+  "exchanges": {
+    "content_more": "El contenido debe ser mayor a 10 carácteres",
+    "content_less": "El contenido debe ser menor a 400 carácteres",
+    "tag": "La etiqueta debe estar entre 2 y 20 carácteres"
+  }
+}

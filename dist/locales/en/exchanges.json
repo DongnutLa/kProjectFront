@@ -1,0 +1,26 @@
+{
+  "title": "Exchanges",
+  "add_exchange": "Add exchange",
+  "home": {
+    "have": "I have",
+    "want": "I want",
+    "attachments": "Attachments",
+    "save": "Save",
+    "exchange": "Exchange",
+    "create": "Create an exchange"
+  },
+  "form": {
+    "pc_have_title": "About photocard you have",
+    "pc_want_title": "About photocard you want",
+    "type": "Type of group",
+    "group": "Group",
+    "album": "Album",
+    "member": "Member",
+    "photocard": "Select photocard",
+    "pc_file": "Upload a photo of your photocard",
+    "tags": "Labels",
+    "information": "Aditional information",
+    "information_placeholder": "Write content here",
+    "button": "Create!"
+  }
+}

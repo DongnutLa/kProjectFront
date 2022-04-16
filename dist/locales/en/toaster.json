@@ -1,0 +1,34 @@
+{
+  "signup": {
+    "success": "Signed up successfully, {{username}}",
+    "error": "Signing up failed"
+  },
+  "groups": {
+    "success": "Group added successfully",
+    "error": "Failed to add group"
+  },
+  "albums": {
+    "success": "Album added successfully",
+    "error": "Failed to add album"
+  },
+  "pc_types": {
+    "success": "Photocard types added successfully",
+    "error": "Failed to add photocard types"
+  },
+  "photocards": {
+    "success": "Photocard added successfully",
+    "error": "Failed to add photocard",
+    "pc_type_failed": "Failed to find photocard versions"
+  },
+  "songs": {
+    "success": "Song added successfully",
+    "error": "Failed to add song"
+  },
+  "exchanges": {
+    "success": "Exchange added successfully",
+    "error": "Failed to add exchange"
+  },
+  "login": {
+    "not_valid_data": "Username or password not valid"
+  }
+}

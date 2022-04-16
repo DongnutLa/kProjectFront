@@ -1,0 +1,22 @@
+{
+  "title": "Groups",
+  "add_group": "Add group",
+  "form": {
+    "name": "Group name",
+    "korean_name": "Korean name",
+    "debut": "Debut date",
+    "members": "Members",
+    "type": "Group type",
+    "company": "Company",
+    "fanclub_name": "Fanclub name",
+    "fanclub_date": "Fanclub creation date",
+    "active": "Active",
+    "instagram": "Instagram",
+    "twitter": "Twitter",
+    "images": "Images",
+    "select_photos": "Select photos",
+    "button": "Add group",
+    "active_true": "Active",
+    "active_false": "Inactive"
+  }
+}
