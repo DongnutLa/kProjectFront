@@ -10,7 +10,7 @@ import upload from '@icons/upload.png';
 import '@styles-utils/Forms.scss';
 import '@styles-utils/buttons.scss';
 
-const URL = process.env.API;
+const URL = process.env.REACT_API_URL;
 const endpoint = 'idols'
 const API = `${URL}${endpoint}`;
 const API_GROUPS = `${URL}groups`;

@@ -34,7 +34,7 @@ const useAuth = () => {
 				}
 			})
 		} else {
-			const URL = process.env.API;
+			const URL = process.env.REACT_API_URL;
 			const endpoint = 'auth/permissions'
 			const API = `${URL}${endpoint}`;
 			const permissions = await axios.get(API, headerConfig);

@@ -4,7 +4,7 @@ import useGetData from '@hooks/useGetData';
 
 import '@styles-containers/Exchanges.scss';
 
-const URL = process.env.API;
+const URL = process.env.REACT_API_URL;
 const endpoint = 'exchanges'
 const API = `${URL}/${endpoint}`;
 const params = {

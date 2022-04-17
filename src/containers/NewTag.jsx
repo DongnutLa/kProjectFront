@@ -7,7 +7,7 @@ import AuthContext from '@context/AuthContext';
 
 import '@styles-containers/News.scss';
 
-const URL = process.env.API;
+const URL = process.env.REACT_API_URL;
 const endpoint = 'news';
 
 const NewTag = () => {

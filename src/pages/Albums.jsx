@@ -6,7 +6,7 @@ import AlbumList from '@components/albums/AlbumList';
 import useGetData from '@hooks/useGetData';
 import AuthContext from '@context/AuthContext';
 
-const URL = process.env.API;
+const URL = process.env.REACT_API_URL;
 const endpoint = 'albums'
 
 const Albums = () => {

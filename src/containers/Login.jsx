@@ -12,7 +12,7 @@ import '@styles-utils/buttons.scss';
 
 import kpopColor from '@icons/kpopColor.png';
 
-const URL = process.env.API;
+const URL = process.env.REACT_API_URL;
 const endpoint = 'auth/login'
 const API = `${URL}${endpoint}`;
 

@@ -9,7 +9,7 @@ import useGetData from '@hooks/useGetData';
 import '@styles-utils/Forms.scss';
 import '@styles-utils/buttons.scss';
 
-const URL = process.env.API;
+const URL = process.env.REACT_API_URL;
 const endpoint = 'songs'
 const API = `${URL}${endpoint}`;
 const API_GROUPS = `${URL}groups`;

@@ -8,7 +8,7 @@ import useGetData from '@hooks/useGetData';
 import '@styles-utils/Forms.scss';
 import '@styles-components/ExchangeForm.scss';
 
-const URL = process.env.API;
+const URL = process.env.REACT_API_URL;
 const API_GROUPS = `${URL}groups`;
 const globalParams = {
   includeDeleted: false,

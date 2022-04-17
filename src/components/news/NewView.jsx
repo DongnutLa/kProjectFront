@@ -7,7 +7,7 @@ import AuthContext from '@context/AuthContext';
 
 import '@styles-components/NewView.scss';
 
-const URL = process.env.API;
+const URL = process.env.REACT_API_URL;
 const endpoint = 'news';
 
 const NewView = () => {

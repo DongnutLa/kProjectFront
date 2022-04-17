@@ -11,7 +11,7 @@ import '@styles-utils/buttons.scss';
 
 import upload from '@icons/upload.png'
 
-const URL = process.env.API;
+const URL = process.env.REACT_API_URL;
 const endpoint = 'albums'
 const API_ALBUMS = `${URL}${endpoint}`;
 const API_GROUPS = `${URL}groups`;

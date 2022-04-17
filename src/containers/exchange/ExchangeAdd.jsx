@@ -10,7 +10,7 @@ import '@styles-utils/Forms.scss';
 
 import upload from '@icons/upload.png';
 
-const URL = process.env.API;
+const URL = process.env.REACT_API_URL;
 const endpoint = 'exchanges'
 const API = `${URL}${endpoint}`;
 
