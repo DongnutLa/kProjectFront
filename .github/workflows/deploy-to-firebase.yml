@@ -16,6 +16,8 @@ jobs:
         uses: actions/checkout@main
       - name: Install Dependencies
         run: npm install
+      - name: Fix Packages
+        run: npm audit fix
       - name: Build
         run: npm run build
       - name: Archive Production Artifact
